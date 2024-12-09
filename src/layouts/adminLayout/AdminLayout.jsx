@@ -24,14 +24,14 @@ export function AdminLayout(props) {
             </Row>
             <Row>
                 <div className="divi">
-                    <section className="layout-sidebar">
+                    <div className="layout-sidebar">
                         <LeftMenu />
-                    </section>
-                    <section className="layout-navbar">
+                    </div>
+                    <div className="layout-navbar">
                         <div className="layout-tablas">
                             <Row>{children}</Row>
                         </div>
-                    </section>
+                    </div>
                 </div>
             </Row>
         </Container>
