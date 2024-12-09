@@ -4,7 +4,7 @@ import { GiBrain, GiMaterialsScience } from "react-icons/gi";
 import { IconButton } from '../../ui';
 import { FormLogin } from '../formLogin/FormLogin';
 
-export function SelectLogin(props) {
+export function SelectLogin() {
 
     const [view, setView] = useState(0)
 
