@@ -2,11 +2,15 @@
 import AOS from 'aos';
 import GLightbox from 'glightbox';
 import { useEffect } from 'react';
+
 const useAppEffects = () => {
+
     useEffect(() => {
         const toggleScrolled = () => {
             const selectBody = document.querySelector('body');
             const selectHeader = document.querySelector('#header');
+            console.log(selectHeader);
+            if (selectHeader === null) return;
             if (!selectHeader.classList.contains('scroll-up-sticky') &&
                 !selectHeader.classList.contains('sticky-top') &&
                 !selectHeader.classList.contains('fixed-top')) return;

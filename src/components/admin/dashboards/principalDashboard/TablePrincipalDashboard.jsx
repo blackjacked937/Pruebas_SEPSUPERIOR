@@ -1,51 +1,46 @@
 import React, { useMemo, useState } from "react";
-import { Button } from "react-bootstrap";
 import DataTable from "react-data-table-component";
-import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import { Filter } from '../../../ui';
 
 export function TablePrincipalDashboard(props) {
 
     const columns = [
         {
-            name: "Nombres",
+            name: "Nombre",
             selector: (row) => row.nombre,
             sortable: true,
         },
         {
-            name: "Descripcion",
-            selector: (row) => row.descripcion,
+            name: "Registrado en",
+            selector: (row) => row.hospital,
             sortable: true,
         },
         {
-            name: "Acciones",
-            button: true,
-            cell: (row) => (
-                <>
-                    <Button
-                        size="sm"
-                        variant="success"
-                        data-toggle="tooltip"
-                        data-placement="top"
-                        title="Actualizar Localidad"
-                        onClick={() => console.log(row)}
-                        className="table-cte boton ms-1"
-                    >
-                        <FaPencilAlt />
-                    </Button>
-                    <Button
-                        size="sm"
-                        variant="danger"
-                        data-toggle="tooltip"
-                        data-placement="top"
-                        title="Eliminar Localidad"
-                        onClick={() => console.log(row.id, row.nombre)}
-                        className="table-cte boton ms-1"
-                    >
-                        <FaTrashAlt />
-                    </Button>
-                </>
-            ),
+            name: "Correo",
+            selector: (row) => row.correo,
+        },
+        {
+            name: "Edad",
+            selector: (row) => row.edad || "NO PROPORCIONADA",
+            sortable: true,
+        },
+        {
+            name: "Género",
+            selector: (row) => row.genero || "NO PROPORCIONADO",
+            sortable: true,
+        },
+        {
+            name: "Ocupación",
+            selector: (row) => row.ocupacion.toUpperCase() || "NO PROPORCIONADO",
+            sortable: true,
+        },
+        {
+            name: "Teléfono de casa",
+            selector: (row) => row.telefono_casa || "NO PROPORCIONADO",
+        },
+        {
+            name: "Teléfono móvil",
+            selector: (row) => row.telefono_movil,
         },
     ];
 

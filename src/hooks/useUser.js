@@ -12,9 +12,13 @@ export function useUser() {
 
     const getMe = async (token) => {
         try {
+            setLoadingUser(true)
             const response = await getMeApi(token);
+            setLoadingUser(false)
             return response;
         } catch (error) {
+            setErrorUser(error)
+            setLoadingUser(false)
             throw error;
         }
     }

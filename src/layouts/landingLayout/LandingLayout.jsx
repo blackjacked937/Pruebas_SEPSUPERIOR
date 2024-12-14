@@ -1,13 +1,11 @@
 import React from 'react';
 import { Footer } from '../../components/landingPage/footer/Footer';
 import { NavBar } from '../../components/landingPage/navBar/NavBar';
-import useAppEffects from '../../hooks/useAppEffects';
 
 
 export function LandingLayout(props) {
 
     const { children } = props;
-    useAppEffects();
 
 
     return (
