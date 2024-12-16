@@ -3,6 +3,15 @@ import DataTable from "react-data-table-component";
 import { Filter } from '../../../ui';
 
 export function TableInterpretacionDatos(props) {
+    const customStyles = {
+        cells: {
+            style: {
+                whiteSpace: 'normal', // Permite que el texto haga salto de línea
+                overflow: 'visible', // Elimina truncamiento
+                textOverflow: 'clip', // Evita que se muestren los "..."
+            },
+        },
+    };
     const columns = [
         {
             name: "Nombre",
@@ -96,7 +105,7 @@ export function TableInterpretacionDatos(props) {
             selector: (row) => row.escala_psl5_interpretacion,
         },
         {
-            name: "Columbia Puntaje                                                                      ",
+            name: "Columbia Puntaje",
             selector: (row) => row.escala_columia,
         },
         {
@@ -121,11 +130,11 @@ export function TableInterpretacionDatos(props) {
         },
         {
             name: "Escala S. Global GAF Puntaje",
-            selector: (row) => row.escala_s_global_gaf,
+            selector: (row) => generarCalificacionGAF(row.escala_s_global_gaf_interpretacion),
         },
         {
             name: "Escala S. Global GAF Interpretación",
-            selector: (row) => row.escala_s_global_gaf_interpretacion,
+            selector: (row) => generarAnalisisGAF(row.escala_s_global_gaf_interpretacion),
         },
         {
             name: "Escala de resiliencia Puntaje",
@@ -187,10 +196,32 @@ export function TableInterpretacionDatos(props) {
             columns={columns}
             data={filteredItems}
             defaultSortField="nombre"
-            striped
             pagination
             subHeader
             subHeaderComponent={subHeaderComponent}
+            customStyles={customStyles}
         />
     );
 }
+
+const generarAnalisisGAF = (data) => {
+    if (!data) return "Sin información disponible"
+
+    const json_respuestas = JSON.parse(data);
+
+    if (json_respuestas[0].calificacion + json_respuestas[1].calificacion === 200) return "Funcionamiento es excelente"
+    if (json_respuestas[8].calificacion + json_respuestas[7].calificacion >= 140 && json_respuestas[8].calificacion + json_respuestas[7].calificacion < 200) return "Funcionamiento es bueno"
+    if (json_respuestas[4].calificacion + json_respuestas[5].calificacion + json_respuestas[6].calificacion >= 90 && json_respuestas[4].calificacion + json_respuestas[5].calificacion + json_respuestas[6].calificacion < 139) return "Funcionamiento es regular"
+    if (json_respuestas[3].calificacion + json_respuestas[2].calificacion + json_respuestas[1].calificacion < 90 && json_respuestas[3].calificacion + json_respuestas[2].calificacion + json_respuestas[1].calificacion >= 1) return "Funcionamiento es regular"
+    else return "Analisis por determinar"
+}
+
+const generarCalificacionGAF = (data) => {
+    if (!data) return "0"
+    let calificacion = 0;
+    const json_respuestas = JSON.parse(data);
+    json_respuestas.forEach(element => {
+        calificacion += element.calificacion
+    });
+    return calificacion;
+} 

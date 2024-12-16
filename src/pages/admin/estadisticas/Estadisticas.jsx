@@ -33,6 +33,25 @@ export function Estadisticas() {
     }, [])
 
     const dataRowsExcel = (row) => {
+        const generarAnalisisGAF = (data) => {
+            if (!data) return "Sin información disponible"
+            const json_respuestas = JSON.parse(data);
+            if (json_respuestas[0].calificacion + json_respuestas[1].calificacion === 200) return "Funcionamiento es excelente"
+            if (json_respuestas[8].calificacion + json_respuestas[7].calificacion >= 140 || json_respuestas[8].calificacion + json_respuestas[7].calificacion < 200) return "Funcionamiento es bueno"
+            if (json_respuestas[4].calificacion + json_respuestas[5].calificacion + json_respuestas[6].calificacion >= 90 && json_respuestas[4].calificacion + json_respuestas[5].calificacion + json_respuestas[6].calificacion < 139) return "Funcionamiento es regular"
+            if (json_respuestas[3].calificacion + json_respuestas[2].calificacion + json_respuestas[1].calificacion < 90 && json_respuestas[3].calificacion + json_respuestas[2].calificacion + json_respuestas[1].calificacion >= 1) return "Funcionamiento es regular"
+            else return "Sin información disponible"
+        }
+
+        const generarCalificacionGAF = (data) => {
+            if (!data) return "0"
+            let calificacion = 0;
+            const json_respuestas = JSON.parse(data);
+            json_respuestas.forEach(element => {
+                calificacion += element.calificacion
+            });
+            return calificacion;
+        }
         const rows = {
             Nombre: row.nombre,
             Edad: row.edad,
@@ -61,8 +80,8 @@ export function Estadisticas() {
             Escala_plutchck_interpretacion: row.escala_plutchck_interpretacion,
             Escala_acf_trauma: row.escala_acf_trauma,
             Escala_acf_trauma_interpretacion: row.escala_acf_trauma_interpretacion,
-            Escala_s_global_gaf: row.escala_s_global_gaf,
-            Escala_s_global_gaf_interpretacion: row.escala_s_global_gaf_interpretacion,
+            Escala_s_global_gaf: generarCalificacionGAF(row.escala_s_global_gaf),
+            Escala_s_global_gaf_interpretacion: generarAnalisisGAF(row.escala_s_global_gaf_interpretacion),
             Escala_reciliencia: row.escala_reciliencia,
             Escala_reciliencia_interpretacion: row.escala_reciliencia_interpretacion,
             Escala__fagerstrom: row.escala__fagerstrom,
@@ -74,6 +93,7 @@ export function Estadisticas() {
     };
 
     const downloadExcel = async () => {
+
         if (dashboardInterpretaciones.length > 0) {
             setTitleModal("Descargar Interpretaciones")
             setContentModal(
