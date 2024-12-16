@@ -9,7 +9,6 @@ const useAppEffects = () => {
         const toggleScrolled = () => {
             const selectBody = document.querySelector('body');
             const selectHeader = document.querySelector('#header');
-            console.log(selectHeader);
             if (selectHeader === null) return;
             if (!selectHeader.classList.contains('scroll-up-sticky') &&
                 !selectHeader.classList.contains('sticky-top') &&

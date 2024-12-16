@@ -107,9 +107,6 @@ export function Estadisticas() {
             openCloseModal();
         }
     };
-
-    console.log(dashboardInterpretaciones);
-
     return (
         <div>
             <Button className='button-color' onClick={() => downloadExcel()}>Descargar Excel</Button>
