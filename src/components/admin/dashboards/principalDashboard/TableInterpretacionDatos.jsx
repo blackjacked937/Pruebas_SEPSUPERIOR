@@ -130,11 +130,11 @@ export function TableInterpretacionDatos(props) {
         },
         {
             name: "Escala S. Global GAF Puntaje",
-            selector: (row) => generarCalificacionGAF(row.escala_s_global_gaf_interpretacion),
+            selector: (row) => row.escala_s_global_gaf,
         },
         {
             name: "Escala S. Global GAF Interpretación",
-            selector: (row) => generarAnalisisGAF(row.escala_s_global_gaf_interpretacion),
+            selector: (row) => row.escala_s_global_gaf_interpretacion,
         },
         {
             name: "Escala de resiliencia Puntaje",
@@ -212,7 +212,7 @@ const generarAnalisisGAF = (data) => {
     if (json_respuestas[0].calificacion + json_respuestas[1].calificacion === 200) return "Funcionamiento es excelente"
     if (json_respuestas[8].calificacion + json_respuestas[7].calificacion >= 140 && json_respuestas[8].calificacion + json_respuestas[7].calificacion < 200) return "Funcionamiento es bueno"
     if (json_respuestas[4].calificacion + json_respuestas[5].calificacion + json_respuestas[6].calificacion >= 90 && json_respuestas[4].calificacion + json_respuestas[5].calificacion + json_respuestas[6].calificacion < 139) return "Funcionamiento es regular"
-    if (json_respuestas[3].calificacion + json_respuestas[2].calificacion + json_respuestas[1].calificacion < 90 && json_respuestas[3].calificacion + json_respuestas[2].calificacion + json_respuestas[1].calificacion >= 1) return "Funcionamiento es regular"
+    if (json_respuestas[3].calificacion + json_respuestas[2].calificacion + json_respuestas[1].calificacion < 90 && json_respuestas[3].calificacion + json_respuestas[2].calificacion + json_respuestas[1].calificacion >= 1) return "Funcionamiento es malo"
     else return "Analisis por determinar"
 }
 
