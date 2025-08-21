@@ -1,8 +1,9 @@
-import { BASE_API } from "../utils/constants";
+import { BASE_API, BASE_API_F1 } from "../utils/constants";
 
-export async function loginApi(formValue) {
+export async function loginApi(formValue, typeLogin) {
     try {
-        const url = `${BASE_API}auth/login/`;
+        const url = typeLogin === 1 ? `${BASE_API}auth/login/` : `${BASE_API_F1}auth/login/`;
+
         const params = {
             method: "POST",
             headers: {

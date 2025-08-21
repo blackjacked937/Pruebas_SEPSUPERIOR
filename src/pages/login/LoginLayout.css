@@ -4,14 +4,12 @@
     align-content: center;
 
     .sub-conteiner {
-        max-width: 600px;
-        background-color: aliceblue;
-        max-height: 380px;
-        min-height: 380px;
-        margin: 10px auto;
-        border-radius: 0.5rem;
-        padding: 15px;
-        box-shadow: 6px 11px 5px 0px rgba(0, 0, 0, 0.75);
+    max-width: 1000px;
+    background-color: aliceblue;
+    margin: 10px auto;
+    border-radius: 0.5rem;
+    padding: 15px;
+    box-shadow: 6px 11px 5px 0px rgba(0, 0, 0, 0.75);
     }
 
     .footer-text {

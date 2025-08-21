@@ -13,11 +13,11 @@ export function TableInterpretacionDatos(props) {
         },
     };
     const columns = [
-        {
-            name: "Nombre",
-            selector: (row) => row.nombre,
-            sortable: true,
-        },
+        // {
+        //     name: "Nombre",
+        //     selector: (row) => row.nombre,
+        //     sortable: true,
+        // },
         {
             name: "Edad",
             selector: (row) => row.edad || "NO PROPORCIONADA",
@@ -28,38 +28,38 @@ export function TableInterpretacionDatos(props) {
             selector: (row) => row.genero || "NO PROPORCIONADO",
             sortable: true,
         },
-        {
-            name: "Municipio",
-            selector: (row) => row.municipio.toUpperCase(),
-            sortable: true,
-        },
+        // {
+        //     name: "Municipio",
+        //     selector: (row) => row.municipio.toUpperCase(),
+        //     sortable: true,
+        // },
         {
             name: "Escolaridad",
             selector: (row) => row.escolaridad.toUpperCase() || "NO PROPORCIONADA",
             sortable: true,
         },
-        {
-            name: "Ocupación",
-            selector: (row) => row.ocupacion.toUpperCase() || "NO PROPORCIONADO",
-            sortable: true,
-        },
-        {
-            name: "Dirección",
-            selector: (row) => row.direccion.toUpperCase() || "NO PROPORCIONADO",
-            sortable: true,
-        },
-        {
-            name: "Teléfono de casa",
-            selector: (row) => row.telefono_casa || "NO PROPORCIONADO",
-        },
-        {
-            name: "Teléfono móvil",
-            selector: (row) => row.telefono_movil,
-        },
-        {
-            name: "Correo",
-            selector: (row) => row.correo,
-        },
+        // {
+        //     name: "Ocupación",
+        //     selector: (row) => row.ocupacion.toUpperCase() || "NO PROPORCIONADO",
+        //     sortable: true,
+        // },
+        // {
+        //     name: "Dirección",
+        //     selector: (row) => row.direccion.toUpperCase() || "NO PROPORCIONADO",
+        //     sortable: true,
+        // },
+        // {
+        //     name: "Teléfono de casa",
+        //     selector: (row) => row.telefono_casa || "NO PROPORCIONADO",
+        // },
+        // {
+        //     name: "Teléfono móvil",
+        //     selector: (row) => row.telefono_movil,
+        // },
+        // {
+        //     name: "Correo",
+        //     selector: (row) => row.correo,
+        // },
         {
             name: "Esquizofrenia",
             selector: (row) => row.escala_esquizofrenia,

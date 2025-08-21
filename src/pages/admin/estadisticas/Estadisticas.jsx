@@ -34,16 +34,16 @@ export function Estadisticas() {
 
     const dataRowsExcel = (row) => {
         const rows = {
-            Nombre: row.nombre,
+            // Nombre: row.nombre,
             Edad: row.edad,
             Genero: row.genero,
-            Municipio: row.municipio,
+            // Municipio: row.municipio,
             Escolaridad: row.escolaridad,
-            Ocupacion: row.ocupacion,
+            // Ocupacion: row.ocupacion,
             Direccion: row.direccion,
-            Telefono_casa: row.telefono_casa,
-            Telefono_movil: row.telefono_movil,
-            Correo: row.correo,
+            // Telefono_casa: row.telefono_casa,
+            // Telefono_movil: row.telefono_movil,
+            // Correo: row.correo,
             Escala_esquizofrenia: row.escala_esquizofrenia,
             Escala_gad7: row.escala_gad7,
             Escala_gad7_interpretacion: row.escala_gad7_interpretacion,

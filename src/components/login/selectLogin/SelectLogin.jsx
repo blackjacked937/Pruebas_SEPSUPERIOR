@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { GiBrain, GiMaterialsScience } from "react-icons/gi";
+import { GiBrain, GiMaterialsScience, GiBrainStem } from "react-icons/gi";
 
 import { IconButton } from '../../ui';
 import { FormLogin } from '../formLogin/FormLogin';
@@ -10,7 +10,8 @@ export function SelectLogin() {
 
     const views = [
         <SelectLogin />,
-        <FormLogin />
+        <FormLogin typeLogin={1}/>,
+        <FormLogin typeLogin={2}/>
     ]
 
     return views[view]
@@ -23,9 +24,9 @@ export function SelectLogin() {
             <div>
                 <center><h3><b>¿A dónde quieres acceder?</b></h3></center>
                 <br />
-                <div className='conteiner-select'>
+                <div className='conteiner-select d-flex gap-5 mr-3 mb-3 flex-wrap mt-3'>
                     <IconButton
-                        text="Mente Conecta"
+                        text="Mente Conecta ISEM"
                         icon={<GiBrain />}
                         color="cadetblue"
                         size="xl"
@@ -40,6 +41,14 @@ export function SelectLogin() {
                             size="xl"
                         />
                     </a>
+                    <IconButton
+                        text="Mente Conecta Fase 1"
+                        icon={<GiBrainStem />}
+                        color="cadetblue"
+                        size="xl"
+
+                        onChangeMethod={() => setView(2)}
+                    />
                 </div>
                 <br />
                 <br />

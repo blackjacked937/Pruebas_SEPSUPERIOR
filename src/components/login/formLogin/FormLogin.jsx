@@ -9,23 +9,22 @@ import { useAuth } from '../../../hooks';
 import { InputForm } from '../../ui';
 import './FormLogin.css';
 
-export function FormLogin() {
+export function FormLogin(props) {
+    const { typeLogin } = props;
     const { login } = useAuth()
 
-
     const formik = useFormik({
-        initialValues: initialValues(),
-        validationSchema: Yup.object(newSchema()),
+        initialValues: initialValues(typeLogin),
+        validationSchema: Yup.object(newSchema(typeLogin)),
         validateOnChange: false,
         onSubmit: async (formvalue) => {
             try {
-                const response = await loginApi(formvalue);
+                const response = await loginApi(formvalue, typeLogin);
                 const { access } = response;
-                login(access);
+                login(access, typeLogin);
             } catch (error) {
                 alert(error.message);
             }
-
         },
     });
 
@@ -41,13 +40,13 @@ export function FormLogin() {
             <InputForm
                 label="Usuario"
                 labelDirection="center"
-                nameInput="username"
-                placeHolderInput="username"
-                valueInput={formik.values.username}
+                nameInput={typeLogin === 2 ? "email" : "username"}
+                placeHolderInput={typeLogin === 2 ? "email" : "username"}
+                valueInput={typeLogin === 2 ? formik.values.email : formik.values.username}
                 onChangeInput={formik.handleChange}
                 type="text"
-                error={formik.errors.username}
-                touched={formik.touched.username}
+                error={typeLogin === 2 ? formik.errors.email : formik.errors.username}
+                touched={typeLogin === 2 ? formik.touched.email : formik.touched.username}
                 size="sm"
             />
             <InputForm
@@ -71,13 +70,31 @@ export function FormLogin() {
     )
 }
 
-function initialValues() {
+function initialValues(typeLogin) {
+    if (typeLogin === 2) {
+        return {
+            email: "",
+            password: "",
+        };
+    }
     return {
         username: "",
         password: "",
     };
 }
-function newSchema() {
+
+function newSchema(typeLogin) {
+    if (typeLogin === 2) {
+        return {
+            email: Yup
+                .string("Ingrese su correo electrónico")
+                .email("Ingrese un correo válido")
+                .required("Ingrese su correo electrónico"),
+            password: Yup
+                .string("Ingrese su contraseña")
+                .required("Ingrese su contraseña"),
+        };
+    }
     return {
         username: Yup
             .string("Ingrese su usuario")
