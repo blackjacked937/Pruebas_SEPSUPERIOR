@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { InitialDashboard } from '../../../components/adminfase1/dashboard'
 import { useDashboardsF1 } from '../../../hooks'
+import { Carousel, Card, Container, Row, Col, Spinner } from 'react-bootstrap'
 
 export function EstadisticaFase1() {
     const { 
@@ -19,12 +20,12 @@ export function EstadisticaFase1() {
         getOpcionesPreguntaUsuarios,
     } = useDashboardsF1();
 
-    const [datasets, setDatasets] = useState([]);
-    const [preguntas, setPreguntas] = useState([]);
+    const [slides, setSlides] = useState([]);
+    const [loadingData, setLoadingData] = useState(true);
+    const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' ? window.innerWidth < 992 : true);
 
     useEffect(() => {
         async function fetchData() {
-            // === 1. Dashboards (agrupados de 4 en 4) ===
             const results = await Promise.all([
                 getDashBoardHasAlzheimerRisk(),
                 getDashBoardHasAlcoholEvaluation(),
@@ -42,21 +43,21 @@ export function EstadisticaFase1() {
 
             const grouped = [];
             for (let i = 0; i < results.length; i += 4) {
-                grouped.push(results.slice(i, i + 4));
+                grouped.push({
+                    title: `Grupo ${i/4 + 1}`,
+                    data: results.slice(i, i + 4)
+                });
             }
-            setDatasets(grouped);
 
-            // === 2. Solo preguntas 1, 3 y 4 ===
             const ids = [1, 3, 4];
-            const opciones = [];
-
+            const preguntas = [];
             for (const id of ids) {
                 try {
                     const res = await getOpcionesPreguntaUsuarios(id);
                     if (res?.opciones?.length) {
-                        opciones.push({
-                            titulo: res.titulo,
-                            opciones: res.opciones,
+                        preguntas.push({
+                            title: res.titulo,
+                            data: res.opciones
                         });
                     }
                 } catch (error) {
@@ -64,32 +65,71 @@ export function EstadisticaFase1() {
                 }
             }
 
-            setPreguntas(opciones);
+            setSlides([...grouped, ...preguntas]);
+            setLoadingData(false);
         }
         fetchData();
+        // Ejecutar solo al montar. Las funciones provienen del hook y no deben re-ejecutar este efecto.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // Detectar cambios de tamaño para alternar entre Carousel (móvil) y Grid (escritorio)
+    useEffect(() => {
+        const onResize = () => setIsMobile(window.innerWidth < 992); // <992px: consideramos móvil/tablet
+        window.addEventListener('resize', onResize);
+        return () => window.removeEventListener('resize', onResize);
     }, []);
 
     return (
-        <div>
-            <h1>Estadísticas Fase 1</h1>
+        <Container className="py-4">
+            <h1 className="mb-4 text-center">Estadísticas Fase 1</h1>
 
-            {/* Dashboards (agrupados en grupos de 4) */}
-            {datasets.map((data, index) => (
-                <InitialDashboard 
-                    key={`grupo-${index}`} 
-                    data={data} 
-                    title={`Grupo ${index + 1}`} 
-                />
-            ))}
-
-            {/* Preguntas específicas (1, 3, 4) */}
-            {preguntas.map((pregunta, index) => (
-                <InitialDashboard 
-                    key={`pregunta-${index}`} 
-                    data={pregunta.opciones} 
-                    title={pregunta.titulo} 
-                />
-            ))}
-        </div>
+            {loadingData ? (
+                <div className="d-flex justify-content-center align-items-center" style={{ minHeight: 240 }}>
+                    <Spinner animation="border" role="status">
+                        <span className="visually-hidden">Cargando...</span>
+                    </Spinner>
+                </div>
+            ) : (
+                isMobile ? (
+                    // Móvil: mantener carrusel (mejor interacción táctil)
+                    <Carousel
+                        interval={5000}
+                        controls={true}
+                        indicators={true}
+                        pause="hover"
+                        keyboard={true}
+                        wrap={true}
+                        touch={true}
+                        className="shadow-lg rounded"
+                    >
+                        {slides.map((slide, index) => (
+                            <Carousel.Item key={index}>
+                                <Card className="p-3 shadow-sm border-0" style={{ minHeight: '420px' }}>
+                                    <Card.Body>
+                                        {/* <h5 className="text-center mb-3">{slide.title}</h5> */}
+                                        <InitialDashboard data={slide.data} title={slide.title} />
+                                    </Card.Body>
+                                </Card>
+                            </Carousel.Item>
+                        ))}
+                    </Carousel>
+                ) : (
+                    // Escritorio: mostrar todas las tarjetas en un grid para mejor overview
+                    <Row xs={1} md={2} lg={3} className="g-4">
+                        {slides.map((slide, index) => (
+                            <Col key={index}>
+                                <Card className="p-3 shadow-sm border-0 h-100" style={{ minHeight: '420px' }}>
+                                    <Card.Body>
+                                        {/* <h5 className="text-center mb-3">{slide.title}</h5> */}
+                                        <InitialDashboard data={slide.data} title={slide.title} />
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                        ))}
+                    </Row>
+                )
+            )}
+        </Container>
     )
 }
