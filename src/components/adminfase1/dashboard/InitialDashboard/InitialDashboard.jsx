@@ -6,6 +6,22 @@ const pastelColors = [
     "#64B5F6", // azul claro
     // "#1565C0", // azul más oscuro
 ];
+
+// Tooltip personalizado
+function CustomTooltip({ active, payload, label }) {
+    if (active && payload && payload.length > 0) {
+        // Buscar el valor mayor a 0 (el único visible)
+        const punto = payload.find(p => p.value > 0);
+        if (!punto) return null;
+        return (
+            <div style={{ background: "#fff", border: "1px solid #ccc", padding: 10 }}>
+                <strong>{label}</strong>: {punto.value}
+            </div>
+        );
+    }
+    return null;
+}
+
 export function InitialDashboard({ data, title }) {
     // Preparar un dataset por cada pico: solo el pico i mantiene su valor, los demás quedan en 0
     const radarsData = data.map((_, i) => (
@@ -20,7 +36,7 @@ export function InitialDashboard({ data, title }) {
                     <PolarGrid />
                     <PolarAngleAxis dataKey="name" />
                     <PolarRadiusAxis />
-                    <Tooltip />
+                    <Tooltip content={<CustomTooltip />} />
 
                     {/* Renderizar un Radar por cada pico usando su dataset específico */}
                     {data.map((entry, index) => (
