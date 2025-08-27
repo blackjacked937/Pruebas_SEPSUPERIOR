@@ -199,3 +199,50 @@ export async function getOpcionesPreguntaUsuariosApi(token, id) {
         throw error;
     }
 }
+
+// funciona
+
+export async function getHasPHQ9sApi(token, id) {
+    try {
+        const url = `${BASE_API_F1}/dashboards/Dashbord_Admin/HasPHQ9/`;
+        const params = {
+            headers: {},
+        };
+
+        const response = await fetch(url, params);
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function getHasResilienceScaleApi(token, id) {
+    try {
+        const url = `${BASE_API_F1}/dashboards/Dashbord_Admin/HasResilienceScale/`;
+        const params = {
+            headers: {},
+        };
+
+        const response = await fetch(url, params);
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function getHasTobaccoEvaluationApi(token, id) {
+    try {
+        const url = `${BASE_API_F1}/dashboards/Dashbord_Admin/HasTobaccoEvaluation/`;
+        const params = {
+            headers: {},
+        };
+
+        const response = await fetch(url, params);
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        throw error;
+    }
+}

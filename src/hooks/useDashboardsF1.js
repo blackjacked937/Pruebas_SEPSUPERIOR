@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from ".";
-import { getDashBoardHasAlcoholEvaluationApi, getDashBoardHasAlzheimerRiskApi, getDashBoardHasColumbiaQuestionnaireApi, getDashBoardHasDrugsQuestionnaireApi, getDashBoardHasEatingBehaviorApi, getDashBoardHasGAD7Api, getDashBoardHasPhysicalActivityApi, getDashBoardHasPlutchickQuestionnaireApi, getDashBoardHasPSL5QuestionnaireApi, getDashBoardHasPsychiatricSymptomsApi, getDashBoardHasSleepQualityApi, getDashBoardHasTraumaticEventsApi, getOpcionesPreguntaUsuariosApi } from "../api/dashboardf1";
+import { getDashBoardHasAlcoholEvaluationApi, getDashBoardHasAlzheimerRiskApi, getDashBoardHasColumbiaQuestionnaireApi, getDashBoardHasDrugsQuestionnaireApi, getDashBoardHasEatingBehaviorApi, getDashBoardHasGAD7Api, getDashBoardHasPhysicalActivityApi, getDashBoardHasPlutchickQuestionnaireApi, getDashBoardHasPSL5QuestionnaireApi, getDashBoardHasPsychiatricSymptomsApi, getDashBoardHasSleepQualityApi, getDashBoardHasTraumaticEventsApi, getHasPHQ9sApi, getHasResilienceScaleApi, getHasTobaccoEvaluationApi, getOpcionesPreguntaUsuariosApi } from "../api/dashboardf1";
 
 
 export function useDashboardsF1() {
@@ -156,6 +156,40 @@ export function useDashboardsF1() {
             setLoading(false);
         }
     };
+    // funciona
+    const getHasPHQ9s = async () => {
+        setLoading(true);
+        try {
+            const result = await getHasPHQ9sApi(auth.token);
+            return result;
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+    const getHasResilienceScale = async () => {
+        setLoading(true);
+        try {
+            const result = await getHasResilienceScaleApi(auth.token);
+            return result;
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+    const getHasTobaccoEvaluation = async () => {
+        setLoading(true);
+        try {
+            const result = await getHasTobaccoEvaluationApi(auth.token);
+            return result;
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
 
     return {
@@ -174,5 +208,8 @@ export function useDashboardsF1() {
         getOpcionesPreguntaUsuarios,
         getDashBoardHasAlzheimerRisk,
         getDashBoardHasAlcoholEvaluation,
+        getHasPHQ9s,
+        getHasResilienceScale,
+        getHasTobaccoEvaluation,
     }
 }

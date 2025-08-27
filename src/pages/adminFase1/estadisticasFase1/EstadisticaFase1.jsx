@@ -18,6 +18,10 @@ export function EstadisticaFase1() {
         getDashBoardHasSleepQuality,
         getDashBoardHasTraumaticEvents,
         getOpcionesPreguntaUsuarios,
+
+        getHasPHQ9s,
+        getHasResilienceScale,
+        getHasTobaccoEvaluation
     } = useDashboardsF1();
 
     const [slides, setSlides] = useState([]);
@@ -27,29 +31,34 @@ export function EstadisticaFase1() {
     useEffect(() => {
         async function fetchData() {
             const results = await Promise.all([
-                getDashBoardHasAlzheimerRisk(),
-                getDashBoardHasAlcoholEvaluation(),
+                // getDashBoardHasAlzheimerRisk(),
+                // getDashBoardHasAlcoholEvaluation(),
+                getHasPHQ9s(),
+                getHasResilienceScale(),
+                getHasTobaccoEvaluation(),
                 getDashBoardHasColumbiaQuestionnaire(),
-                getDashBoardHasDrugsQuestionnaire(),
-                getDashBoardHasEatingBehavior(),
-                getDashBoardHasGAD7(),
+                // getDashBoardHasDrugsQuestionnaire(),
+                // getDashBoardHasEatingBehavior(),
+                // getDashBoardHasGAD7(),
+
                 getDashBoardHasPSL5Questionnaire(),
-                getDashBoardHasPhysicalActivity(),
-                getDashBoardHasPlutchickQuestionnaire(),
+                // getDashBoardHasPhysicalActivity(),
+                // getDashBoardHasPlutchickQuestionnaire(),
+
                 getDashBoardHasPsychiatricSymptoms(),
-                getDashBoardHasSleepQuality(),
-                getDashBoardHasTraumaticEvents(),
+                // getDashBoardHasSleepQuality(),
+                // getDashBoardHasTraumaticEvents(),
             ]);
 
             const grouped = [];
-            for (let i = 0; i < results.length; i += 4) {
+            for (let i = 0; i < results.length; i += 3) { // Cambia 4 por 3
                 grouped.push({
-                    title: `Grupo ${i/4 + 1}`,
-                    data: results.slice(i, i + 4)
+                    title: `Evaluación ${Math.floor(i / 3) + 1}`, // Ajusta el índice
+                    data: results.slice(i, i + 3) // Cambia 4 por 3
                 });
             }
 
-            const ids = [1, 3, 4];
+            const ids = [1, 3, 4, 19];
             const preguntas = [];
             for (const id of ids) {
                 try {
@@ -116,7 +125,9 @@ export function EstadisticaFase1() {
                     </Carousel>
                 ) : (
                     // Escritorio: mostrar todas las tarjetas en un grid para mejor overview
+                    
                     <Row xs={1} md={2} lg={3} className="g-4">
+                        <br />
                         {slides.map((slide, index) => (
                             <Col key={index}>
                                 <Card className="p-3 shadow-sm border-0 h-100" style={{ minHeight: '420px' }}>
