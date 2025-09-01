@@ -1,17 +1,14 @@
 import React from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip } from 'recharts';
 
-// 🎨 Paleta: alternar entre dos azules (uno a uno)
 const pastelColors = [
-    "#64B5F6", // azul claro
-    // "#1565C0", // azul más oscuro
+    "#64B5F6",
 ];
 
 // Tooltip personalizado
 function CustomTooltip({ active, payload, label }) {
     if (active && payload && payload.length > 0) {
-        // Buscar el valor mayor a 0 (el único visible)
-        const punto = payload.find(p => p.value > 0);
+        const punto = payload.find(p => p.value > 0 || p.value === 0);
         if (!punto) return null;
         return (
             <div style={{ background: "#fff", border: "1px solid #ccc", padding: 10 }}>
@@ -22,35 +19,52 @@ function CustomTooltip({ active, payload, label }) {
     return null;
 }
 
+// Función para quitar "usuarios con " y truncar a 10 caracteres
+function truncateLabel(label) {
+    if (!label) return '';
+    const clean = label.replace(/^usuarios con\s*/i, '');
+    return clean.length > 10 ? clean.slice(0, 20) + '…' : clean;
+}
+
 export function InitialDashboard({ data, title }) {
-    // Preparar un dataset por cada pico: solo el pico i mantiene su valor, los demás quedan en 0
-    const radarsData = data.map((_, i) => (
-        data.map((d, j) => ({ ...d, score: j === i ? d.score : 0 }))
-    ));
+    // Normalizar los valores para que el mayor llegue al borde
+    let normalizedData = data;
+    let maxValue = Math.max(...data.map(d => d.score), 1); // evitar 0
+
+    if (data.length === 3) {
+        normalizedData = data.map(d => ({
+            ...d,
+            score: (d.score / maxValue) * 100 // Normaliza a 100
+        }));
+        maxValue = 100;
+    }
 
     return (
-        <div style={{ width: '100%', height: 400, marginBottom: "2rem" }}>
-            <h3 style={{ textAlign: "center" }}>{title}</h3>
+        <div style={{ width: '100%', height: 400, marginBottom: "2rem", overflow: "hidden" }}>
+            <h3 style={{ textAlign: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{title}</h3>
             <ResponsiveContainer>
-                <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
+                <RadarChart cx="50%" cy="50%" outerRadius="80%" data={normalizedData}>
                     <PolarGrid />
-                    <PolarAngleAxis dataKey="name" />
-                    <PolarRadiusAxis />
+                    <PolarAngleAxis 
+                        dataKey="name"
+                        tickFormatter={truncateLabel}
+                        tick={{ 
+                            fontSize: 13, 
+                            whiteSpace: "nowrap", 
+                            overflow: "hidden", 
+                            textOverflow: "ellipsis" 
+                        }} 
+                    />
+                    <PolarRadiusAxis domain={[0, maxValue]} />
                     <Tooltip content={<CustomTooltip />} />
-
-                    {/* Renderizar un Radar por cada pico usando su dataset específico */}
-                    {data.map((entry, index) => (
-                        <Radar
-                            key={index}
-                            name={entry.name}
-                            data={radarsData[index]}
-                            dataKey="score"
-                            stroke={pastelColors[index % pastelColors.length]}
-                            fill={pastelColors[index % pastelColors.length]}
-                            fillOpacity={0.7}
-                            dot={false}
-                        />
-                    ))}
+                    <Radar
+                        name={title}
+                        dataKey="score"
+                        stroke={pastelColors[0]}
+                        fill={pastelColors[0]}
+                        fillOpacity={0.7}
+                        dot={false}
+                    />
                 </RadarChart>
             </ResponsiveContainer>
         </div>
