@@ -1,3 +1,15 @@
+:root {
+  --color-fondo: #E0F2F1;
+  --color-texto-negro: #000000;
+  --color-texto-blanco: #FFFEFE;
+  --color-texto-primario: #009688;
+  --color-botones-primario: #009688;
+  --color-botones-secundario: #4DB6AC;
+  --color-elementos-extras: #4DB6AC;
+  --color-texto-claro: #E0F2F1;
+  --color-lineas: #D9D9D9;
+}
+
 .App {
   text-align: center;
 }
@@ -5,6 +17,7 @@
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+  border-radius: 20px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
