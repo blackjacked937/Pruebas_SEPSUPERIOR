@@ -1,0 +1,143 @@
+.security-body {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    width: 100%;
+    background-color: var(--color-fondo);
+    padding: 40px 20px;
+    box-sizing: border-box;
+}
+
+.security-container {
+    width: 100%;
+    max-width: 1645px;
+    text-align: center;
+    padding: 2rem;
+    border-radius: 20px;
+}
+
+.security-header h1 {
+    color: var(--color-texto-primario);
+    font-size: 6rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.security-header p {
+    color: var(--color-texto-negro);
+    font-size: 2rem;
+    font-weight: 600;
+    max-width: 1550px;
+    margin: 0 auto 3rem auto;
+}
+
+.security-content {
+    display: flex;
+    gap: 2rem;
+    align-items: stretch;
+}
+
+.security-features-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: left;
+}
+
+.feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
+.feature-icon {
+    color: var(--color-texto-negro);
+    font-size: 1.5rem;
+    padding: 0.75rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.feature-text h3 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+    color: var(--color-texto-negro);
+}
+
+.feature-text p {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 0;
+    color: var(--color-texto-negro);
+}
+
+.security-guarantee-card {
+    flex: 1;
+    background-color: var(--color-elementos-extras);
+    border-radius: 20px;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-texto-blanco);
+}
+
+.guarantee-icon {
+    font-size: 8rem;
+    margin-bottom: 2rem;
+}
+
+.security-guarantee-card h3 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+}
+
+.security-guarantee-card p {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+/* Media Queries para Responsividad */
+@media (max-width: 1200px) {
+    .security-content {
+        flex-direction: column;
+    }
+
+    .security-guarantee-card {
+        margin-top: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .security-header h1 {
+        font-size: 4rem;
+    }
+
+    .security-header p {
+        font-size: 1.5rem;
+    }
+
+    .feature-text h3 {
+        font-size: 1.5rem;
+    }
+
+    .feature-text p {
+        font-size: 1.1rem;
+    }
+
+    .security-guarantee-card h3 {
+        font-size: 2rem;
+    }
+
+    .security-guarantee-card p {
+        font-size: 1.25rem;
+    }
+}

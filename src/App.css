@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
 :root {
   --color-fondo: #E0F2F1;
   --color-texto-negro: #000000;
@@ -8,6 +10,10 @@
   --color-elementos-extras: #4DB6AC;
   --color-texto-claro: #E0F2F1;
   --color-lineas: #D9D9D9;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
 }
 
 .App {
@@ -45,6 +51,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
