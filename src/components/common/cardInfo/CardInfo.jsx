@@ -42,23 +42,26 @@ export function CardInfoNavigation(props) {
 
 
   return (
-    <Link to={link}>
-      <div className={cardClasses(riskLevel)} onClick={console.log("Me pushaste papu")}>
-        <div className="card-header">
-          <div className="card-icon-container">
-            {getIcon(riskLevel)}
+    <div className='container-card-info-1'>
+      <Link to={link}>
+        <div className={cardClasses(riskLevel)} onClick={console.log("Me pushaste papu")}>
+          <div className="card-header">
+            <div className="card-icon-container">
+              {getIcon(riskLevel)}
+            </div>
+            <h3 className="card-title">{title}</h3>
           </div>
-          <h3 className="card-title">{title}</h3>
+          <div className="card-body">
+            <p className="patient-count">{account}</p>
+            <p className="card-subtitle">{subTitle}</p>
+          </div>
+          <div className="card-footer">
+            <span className="footer-link">{textLink}</span>
+          </div>
         </div>
-        <div className="card-body">
-          <p className="patient-count">{account}</p>
-          <p className="card-subtitle">{subTitle}</p>
-        </div>
-        <div className="card-footer">
-          <span className="footer-link">{textLink}</span>
-        </div>
-      </div>
-    </Link>
+      </Link>
+
+    </div>
   );
 };
 
@@ -77,19 +80,21 @@ export function DemoCardInfoNavigation() {
     return () => clearInterval(intervalo);
   }, []);
   return (
-    <div className={cardClasses(conteo)} onClick={() => console.log("Me pushaste papu")}>
-      <div className="card-header">
-        <div className="card-icon-container">
-          {getIcon(conteo)}
+    <div className='container-card-info-1'>
+      <div className={cardClasses(conteo)} onClick={() => console.log("Me pushaste papu")}>
+        <div className="card-header">
+          <div className="card-icon-container">
+            {getIcon(conteo)}
+          </div>
+          <h3 className="card-title">Demo de tarjeta</h3>
         </div>
-        <h3 className="card-title">Demo de tarjeta</h3>
-      </div>
-      <div className="card-body">
-        <p className="patient-count">{conteo}</p>
-        <p className="card-subtitle">Muestra las posibles tarjetas disponibles.</p>
-      </div>
-      <div className="card-footer">
-        <span className="footer-link">Ver detalles</span>
+        <div className="card-body">
+          <p className="patient-count">{conteo}</p>
+          <p className="card-subtitle">Muestra las posibles tarjetas disponibles.</p>
+        </div>
+        <div className="card-footer">
+          <span className="footer-link">Ver detalles</span>
+        </div>
       </div>
     </div>
   )

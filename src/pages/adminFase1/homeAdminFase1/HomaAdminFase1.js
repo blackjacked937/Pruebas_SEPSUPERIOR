@@ -9,8 +9,8 @@ import './HomaAdminFase1.css'
 
 export function HomaAdminFase1() {
     return (
-        <div class="container">
-            <div class="box">
+        <div className="container-home-admin-fase-1">
+            <div className="box">
                 <CardInfoNavigation
                     riskLevel = {1}
                     account = {1}
@@ -20,7 +20,7 @@ export function HomaAdminFase1() {
                     link = "/admin/f1/estadisticas"
                 />
             </div>
-            <div class="box">
+            <div className="box">
                 <CardInfoNavigation
                     riskLevel = {2}
                     account = {2}
@@ -30,7 +30,7 @@ export function HomaAdminFase1() {
                     link = "/admin/f1/"
                 />
             </div>
-            <div class="box">
+            <div className="box">
                 <CardInfoNavigation
                     riskLevel = {3}
                     account = {3}
@@ -40,7 +40,7 @@ export function HomaAdminFase1() {
                     link = "/admin/f1/columbia"
                 />
             </div>
-            <div class="box">
+            <div className="box">
                 <DemoCardInfoNavigation/>
             </div>
         </div>
