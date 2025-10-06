@@ -1,8 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Footer.css';
-import { FaFacebook, FaLinkedin, FaInstagram } from 'react-icons/fa';
-
 
 export function Footer() {
     const navigate = useNavigate();
@@ -20,13 +18,13 @@ export function Footer() {
                     <h4>Redes sociales</h4>
                     <div className="social-icons">
                         <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                            <FaFacebook size={30} color="white" />
+                            <img src='/icons/Vector.svg' alt="Facebook" />
                         </a>
                         <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-                            <FaLinkedin size={30} color="white" />
+                            <img src='/icons/Vector (1).svg' alt="LinkedIn" />
                         </a>
                         <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                            <FaInstagram size={30} color="white" />
+                            <img src='/icons/logo-instagram.svg' alt="Instagram" />
                         </a>
                     </div>
                 </div>
