@@ -31,11 +31,11 @@
     border-left-color: #3182CE;
   }
 
-  .risk-card.risk-level-1 .card-icon-container {
+  .risk-card.risk-level-1 .card-icon-container-navigation {
     background-color: #BEE3F8;
   }
 
-  .risk-card.risk-level-1 .card-icon {
+  .risk-card.risk-level-1 .card-icon-navigation {
     color: #2B6CB0;
   }
 
@@ -48,11 +48,11 @@
     border-left-color: #D69E2E;
   }
 
-  .risk-card.risk-level-2 .card-icon-container {
+  .risk-card.risk-level-2 .card-icon-container-navigation {
     background-color: #FEFCBF;
   }
 
-  .risk-card.risk-level-2 .card-icon {
+  .risk-card.risk-level-2 .card-icon-navigation {
     color: #B7791F;
   }
 
@@ -65,11 +65,11 @@
     border-left-color: #E53E3E;
   }
 
-  .risk-card.risk-level-3 .card-icon-container {
+  .risk-card.risk-level-3 .card-icon-container-navigation {
     background-color: #FED7D7;
   }
 
-  .risk-card.risk-level-3 .card-icon {
+  .risk-card.risk-level-3 .card-icon-navigation {
     color: #C53030;
   }
 
@@ -83,13 +83,13 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
   }
 
-  .card-header {
+  .card-header-navigation {
     display: flex;
     align-items: center;
     margin-bottom: 16px;
   }
 
-  .card-icon-container {
+  .card-icon-container-navigation {
     border-radius: 50%;
     padding: 8px;
     display: flex;
@@ -98,18 +98,18 @@
     margin-right: 12px;
   }
 
-  .card-icon {
+  .card-icon-navigation {
     font-size: 24px;
   }
 
-  .card-title {
+  .card-title-navigation {
     font-size: 1.1rem;
     font-weight: 600;
     color: #2D3748;
     margin: 0;
   }
 
-  .card-body {
+  .card-body-navigation {
     text-align: center;
     flex-grow: 1;
   }
@@ -121,18 +121,17 @@
     line-height: 1;
   }
 
-  .card-subtitle {
+  .card-subtitle-navigation {
     font-size: 0.9rem;
     color: #718096;
     margin-top: 8px;
   }
 
-  .card-footer {
-    margin-top: 20px;
+  .card-footer-navigation {
     text-align: center;
   }
 
-  .footer-link {
+  .footer-link-navigation {
     color: #2B6CB0;
     font-weight: 500;
     text-decoration: none;
@@ -140,7 +139,7 @@
     transition: color 0.2s;
   }
 
-  .risk-card:hover .footer-link {
+  .risk-card:hover .footer-link-navigation {
     text-decoration: underline;
   }
 

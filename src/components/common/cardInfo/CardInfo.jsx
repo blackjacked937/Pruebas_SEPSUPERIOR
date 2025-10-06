@@ -45,18 +45,18 @@ export function CardInfoNavigation(props) {
     <div className='container-card-info-1'>
       <Link to={link}>
         <div className={cardClasses(riskLevel)} onClick={console.log("Me pushaste papu")}>
-          <div className="card-header">
-            <div className="card-icon-container">
+          <div className="card-header-navigation">
+            <div className="card-icon-container-navigation">
               {getIcon(riskLevel)}
             </div>
-            <h3 className="card-title">{title}</h3>
+            <h3 className="card-title-navigation">{title}</h3>
           </div>
-          <div className="card-body">
+          <div className="card-body-navigation">
             <p className="patient-count">{account}</p>
-            <p className="card-subtitle">{subTitle}</p>
+            <p className="card-subtitle-navigation">{subTitle}</p>
           </div>
-          <div className="card-footer">
-            <span className="footer-link">{textLink}</span>
+          <div className="card-footer-navigation">
+            <span className="footer-link-navigation">{textLink}</span>
           </div>
         </div>
       </Link>
@@ -82,18 +82,18 @@ export function DemoCardInfoNavigation() {
   return (
     <div className='container-card-info-1'>
       <div className={cardClasses(conteo)} onClick={() => console.log("Me pushaste papu")}>
-        <div className="card-header">
-          <div className="card-icon-container">
+        <div className="card-header-navigation">
+          <div className="card-icon-container-navigation">
             {getIcon(conteo)}
           </div>
-          <h3 className="card-title">Demo de tarjeta</h3>
+          <h3 className="card-title-navigation">Demo de tarjeta</h3>
         </div>
-        <div className="card-body">
+        <div className="card-body-navigation">
           <p className="patient-count">{conteo}</p>
-          <p className="card-subtitle">Muestra las posibles tarjetas disponibles.</p>
+          <p className="card-subtitle-navigation">Muestra las posibles tarjetas disponibles.</p>
         </div>
-        <div className="card-footer">
-          <span className="footer-link">Ver detalles</span>
+        <div className="card-footer-navigation">
+          <span className="footer-link-navigation">Ver detalles</span>
         </div>
       </div>
     </div>

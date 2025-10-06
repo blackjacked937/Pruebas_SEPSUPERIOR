@@ -1,1 +1,1 @@
-export * from './CardInfo'
+export * from './CardInfo.jsx'
