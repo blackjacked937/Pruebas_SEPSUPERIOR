@@ -1,16 +1,31 @@
-import React from 'react'
-
+import React, {useState, useEffect} from 'react'
 
 import { 
     CardInfoNavigation, 
     DemoCardInfoNavigation 
 } from '../../../components/common'
+import { useDashboardAdmin } from '../../../hooks';
+
 import './HomaAdminFase1.css'
 
 export function HomaAdminFase1() {
+      const { 
+        alertsColumbia, 
+        loadingAlertsColumbia, 
+        getAlertsColumbia
+      } = useDashboardAdmin();
+    
+      const getData = async () => {
+        await getAlertsColumbia();
+      }
+    
+      useEffect(() => {
+        getData()
+      }, [])
+      
     return (
-        <div class="container">
-            <div class="box">
+        <div className="container-home-admin-fase-1">
+            <div className="box">
                 <CardInfoNavigation
                     riskLevel = {1}
                     account = {1}
@@ -20,7 +35,7 @@ export function HomaAdminFase1() {
                     link = "/admin/f1/estadisticas"
                 />
             </div>
-            <div class="box">
+            <div className="box">
                 <CardInfoNavigation
                     riskLevel = {2}
                     account = {2}
@@ -30,17 +45,23 @@ export function HomaAdminFase1() {
                     link = "/admin/f1/"
                 />
             </div>
-            <div class="box">
-                <CardInfoNavigation
-                    riskLevel = {3}
-                    account = {3}
-                    title = "Pacientes en riesgo"
-                    subTitle = "Cuestionario de Columbia"
-                    textLink = "Ver más detalles"
-                    link = "/admin/f1/columbia"
-                />
+            <div className="box">
+                {
+                    loadingAlertsColumbia 
+                    ? <h1>Cargando</h1>
+                    :  
+                        <CardInfoNavigation
+                            riskLevel = {alertsColumbia?.pacientes_en_alerta === 0 ? 1: 3}
+                            account = {alertsColumbia?.pacientes_en_alerta}
+                            title = "Pacientes en riesgo"
+                            subTitle = "Cuestionario de Columbia"
+                            textLink = "Ver más detalles"
+                            link = "/admin/f1/columbia"
+                        />
+                }
+                
             </div>
-            <div class="box">
+            <div className="box">
                 <DemoCardInfoNavigation/>
             </div>
         </div>
