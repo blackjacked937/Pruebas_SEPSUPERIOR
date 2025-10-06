@@ -3,29 +3,28 @@ import './Security.css';
 import { IoEyeOutline } from "react-icons/io5";
 import { LuLock } from "react-icons/lu";
 import { HiOutlineUsers } from "react-icons/hi2";
-import { BsShield } from 'react-icons/bs';
 
 const securityFeatures = [
     {
         icon: <LuLock />,
         title: 'Encriptación End-to-End',
         description: 'Todos los datos se encriptan antes de ser almacenados y durante la transmisión.',
-        iconBg: '#A5D6A7',
-        iconColor: '#2E7D32'
+        iconBg: 'rgba(204, 252, 211, 0.80)',
+        iconColor: '#66C870'
     },
     {
         icon: <HiOutlineUsers />,
         title: 'Control Total del Usuario',
         description: 'Solo los usuarios pueden acceder y modificar su información personal.',
-        iconBg: '#90CAF9',
-        iconColor: '#1565C0'
+        iconBg: 'rgba(136, 165, 229, 0.74)',
+        iconColor: '#2C5FCC'
     },
     {
         icon: <IoEyeOutline />,
         title: 'Cumplimiento HIPAA',
         description: 'Cumplimos con todas las regulaciones de privacidad en salud.',
-        iconBg: '#CE93D8',
-        iconColor: '#6A1B9A'
+        iconBg: 'rgba(222, 137, 227, 0.45)',
+        iconColor: '#75257D'
     }
 ];
 
@@ -53,7 +52,7 @@ const Security = () => {
                     </div>
                     <div className="security-guarantee-card">
                         <div className="guarantee-icon">
-                            <BsShield />
+                            <img src="/seguridad.svg" alt="Icono de escudo de seguridad" style={{ height: '11.16rem' }} />
                         </div>
                         <h3>Protección Garantizada</h3>
                         <p>Utilizamos tecnología de punta para garantizar que la información de salud mental de tus pacientes esté completamente protegida.</p>

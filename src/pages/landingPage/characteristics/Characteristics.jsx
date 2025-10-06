@@ -43,6 +43,7 @@ const Characteristics = () => {
                             icon={feature.icon}
                             title={feature.title}
                             description={feature.description}
+                            className={index % 2 === 0 ? 'card-from-left' : 'card-from-right'}
                         />
                     ))}
                 </main>

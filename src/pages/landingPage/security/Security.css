@@ -7,6 +7,7 @@
     background-color: var(--color-fondo);
     padding: 40px 20px;
     box-sizing: border-box;
+    animation: fadeIn 0.5s ease-in-out;
 }
 
 .security-container {
@@ -22,6 +23,7 @@
     font-size: 6rem;
     font-weight: 700;
     margin-bottom: 1rem;
+    animation: slideDown 0.75s ease-out forwards;
 }
 
 .security-header p {
@@ -30,6 +32,8 @@
     font-weight: 600;
     max-width: 1550px;
     margin: 0 auto 3rem auto;
+    opacity: 0;
+    animation: slideDown 0.75s ease-out 0.2s forwards;
 }
 
 .security-content {
@@ -44,6 +48,8 @@
     flex-direction: column;
     justify-content: space-around;
     text-align: left;
+    opacity: 0;
+    animation: slideInFromLeft 0.8s ease-out 0.4s forwards;
 }
 
 .feature-item {
@@ -55,11 +61,13 @@
 .feature-icon {
     color: var(--color-texto-negro);
     font-size: 1.5rem;
-    padding: 0.75rem;
+    padding: 9px 14px;
     border-radius: 8px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 50px;
 }
 
 .feature-text h3 {
@@ -88,11 +96,13 @@
     align-items: center;
     justify-content: center;
     color: var(--color-texto-blanco);
+    opacity: 0;
+    animation: slideInFromRight 0.8s ease-out 0.4s forwards;
 }
 
 .guarantee-icon {
     font-size: 8rem;
-    margin-bottom: 2rem;
+    margin: 3rem 0 1rem 0;
 }
 
 .security-guarantee-card h3 {
@@ -104,7 +114,55 @@
 .security-guarantee-card p {
     font-size: 2rem;
     font-weight: 500;
-    margin: 0;
+    margin: 0 0 3rem 0;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Media Queries para Responsividad */
