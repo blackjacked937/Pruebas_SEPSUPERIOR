@@ -6,11 +6,11 @@ import {
     PreguntasFrecuentes,
     SeccionDestacada
 } from '../../components/landingPage';
-import useAppEffects from '../../hooks/useAppEffects';
+// import useAppEffects from '../../hooks/useAppEffects';
 
 
 export function Home() {
-    useAppEffects();
+    // useAppEffects();
 
     return (
         <div>
