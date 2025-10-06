@@ -3,9 +3,6 @@ import {
     Home,
 } from '../pages/landing';
 import { HomeLanding } from '../pages/landingPage/home';
-
-import { HomeLanding } from '../pages/landingPage/home';
-
 import { CharacteristicsPage } from '../pages/landingPage/characteristics/CharacteristicsPage';
 import { SecurityPage } from '../pages/landingPage/security/SecurityPage';
 
