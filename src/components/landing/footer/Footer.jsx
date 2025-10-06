@@ -11,7 +11,7 @@ export function Footer() {
         <footer className="footer">
             <div className="footer-section">
                 <div className="footer-logo">
-                    <img src="/image/McLogo.JPEG" alt="Mente Conecta" />
+                    <img src="/image/mcLogo.jpeg" alt="Mente Conecta" />
                     <p>
                         Plataforma integral de salud mental que conecta pacientes con profesionales de la salud, ofrece herramientas de evaluación personalizadas.
                     </p>
