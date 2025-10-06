@@ -107,7 +107,7 @@ function MenuAdminFase1(props) {
                 <Nav.Link
                     className="text-nav"
                     as={Link}
-                    to={"/admin"}
+                    to={"/admin/f1"}
                     active={pathname === "/admin"}
                 >
                     <FaHome className="icon" /> Inicio
@@ -122,6 +122,17 @@ function MenuAdminFase1(props) {
                     active={pathname === "/admin/f1/estadisticas"}
                 >
                     <FcStatistics className="icon" /> Dashboard
+                </Nav.Link>
+            </Nav.Item>
+
+            <Nav.Item className="menu-sub">
+                <Nav.Link
+                    className="text-nav"
+                    as={Link}
+                    to={"/admin/f1/columbia"}
+                    active={pathname === "/admin/f1/columbia"}
+                >
+                    <FcStatistics className="icon" /> Columbia
                 </Nav.Link>
             </Nav.Item>
 
