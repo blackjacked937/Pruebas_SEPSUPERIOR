@@ -57,3 +57,14 @@ body {
     transform: rotate(360deg);
   }
 }
+
+.landing-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--color-fondo);
+}
+
+.landing-content {
+  flex: 1;
+}

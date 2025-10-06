@@ -2,6 +2,7 @@
     background-color: var(--color-botones-primario);
     color: var(--color-texto-blanco);
     width: 100%;
+    min-height: 18vh;
     padding: 40px 0;
 }
 

@@ -2,10 +2,9 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    min-height: 100vh;
     width: 100%;
     background-color: var(--color-fondo);
-    padding: 40px 20px;
+    padding: 2px 20px 10px 20px;
     box-sizing: border-box;
     animation: fadeIn 0.5s ease-in-out;
 }
@@ -73,7 +72,7 @@
 .feature-text h3 {
     font-size: 1.5rem;
     font-weight: 700;
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 0 0;
     color: var(--color-texto-negro);
 }
 
@@ -88,7 +87,7 @@
     flex: 1;
     background-color: rgba(77, 182, 172, 0.71);
     border-radius: 20px;
-    padding: 3rem;
+    padding: 2rem;
     max-width: 831px;
     max-height: 530px;
     display: flex;
@@ -165,7 +164,6 @@
     }
 }
 
-/* Media Queries para Responsividad */
 @media (max-width: 1200px) {
     .security-content {
         flex-direction: column;

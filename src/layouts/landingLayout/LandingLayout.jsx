@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavBar } from '../../components/landingPage/navBar/NavBar';
+// import { NavBar } from '../../components/landingPage/navBar/NavBar'; // Este import no se está utilizando
 import { Header } from '../../components/landing/header/Header';
 import { Footer } from '../../components/landing/footer';
 
@@ -10,11 +10,11 @@ export function LandingLayout(props) {
 
 
     return (
-        <div>
+        <div className="landing-layout">
             <Header />
-            <div>
+            <main className="landing-content">
                 {children}
-            </div>
+            </main>
             <Footer />
             <a href="#" id="scroll-top" className="scroll-top d-flex align-items-center justify-content-center">
                 <i className="bi bi-arrow-up-short"></i>
