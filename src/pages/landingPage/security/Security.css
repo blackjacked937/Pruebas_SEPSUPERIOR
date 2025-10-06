@@ -63,14 +63,14 @@
 }
 
 .feature-text h3 {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     font-weight: 700;
     margin: 0 0 0.5rem 0;
     color: var(--color-texto-negro);
 }
 
 .feature-text p {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: 500;
     margin: 0;
     color: var(--color-texto-negro);
@@ -78,9 +78,11 @@
 
 .security-guarantee-card {
     flex: 1;
-    background-color: var(--color-elementos-extras);
+    background-color: rgba(77, 182, 172, 0.71);
     border-radius: 20px;
     padding: 3rem;
+    max-width: 831px;
+    max-height: 530px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -100,7 +102,7 @@
 }
 
 .security-guarantee-card p {
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: 500;
     margin: 0;
 }
@@ -118,7 +120,7 @@
 
 @media (max-width: 768px) {
     .security-header h1 {
-        font-size: 4rem;
+        font-size: 3.5rem;
     }
 
     .security-header p {
@@ -138,6 +140,6 @@
     }
 
     .security-guarantee-card p {
-        font-size: 1.25rem;
+        font-size: 1rem;
     }
 }

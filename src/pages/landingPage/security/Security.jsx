@@ -1,25 +1,31 @@
 import React from 'react';
 import './Security.css';
-import { FaLock, FaUserShield, FaEye, FaShieldAlt } from 'react-icons/fa';
+import { IoEyeOutline } from "react-icons/io5";
+import { LuLock } from "react-icons/lu";
+import { HiOutlineUsers } from "react-icons/hi2";
+import { BsShield } from 'react-icons/bs';
 
 const securityFeatures = [
     {
-        icon: <FaLock />,
+        icon: <LuLock />,
         title: 'Encriptación End-to-End',
         description: 'Todos los datos se encriptan antes de ser almacenados y durante la transmisión.',
-        iconBg: '#A5D6A7' // Verde claro
+        iconBg: '#A5D6A7',
+        iconColor: '#2E7D32'
     },
     {
-        icon: <FaUserShield />,
+        icon: <HiOutlineUsers />,
         title: 'Control Total del Usuario',
         description: 'Solo los usuarios pueden acceder y modificar su información personal.',
-        iconBg: '#90CAF9' // Azul claro
+        iconBg: '#90CAF9',
+        iconColor: '#1565C0'
     },
     {
-        icon: <FaEye />,
+        icon: <IoEyeOutline />,
         title: 'Cumplimiento HIPAA',
         description: 'Cumplimos con todas las regulaciones de privacidad en salud.',
-        iconBg: '#CE93D8' // Morado claro
+        iconBg: '#CE93D8',
+        iconColor: '#6A1B9A'
     }
 ];
 
@@ -36,7 +42,7 @@ const Security = () => {
                         {securityFeatures.map((feature, index) => (
                             <div className="feature-item" key={index}>
                                 <div className="feature-icon" style={{ backgroundColor: feature.iconBg }}>
-                                    {feature.icon}
+                                    {React.cloneElement(feature.icon, { style: { color: feature.iconColor } })}
                                 </div>
                                 <div className="feature-text">
                                     <h3>{feature.title}</h3>
@@ -47,7 +53,7 @@ const Security = () => {
                     </div>
                     <div className="security-guarantee-card">
                         <div className="guarantee-icon">
-                            <FaShieldAlt />
+                            <BsShield />
                         </div>
                         <h3>Protección Garantizada</h3>
                         <p>Utilizamos tecnología de punta para garantizar que la información de salud mental de tus pacientes esté completamente protegida.</p>
