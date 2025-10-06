@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import { AuthProvider } from './context/AuthContext';
 import { Navigation } from './routes';
+import './App.css';
 
 function App() {
 
