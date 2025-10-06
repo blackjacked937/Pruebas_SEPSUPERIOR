@@ -15,6 +15,7 @@
 .logo {
     height: 4.7rem;
     width: auto;
+    border-radius: 20px;
 }
 
 .header-right {
