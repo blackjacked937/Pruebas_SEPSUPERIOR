@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavBar } from '../../components/landingPage/navBar/NavBar';
-import { Footer } from '../../components/landing/footer';
+import { Header } from '../../components/landing/header/Header'; import { Footer } from '../../components/landing/footer';
 
 
 export function LandingLayout(props) {
@@ -10,7 +10,7 @@ export function LandingLayout(props) {
 
     return (
         <div>
-            <NavBar />
+            <Header />
             <div>
                 {children}
             </div>
