@@ -1,6 +1,6 @@
 import React from 'react';
-import { Footer } from '../../components/landingPage/footer/Footer';
 import { NavBar } from '../../components/landingPage/navBar/NavBar';
+import { Footer } from '../../components/landing/footer';
 
 
 export function LandingLayout(props) {
