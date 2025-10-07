@@ -10,11 +10,6 @@ const routesLanding = [
     {
         path: '/',
         layout: LandingLayout,
-        component: Home,
-    },
-    {
-        path: '/home',
-        layout: LandingLayout,
         component: HomeLanding,
     },
     {
