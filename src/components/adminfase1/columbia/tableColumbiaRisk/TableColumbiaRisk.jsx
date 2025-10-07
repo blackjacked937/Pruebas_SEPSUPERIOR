@@ -42,9 +42,9 @@ export function TableColumbiaRisk(props) {
             size="sm"
             variant="success"
             className="table-webinar-admin__boton btn-boton"
-            onClick={() => {
-                setMarkPatientSeen(row.id_registro)
-                onRefetch()
+            onClick={ async () => {
+                await setMarkPatientSeen(row.id_registro)
+                await onRefetch()
             }}
           >
             <FontAwesomeIcon icon={faPencil} />
