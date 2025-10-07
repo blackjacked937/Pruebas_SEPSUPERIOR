@@ -60,7 +60,7 @@ export function FormLogin(props) {
                     placeHolderInput="password"
                     valueInput={formik.values.password}
                     onChangeInput={formik.handleChange}
-                    type="text"
+                    type="password"
                     error={formik.errors.password}
                     touched={formik.touched.password}
                     size="sm"
