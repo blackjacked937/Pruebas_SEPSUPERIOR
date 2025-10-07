@@ -61,6 +61,10 @@ export function LandingHome() {
                                 <svg className="background-svg" width="697" height="594" viewBox="0 0 697 594" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M481.181 558.349C640.221 500.594 735.579 209.152 681.073 59.059C626.567 -91.034 446.41 86.2264 287.371 143.981C128.331 201.737 -43.8337 312.808 10.6724 462.9C65.1785 612.993 322.142 616.104 481.181 558.349Z" fill="#4DB6AC" fillOpacity="0.34" />
                                 </svg>
+                                <svg className="image-background-svg"
+                                    width="697" height="594" viewBox="0 0 697 594" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M481.181 558.349C640.221 500.594 735.579 209.152 681.073 59.059C626.567 -91.034 446.41 86.2264 287.371 143.981C128.331 201.737 -43.8337 312.808 10.6724 462.9C65.1785 612.993 322.142 616.104 481.181 558.349Z" fill="#4DB6AC" fillOpacity="0.34" />
+                                </svg>
                                 <img src="/image/Doctor2.png" alt="doctor-one" className="doctor-image" />
                                 <img src="/image/Doctora1.png" alt="doctora-second" className="doctora-image" />
                             </div>
