@@ -1,35 +1,43 @@
 .footer {
     background-color: var(--color-botones-primario);
     color: var(--color-texto-blanco);
-    padding: 20px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: wrap;
+    width: 100%;
+    min-height: 18vh;
+    padding: 40px 0;
+}
+
+.footer-content {
+    max-width: 1645px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 .footer-section {
     display: flex;
     text-align: left;
     justify-content: space-between;
-    width: 100%;
+    width: 95%;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 40px;
 }
 
 .footer-logo {
     flex: 1;
-    max-width: 300px;
+    max-width: 29rem;
 }
 
 .footer-logo img {
-    width: 50px;
-    margin-bottom: 10px;
+    width: 120px;
+
 }
 
 .footer-logo p {
-    font-size: 14px;
+    font-size: 1.25rem;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
     line-height: 1.5;
+    color: var(--color-texto-blanco);
+    margin: 0;
 }
 
 .footer-social {
@@ -38,16 +46,14 @@
 }
 
 .footer-social h4 {
-    font-size: 16px;
-    margin-bottom: 10px;
+    font-size: 1rem;
+    margin-bottom: 20px;
 }
 
 .social-icons {
     display: flex;
     gap: 20px;
-    /* Espaciado entre íconos */
-    margin-top: 10px;
-    /* Ajusta la posición de los íconos */
+    margin-top: 20px;
 }
 
 .social-icons a {
@@ -57,25 +63,29 @@
 }
 
 .social-icons svg {
-    width: 48px;
-    /* Tamaño de los íconos */
-    height: 48px;
+    width: 3.125rem;
+    height: 3.125rem;
+    margin-top: 50px;
 }
 
 .footer-contact {
     flex: 1;
     max-width: 200px;
+    margin-right: 10px;
 }
 
 .footer-contact h4 {
-    font-size: 16px;
-    margin-bottom: 10px;
+    font-size: 1rem;
     text-align: left;
+    margin-bottom: 25px;
 }
 
 .footer-contact p {
-    font-size: 14px;
+    font-size: 1rem;
     text-align: left;
+    width: 250px;
+    height: 30px;
+    flex-shrink: 0;
     margin: 5px 0;
 }
 
@@ -85,14 +95,15 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin-top: 20px;
+    margin-left: 10px;
 }
 
 .footer-links button {
     background: none;
     border: none;
     color: var(--color-texto-negro);
-    /* Cambia el color del texto a negro */
-    font-size: 16px;
+    font-size: 1rem;
     cursor: pointer;
 }
 

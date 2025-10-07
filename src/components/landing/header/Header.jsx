@@ -24,10 +24,10 @@ export function Header() {
                 </button>
             </div>
             <div className="header-right">
-                <button className="header-btn" onClick={() => handleNavigation('/caracteristicas')}>
+                <button className="header-btn" onClick={() => handleNavigation('/characteristics')}>
                     Características
                 </button>
-                <button className="header-btn" onClick={() => handleNavigation('/seguridad')}>
+                <button className="header-btn" onClick={() => handleNavigation('/security')}>
                     Seguridad
                 </button>
                 <button className="header-btn primary" onClick={() => handleNavigation('/admin')}>
