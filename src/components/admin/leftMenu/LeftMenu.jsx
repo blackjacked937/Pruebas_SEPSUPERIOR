@@ -5,6 +5,7 @@ import { FcStatistics } from "react-icons/fc";
 import { GiBrain, GiBrainStem } from "react-icons/gi";
 import { SiJupyter } from "react-icons/si";
 
+import image from '../../../assets/img/logoColor.png'
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../../hooks";
 
@@ -95,12 +96,23 @@ function MenuAdminFase1(props) {
             activeKey="/admin"
             className="nav-conteiner"
         >
-            <Nav.Item className="menu-sub" >
-                <div>
-                    <center>
-                        <GiBrainStem className="logo" />
-                    </center>
-                </div>
+            <Nav.Item className="menu-sub">
+
+                <Nav.Link
+                    className="text-nav"
+                    as={Link}
+                    to={"/admin/f1"}
+                    active={pathname === "/admin"}
+                >
+                    <div>
+                        <img src={image} alt="Logo" style={{
+                            width: "100%",
+                            marginBottom: "1rem",
+                            marginTop: "2rem",
+                            }}
+                        />
+                    </div>
+                </Nav.Link>
             </Nav.Item>
 
             <Nav.Item className="menu-sub">
