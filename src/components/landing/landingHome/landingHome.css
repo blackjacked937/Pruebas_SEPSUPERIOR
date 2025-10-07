@@ -37,7 +37,7 @@
     padding: 0 0rem;
     color: white;
     z-index: 2;
-    margin-bottom: 50px;
+    margin-bottom: 100px;
 }
 
 .slide-content h1 {
@@ -49,6 +49,12 @@
 .slide-content p {
     font-size: 1.2rem;
     max-width: 600px;
+}
+@media (max-width: 1550px) {
+    .slide-content {
+        margin-bottom: 160px; 
+    }
+    
 }
 
 /* Estilos para los controles del carrusel */
@@ -123,17 +129,17 @@
     color: white;
 }
 .text-content {
-    flex: 1;
+    /* flex: 1; */
     width: 100%;
     text-align: center;
     max-width: none;
     padding-right: 4rem;
-    padding-left: 4rem;
+    /* padding-left: 4rem; */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: -10%;
+    margin-top: -5%;
 }
 .title-conectando {
     font-size: 6rem;
@@ -169,7 +175,7 @@
     max-width: 1650px;
     margin-top: -20px;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 1rem;
     text-align: center;
 }
 .description {
