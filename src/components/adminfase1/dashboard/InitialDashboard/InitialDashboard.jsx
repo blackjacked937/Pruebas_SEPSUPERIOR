@@ -10,9 +10,14 @@ function CustomTooltip({ active, payload, label }) {
     if (active && payload && payload.length > 0) {
         const punto = payload.find(p => p.value > 0 || p.value === 0);
         if (!punto) return null;
+        
+        // Buscar el valor original en los datos no normalizados
+        const originalItem = payload[0].payload;
+        const originalValue = originalItem.originalScore || Math.round(punto.value);
+        
         return (
             <div style={{ background: "#fff", border: "1px solid #ccc", padding: 10 }}>
-                <strong>{label}</strong>: {punto.value}
+                <strong>{label}</strong>: {originalValue}
             </div>
         );
     }
@@ -34,9 +39,15 @@ export function InitialDashboard({ data, title }) {
     if (data.length === 3) {
         normalizedData = data.map(d => ({
             ...d,
-            score: (d.score / maxValue) * 100 // Normaliza a 100
+            score: (d.score / maxValue) * 100, // Normaliza a 100
+            originalScore: d.score // Guardar el valor original
         }));
         maxValue = 100;
+    } else {
+        normalizedData = data.map(d => ({
+            ...d,
+            originalScore: d.score // Guardar el valor original también para casos no normalizados
+        }));
     }
 
     return (
