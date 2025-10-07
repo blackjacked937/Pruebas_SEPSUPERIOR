@@ -13,19 +13,17 @@ export function IconButton(props) {
     }
 
     if (image) return(
-        <div className='container-button' onClick={onChangeMethod ? onChangeMethod : null}>
-             <img src={image} alt="Logo" style={{
-                width: "100%",
-                marginBottom: "1rem",
-                marginTop: "2rem",
-                }}
-            />
+        <div className='container-icon-button' onClick={onChangeMethod ? onChangeMethod : null}>
+             <div className='container-image-icon-button'>
+                <img src={image} alt="Logo"/>
+             </div>
+
             {text}
         </div>
     )
 
     return (
-        <div className='container-button' onClick={onChangeMethod ? onChangeMethod : null}>
+        <div className='container-icon-button' onClick={onChangeMethod ? onChangeMethod : null}>
             <div
                 className='container-icon'
                 style={{

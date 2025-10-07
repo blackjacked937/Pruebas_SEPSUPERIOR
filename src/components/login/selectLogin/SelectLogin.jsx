@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
-import { GiBrain, GiMaterialsScience, GiBrainStem } from "react-icons/gi";
+import { GiMaterialsScience } from "react-icons/gi";
 
 import { IconButton } from '../../ui';
 import { FormLogin } from '../formLogin/FormLogin';
 import imagen from '../../../assets/img/logoColor.png'
+import isem from '../../../assets/img/Colibri_Vertical_FondoClaro 02.png'
+import jupyter from '../../../assets/img/Jupyter_log.png'
+import './SelectLogin.css'
+
 
 export function SelectLogin() {
 
@@ -25,29 +29,21 @@ export function SelectLogin() {
             <div>
                 <center><h3><b>¿A dónde quieres acceder?</b></h3></center>
                 <br />
-                <div className='conteiner-select d-flex gap-5 mr-3 mb-3 flex-wrap mt-3'>
+                <div className=' card-select-login'>
                     <IconButton
+                        image={isem}
                         text="Mente Conecta ISEM"
-                        icon={<GiBrain />}
-                        color="#4DB6AC"
-                        size="xl"
-
                         onChangeMethod={() => setView(1)}
                     />
                     <a href='http://menteconecta.net/jupyterhub/'>
                         <IconButton
                             text="Jupyter Notebook"
-                            icon={<GiMaterialsScience />}
-                            color="#4DB6AC"
-                            size="xl"
+                            image={jupyter}
                         />
                     </a>
                     <IconButton
-                        text="Mente Conecta Fase 1"
+                        text="Mente Conecta"
                         image={imagen}
-                        color="#4DB6AC"
-                        size="xl"
-
                         onChangeMethod={() => setView(2)}
                     />
                 </div>
