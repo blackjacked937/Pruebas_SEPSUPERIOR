@@ -54,6 +54,10 @@
     .slide-content {
         margin-bottom: 160px; 
     }
+    .text-content {
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
     
 }
 
@@ -139,7 +143,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: -5%;
+    margin-bottom: 3%;
 }
 .title-conectando {
     font-size: 6rem;
@@ -230,12 +234,36 @@
     width: 80%;
     height: 110%;
     z-index: 0;
-    position: absolute;
     left: 0;
     top: 50%;
     transform: translate(-250px,-40%);
+    position: absolute;
+
+}
+@media (max-width: 1000px) {
+    .doctora-image{
+        opacity: 0;
+    }
+}
+@-moz-document url-prefix() {
+    .doctora-image {
+        width: 125% !important;
+        height: 125% !important;
+        z-index: 0;
+        left: 0;
+        top: 50%;
+        transform: translate(-206px,-18%);
+        position: absolute;
+    }
+    .text-content {
+    margin-top: 0%;
+    margin-bottom: 8%;
+}
 }
 
+.background-svg {
+    opacity: 0;
+}
 
 
 .stats-banner {
