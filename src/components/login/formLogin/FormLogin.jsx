@@ -37,32 +37,38 @@ export function FormLogin(props) {
                     <br />
                 </center>
             </div>
-            <InputForm
-                label="Usuario"
-                labelDirection="center"
-                nameInput={typeLogin === 2 ? "email" : "username"}
-                placeHolderInput={typeLogin === 2 ? "email" : "username"}
-                valueInput={typeLogin === 2 ? formik.values.email : formik.values.username}
-                onChangeInput={formik.handleChange}
-                type="text"
-                error={typeLogin === 2 ? formik.errors.email : formik.errors.username}
-                touched={typeLogin === 2 ? formik.touched.email : formik.touched.username}
-                size="sm"
-            />
-            <InputForm
-                label="Contraseña"
-                labelDirection="center"
-                nameInput="password"
-                placeHolderInput="password"
-                valueInput={formik.values.password}
-                onChangeInput={formik.handleChange}
-                type="text"
-                error={formik.errors.password}
-                touched={formik.touched.password}
-                size="sm"
-            />
+            <div className="form-login-input">
+                <InputForm
+                    className="form-login-input"
+                    label="Usuario"
+                    labelDirection="center"
+                    nameInput={typeLogin === 2 ? "email" : "username"}
+                    placeHolderInput={typeLogin === 2 ? "email" : "username"}
+                    valueInput={typeLogin === 2 ? formik.values.email : formik.values.username}
+                    onChangeInput={formik.handleChange}
+                    type="text"
+                    error={typeLogin === 2 ? formik.errors.email : formik.errors.username}
+                    touched={typeLogin === 2 ? formik.touched.email : formik.touched.username}
+                    size="sm"
+                />
+            </div>
+            <div className="form-login-input">
+                <InputForm
+                    label="Contraseña"
+                    labelDirection="center"
+                    nameInput="password"
+                    placeHolderInput="password"
+                    valueInput={formik.values.password}
+                    onChangeInput={formik.handleChange}
+                    type="text"
+                    error={formik.errors.password}
+                    touched={formik.touched.password}
+                    size="sm"
+                />
+            </div>
+
             <div className='conteiner-select'>
-                <Button type="submit">
+                <Button type="submit" style={{ background: "#4DB6AC", fontWeight: 800, borderColor: "#4DB6AC" }}>
                     Iniciar sesión
                 </Button>
             </div>

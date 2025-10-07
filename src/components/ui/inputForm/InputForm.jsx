@@ -29,7 +29,7 @@ export function InputForm(props) {
                     disabled={disabled}
                     size={size}
                     style={{
-                        borderColor: touched && error ? "red" : "#0f7ae6",
+                        borderColor: touched && error ? "red" : "#4DB6AC57",
                         width: "22rem"
                     }}
                 />

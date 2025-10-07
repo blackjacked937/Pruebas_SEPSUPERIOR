@@ -3,6 +3,7 @@ import { GiBrain, GiMaterialsScience, GiBrainStem } from "react-icons/gi";
 
 import { IconButton } from '../../ui';
 import { FormLogin } from '../formLogin/FormLogin';
+import imagen from '../../../assets/img/logoColor.png'
 
 export function SelectLogin() {
 
@@ -28,7 +29,7 @@ export function SelectLogin() {
                     <IconButton
                         text="Mente Conecta ISEM"
                         icon={<GiBrain />}
-                        color="cadetblue"
+                        color="#4DB6AC"
                         size="xl"
 
                         onChangeMethod={() => setView(1)}
@@ -37,14 +38,14 @@ export function SelectLogin() {
                         <IconButton
                             text="Jupyter Notebook"
                             icon={<GiMaterialsScience />}
-                            color="cadetblue"
+                            color="#4DB6AC"
                             size="xl"
                         />
                     </a>
                     <IconButton
                         text="Mente Conecta Fase 1"
-                        icon={<GiBrainStem />}
-                        color="cadetblue"
+                        image={imagen}
+                        color="#4DB6AC"
                         size="xl"
 
                         onChangeMethod={() => setView(2)}
