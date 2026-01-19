@@ -60,6 +60,7 @@ body {
 
 .landing-layout {
   display: flex;
+  width: 100%;
   flex-direction: column;
   min-height: 100vh;
   background-color: var(--color-fondo);

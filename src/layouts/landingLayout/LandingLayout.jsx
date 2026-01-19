@@ -10,7 +10,7 @@ export function LandingLayout(props) {
 
 
     return (
-        <div className="landing-layout">
+        <div className="col-xs-12 col-md-12 col-lg-12 landing-layout">
             <Header />
             <main className="landing-content">
                 {children}

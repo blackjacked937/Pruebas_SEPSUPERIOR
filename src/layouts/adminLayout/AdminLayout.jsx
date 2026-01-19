@@ -37,16 +37,12 @@ export function AdminLayout(props) {
             <Row>
                 <HeaderAdmin />
             </Row>
-            <Row>
-                <div className="divi">
-                    <div className="layout-sidebar">
-                        <LeftMenu />
-                    </div>
-                    <div className="layout-navbar">
-                        <div className="layout-tablas">
-                            <Row>{children}</Row>
-                        </div>
-                    </div>
+            <Row className="row divi">
+                <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3">
+                    <LeftMenu />
+                </div>
+                <div class="col-sm-12 col-md-8 col-lg-9 col-xl-9">
+                    <Row>{children}</Row>
                 </div>
             </Row>
         </Container>

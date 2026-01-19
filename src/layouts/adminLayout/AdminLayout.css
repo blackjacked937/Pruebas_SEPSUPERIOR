@@ -1,8 +1,5 @@
 .admin-layout {
     width: 100%;
-    margin: 0 !important;
-    padding: 0 !important;
-    box-sizing: content-box !important;
 
     &__menu {
         grid-area: menu;
@@ -19,30 +16,10 @@
 }
 
 .layout-tablas {
-    margin-left: 1em;
-    margin-right: 1em;
+    width: 100%;
 }
 
 .divi {
     display: flex;
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-.layout-sidebar {
-    min-height: 100vh;
-    width: 350px;
-}
-
-.layout-navbar {
-    width: 100%;
-}
-
-@media only screen and (max-width: 767px) {
-    .layout-sidebar {
-        width: 10%;
-        position: absolute;
-        box-sizing: border-box;
-    }
+    padding: 1%;
 }

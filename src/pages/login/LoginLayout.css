@@ -4,7 +4,7 @@
     align-content: center;
 
     .sub-conteiner {
-    max-width: 1000px;
+    max-width: 60%;
     background-color: aliceblue;
     margin: 10px auto;
     border-radius: 0.5rem;

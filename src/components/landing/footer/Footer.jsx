@@ -8,7 +8,7 @@ export function Footer() {
     return (
         <footer className="footer">
             <div className="footer-content">
-                <div className="footer-section">
+                <div className="footer-section col-xs-12 col-sm-12 col-md-8 col-lg-6">
                     <div className="footer-logo">
                         <img src="/image/mcLogoSF.png" alt="Mente Conecta" />
                         <p>

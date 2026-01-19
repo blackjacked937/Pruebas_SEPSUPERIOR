@@ -32,6 +32,7 @@ function truncateLabel(label) {
 }
 
 export function InitialDashboard({ data, title }) {
+
     // Normalizar los valores para que el mayor llegue al borde
     let normalizedData = data;
     let maxValue = Math.max(...data.map(d => d.score), 1); // evitar 0
@@ -52,7 +53,7 @@ export function InitialDashboard({ data, title }) {
 
     return (
         <div style={{ width: '100%', height: 400, marginBottom: "2rem", overflow: "hidden" }}>
-            <h3 style={{ textAlign: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{title}</h3>
+            <h4 style={{ textAlign: "center", whiteSpace: "normal", wordBreak: 'break-word', overflow: "hidden", textOverflow: "ellipsis" }}>{title}</h4>
             <ResponsiveContainer>
                 <RadarChart cx="50%" cy="50%" outerRadius="80%" data={normalizedData}>
                     <PolarGrid />

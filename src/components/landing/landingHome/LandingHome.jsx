@@ -70,16 +70,16 @@ export function LandingHome() {
                             </div>
                         </div>
                     </div>
-                    <div className="stats-banner">
-                        <div className="stat-item">
+                    <div className="row w-100 stats-banner">
+                        <div className="stat-item col-sm-12 col-md-6 col-lg-4">
                             <div className="stat-number">1000+</div>
                             <div className="stat-label">Pacientes</div>
                         </div>
-                        <div className="stat-item">
+                        <div className="stat-item col-sm-12 col-md-6 col-lg-4">
                             <div className="stat-number">50+</div>
                             <div className="stat-label">Profesionales</div>
                         </div>
-                        <div className="stat-item">
+                        <div className="stat-item col-sm-12 col-md-6 col-lg-4">
                             <div className="stat-number">24/7</div>
                             <div className="stat-label">Soporte Disponible</div>
                         </div>

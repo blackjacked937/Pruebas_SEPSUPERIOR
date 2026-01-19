@@ -16,7 +16,8 @@ export function SelectLogin() {
     const views = [
         <SelectLogin />,
         <FormLogin typeLogin={1}/>,
-        <FormLogin typeLogin={2}/>
+        <FormLogin typeLogin={2}/>,
+        <FormLogin typeLogin={3}/>
     ]
 
     return views[view]
@@ -45,6 +46,11 @@ export function SelectLogin() {
                         text="Mente Conecta"
                         image={imagen}
                         onChangeMethod={() => setView(2)}
+                    />
+                    <IconButton
+                        text="Mente Conecta Conasama"
+                        image={imagen}
+                        onChangeMethod={() => setView(3)}
                     />
                 </div>
                 <br />

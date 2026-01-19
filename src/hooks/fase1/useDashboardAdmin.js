@@ -1,9 +1,13 @@
 import { useState } from "react";
-
-import {
-    getAlertsColumbiaAPI
-} from '../../api/fase1/dashboardAdminPage';
 import { useAuth } from "../useAuth";
+import { 
+    getAlertsColumbiaAPI,
+    getAlertsTabaquismoAPI,
+    getAlertsAlcoholismoAPI,
+    getAlertsAnsiedadAPI,
+    getAlertsDepresionAPI,
+    getAlertsDrogasAPI
+} from '../../api/fase1/dashboardAdminPage';
 
 export function useDashboardAdmin() {
     const [alertsColumbia, setAlertsColumbia] = useState(undefined);
