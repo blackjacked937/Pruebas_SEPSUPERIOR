@@ -1,36 +1,28 @@
 import { useState } from "react";
 import { useAuth } from "../useAuth";
-import { 
-    getAlertsColumbiaAPI,
-    getAlertsTabaquismoAPI,
-    getAlertsAlcoholismoAPI,
-    getAlertsAnsiedadAPI,
-    getAlertsDepresionAPI,
-    getAlertsDrogasAPI
-} from '../../api/fase1/dashboardAdminPage';
+import { getAlertsApi } from '../../api/fase1/dashboardAdminPage';
 
 export function useDashboardAdmin() {
-    const [alertsColumbia, setAlertsColumbia] = useState(undefined);
-    const [loadingAlertsColumbia, setLoadingAlertsColumbia] = useState(false)
-    const [errorAlertsColumbia, setErrorAlertsColumbia] = useState(undefined);
     const { auth } = useAuth();
+    const [alerts, setAlerts] = useState(undefined);
+    const [loadingAlerts, setLoadingAlerts] = useState(false)
 
-    const getAlertsColumbia = async () => {
+    const getAlerts = async () => {
         try {
-            setLoadingAlertsColumbia(true);
-            const response = await getAlertsColumbiaAPI(auth.token);
-            setAlertsColumbia(response);
-            setLoadingAlertsColumbia(false);
+            setLoadingAlerts(true);
+            const response = await getAlertsApi(auth.token);
+            console.log('response: ',response)
+            setAlerts(response);
+            setLoadingAlerts(false);
         } catch (error) {
-            setErrorAlertsColumbia(error);
-            setLoadingAlertsColumbia(false);
+            setLoadingAlerts(false);
+            console.log('error:',error);
         }
     };
 
     return{
-        alertsColumbia,
-        loadingAlertsColumbia,
-        errorAlertsColumbia,
-        getAlertsColumbia,
+        alerts,
+        loadingAlerts,
+        getAlerts,
     }
 }

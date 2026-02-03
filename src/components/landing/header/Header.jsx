@@ -10,7 +10,7 @@ export function Header() {
     return (
         <div className="header container-fluid">
             <div className="row w-100">
-                <div className="col-xs-12 col-sm-3 col-md-4 col-lg-6 col-xl-7 col-xxl-8 header-left">
+                <div className="col-xs-12 col-sm-2 col-md-3 col-lg-4 col-xl-5 col-xxl-6 header-left bg-dark">
                     <button
                         type="button"
                         className="logo-btn"
@@ -27,21 +27,31 @@ export function Header() {
                 </div>
 
 
-                <div className="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-5 col-xxl-4 header-right">
+                <div className="col-xs-12 col-sm-10 col-md-9 col-lg-8 col-xl-7 col-xxl-6 header-right">
                     <div className="row w-100 text-center">
-                        <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                            <button className="header-btn" onClick={() => handleNavigation('/characteristics')}>
-                                Características
+                        <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-2 col-xxl-2">
+                            <button className="header-btn">
+                                INICIO
                             </button>
                         </div>
-                        <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                        <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-2 col-xxl-2">
+                            <button className="header-btn">
+                                SERVICIOS
+                            </button>
+                        </div>
+                        <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-2 col-xxl-2">
+                            <button className="header-btn" onClick={() => handleNavigation('/characteristics')}>
+                                CARACTERÍSTICAS
+                            </button>
+                        </div>
+                        <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-2 col-xxl-2">
                             <button className="header-btn" onClick={() => handleNavigation('/security')}>
-                                Seguridad
+                                SEGURIDAD
                             </button>
                         </div>
                         <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4 d-flex justify-content-center">
                             <button className="header-btn primary" onClick={() => handleNavigation('/admin')}>
-                                Acceder
+                                ACCEDER AL PANEL
                             </button>
                         </div>
                     </div>
