@@ -10,10 +10,10 @@ export function useUser() {
     const [errorUser, setErrorUser] = useState(undefined);
     const { auth } = useAuth();
 
-    const getMe = async (token) => {
+    const getMe = async (token, typeLogin) => {
         try {
             setLoadingUser(true)
-            const response = await getMeApi(token);
+            const response = await getMeApi(token, typeLogin);
             setLoadingUser(false)
             return response;
         } catch (error) {
