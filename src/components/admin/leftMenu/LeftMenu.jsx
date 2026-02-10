@@ -27,15 +27,14 @@ export function LeftMenu(props) {
 
 function MenuLeft(props) {
     const { pathname, typeLogin } = props;
-    const role = typeLogin === 1 ? 0 : 1;
 
-    const menus = [
-        <MenuAdmin pathname={pathname} />,
-        <MenuAdminFase1 pathname={pathname} />,
-        <MenuAdminConasama pathname={pathname} />
-    ]
+    const menusByTypeLogin = {
+        1: <MenuAdmin pathname={pathname} />,
+        2: <MenuAdminFase1 pathname={pathname} />,
+        3: <MenuAdminConasama pathname={pathname} />,
+    };
 
-    return menus[role];
+    return menusByTypeLogin[typeLogin] ?? null;
 }
 
 function MenuAdmin(props) {
@@ -209,7 +208,7 @@ function MenuAdminConasama(props) {
                     to={"/admin/conasama/columbia"}
                     active={pathname === "/admin/conasama/columbia"}
                 >
-                    <FcStatistics className="icon" /> Columbia
+                    <FcStatistics className="icon" /> Grupo de Riesgos
                 </Nav.Link>
             </Nav.Item>
 

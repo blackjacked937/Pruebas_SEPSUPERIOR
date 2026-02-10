@@ -4,7 +4,16 @@ import { useDashboardsF1 } from '../../../hooks'
 import { Carousel, Card, Container, Row, Col, Spinner } from 'react-bootstrap'
 
 export function EstadisticaConasama() {
-    const { getConteoPorNivelRiesgoCategoria, getOpcionesPreguntaUsuarios } = useDashboardsF1();
+
+    return(
+
+    <Row> 
+        <h1> Pagina Graficas CONASAMA </h1>
+    </Row>
+
+    )
+
+    /*const { getConteoPorNivelRiesgoCategoria, getOpcionesPreguntaUsuarios } = useDashboardsF1();
 
     const [slides, setSlides] = useState([]);
     const [loadingData, setLoadingData] = useState(true);
@@ -55,8 +64,9 @@ export function EstadisticaConasama() {
                         <Col key={index}>
                             <Card className="p-3 shadow-sm border-0 h-100" style={{ minHeight: '420px' }}>
                                 <Card.Body>
-                                    {/* <h5 className="text-center mb-3">{slide.title}</h5> */}
-                                    <InitialDashboard data={slide.data} title={slide.title} />
+                                    {/* <h5 className="text-center mb-3">{slide.title}</h5> */
+                                    /*}
+                                    /*<InitialDashboard data={slide.data} title={slide.title} />
                                 </Card.Body>
                             </Card>
                         </Col>
@@ -65,4 +75,5 @@ export function EstadisticaConasama() {
             )}
         </Container>
     )
+    */
 }

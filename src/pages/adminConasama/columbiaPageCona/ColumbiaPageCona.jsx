@@ -3,10 +3,19 @@ import React, {useEffect, useState} from 'react'
 import { useColumbia } from '../../../hooks';
 import { DividerIcon } from '../../../components/common';
 import { TableColumbiaRisk } from '../../../components/adminconasama';
+import { Row, Col } from 'react-bootstrap'
 
 
 export function ColumbiaPageCona() {
 
+  return(
+
+    <Row> 
+        <h1> Pagina Grupo de Riesgos CONASAMA </h1>
+    </Row>
+
+    )
+  /*
   const {
     columbiaPatiensInAlert,
     getTableDataAlertsColumbia,
@@ -44,5 +53,5 @@ export function ColumbiaPageCona() {
         }
 
     </div>
-  )
+  )*/
 }

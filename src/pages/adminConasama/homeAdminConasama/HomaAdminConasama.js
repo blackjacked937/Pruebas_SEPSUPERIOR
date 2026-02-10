@@ -6,7 +6,15 @@ import { Row } from 'react-bootstrap';
 
 export function HomaAdminConasama() {
 
-    const { loadingAlerts, alerts, getAlerts } = useDashboardAdmin();
+    return(
+
+    <Row> 
+        <h1> Pagina Cards CONASAMA </h1>
+    </Row>
+
+    )
+
+    /*const { loadingAlerts, alerts, getAlerts } = useDashboardAdmin();
 
     useEffect(() => {
         getAlerts();
@@ -33,5 +41,5 @@ export function HomaAdminConasama() {
                 </div>
             ))}
         </Row>
-    )
+    )*/
 }

@@ -19,6 +19,7 @@ export function AdminLayout(props) {
     console.log(`Ruta actual: ${pathname}, Tipo de Login: ${auth.typeLogin}`);
 
     const isAdminF1Route = pathname.startsWith('/admin/f1');
+    const isAdminCONASAMARoute = pathname.startsWith('/admin/conasama');
     
 
     if (auth.typeLogin === 1) {
@@ -33,7 +34,7 @@ export function AdminLayout(props) {
         }
     }
      if (auth.typeLogin === 3) {
-        if (!isAdminF1Route) {
+        if (!isAdminCONASAMARoute) {
             return <Navigate to="/admin/conasama/" />;
         }
     }
