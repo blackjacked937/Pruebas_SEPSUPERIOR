@@ -19,6 +19,7 @@ export function AdminLayout(props) {
     console.log(`Ruta actual: ${pathname}, Tipo de Login: ${auth.typeLogin}`);
 
     const isAdminF1Route = pathname.startsWith('/admin/f1');
+    
 
     if (auth.typeLogin === 1) {
         if (isAdminF1Route) {
@@ -31,7 +32,11 @@ export function AdminLayout(props) {
             return <Navigate to="/admin/f1/" />;
         }
     }
-
+     if (auth.typeLogin === 3) {
+        if (!isAdminF1Route) {
+            return <Navigate to="/admin/conasama/" />;
+        }
+    }
     return (
         <Container fluid className="admin-layout">
             <Row>

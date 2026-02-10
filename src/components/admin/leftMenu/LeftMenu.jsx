@@ -31,7 +31,8 @@ function MenuLeft(props) {
 
     const menus = [
         <MenuAdmin pathname={pathname} />,
-        <MenuAdminFase1 pathname={pathname} />
+        <MenuAdminFase1 pathname={pathname} />,
+        <MenuAdminConasama pathname={pathname} />
     ]
 
     return menus[role];
@@ -143,6 +144,70 @@ function MenuAdminFase1(props) {
                     as={Link}
                     to={"/admin/f1/columbia"}
                     active={pathname === "/admin/f1/columbia"}
+                >
+                    <FcStatistics className="icon" /> Columbia
+                </Nav.Link>
+            </Nav.Item>
+
+        </Nav>
+    );
+}
+
+function MenuAdminConasama(props) {
+
+    const { pathname } = props;
+    return (
+        <Nav
+            activeKey="/admin"
+            className="nav-conteiner"
+        >
+            <Nav.Item className="menu-sub">
+
+                <Nav.Link
+                    className="text-nav"
+                    as={Link}
+                    to={"/admin/conasama"}
+                    active={pathname === "/admin"}
+                >
+                    <div>
+                        <img src={image} alt="Logo" style={{
+                            width: "100%",
+                            marginBottom: "1rem",
+                            marginTop: "2rem",
+                            }}
+                        />
+                    </div>
+                </Nav.Link>
+            </Nav.Item>
+
+            <Nav.Item className="menu-sub">
+                <Nav.Link
+                    className="text-nav"
+                    as={Link}
+                    to={"/admin/conasama"}
+                    active={pathname === "/admin"}
+                >
+                    <FaHome className="icon" /> Inicio
+                </Nav.Link>
+            </Nav.Item>
+
+            <Nav.Item className="menu-sub">
+                <Nav.Link
+                    className="text-nav"
+                    as={Link}
+                    to={"/admin/conasama/estadisticas"}
+                    active={pathname === "/admin/conasama/estadisticas"}
+                >
+                    <FcStatistics className="icon" /> Dashboard
+                </Nav.Link>
+            </Nav.Item>
+
+            <Nav.Item className="menu-sub">
+                <Nav.Link
+                    className="text-nav"
+                    as={Link}
+                    to={"/admin/conasama/columbia"}
+                    active={pathname === "/admin/conasama/columbia"}
                 >
                     <FcStatistics className="icon" /> Columbia
                 </Nav.Link>
