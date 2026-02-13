@@ -5,6 +5,7 @@ import {
 import { HomeLanding } from '../pages/landingPage/home';
 import { CharacteristicsPage } from '../pages/landingPage/characteristics/CharacteristicsPage';
 import { SecurityPage } from '../pages/landingPage/security/SecurityPage';
+import { ServicesPage } from '../pages/landingPage/services/ServicesPage';
 
 const routesLanding = [
     {
@@ -16,6 +17,11 @@ const routesLanding = [
         path: '/home',
         layout: LandingLayout,
         component: HomeLanding,
+    },
+    {
+        path: '/services',
+        layout: LandingLayout,
+        component: ServicesPage,
     },
     {
         path: '/characteristics',

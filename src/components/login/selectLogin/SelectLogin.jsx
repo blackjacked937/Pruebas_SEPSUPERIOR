@@ -22,13 +22,10 @@ export function SelectLogin() {
 
     return views[view]
 
-
-
-
     function SelectLogin() {
         return (
             <div>
-                <center><h3><b>¿A dónde quieres acceder?</b></h3></center>
+                <center style={{ marginTop: '40px', color: '#04547B' }}><h2 ><b>¿A dónde quieres acceder?</b></h2></center>
                 <br />
                 <div className=' card-select-login'>
                     <IconButton

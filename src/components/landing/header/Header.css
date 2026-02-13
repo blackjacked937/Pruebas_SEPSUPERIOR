@@ -27,7 +27,7 @@
 
 .header-btn {
     align-items: center;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0;
     border: none;
     background: transparent;
     cursor: pointer;
@@ -60,10 +60,29 @@
     background-color: var(--color-texto-primario);
 }
 
+.header-buttons {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(4, 1fr) auto;
+    gap: 3%;
+    align-items: center;
+}
+
+.fixed-btn {
+  white-space: nowrap;
+}
+
+
 @media (max-width: 767px) {
     .header-left {
         display: flex;
         width: 100%;
         justify-content: center;
+    }
+}
+
+@media (max-width: 991px) {
+    .header-right {
+        display: none;
     }
 }
