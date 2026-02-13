@@ -13,17 +13,22 @@ export function FormLogin(props) {
     const { typeLogin } = props;
     const { login } = useAuth()
 
+    const getLoginApi = (typeLogin) => {
+        if (typeLogin === 3) return loginApiConasama;
+        return loginApi;
+    };
+
     const formik = useFormik({
         initialValues: initialValues(typeLogin),
         validationSchema: Yup.object(newSchema(typeLogin)),
         validateOnChange: false,
         onSubmit: async (formvalue) => {
             try {
-                const response = await loginApi(formvalue, typeLogin);
-                const { access } = response;
-                login(access, typeLogin);
+            const response = await getLoginApi(typeLogin)(formvalue, typeLogin);
+            const { access } = response;
+            login(access, typeLogin);
             } catch (error) {
-                alert(error.message);
+            alert(error.message);
             }
         },
     });

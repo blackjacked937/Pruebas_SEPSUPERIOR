@@ -23,9 +23,9 @@ export async function loginApi(formValue, typeLogin) {
     }
 }
 
-export async function loginApiConasama(formValue, typeLogin) {
+export async function loginApiConasama(formValue) {
     try {
-        const url = typeLogin === 1 ? `${BASE_API}auth/login/` : `${BASE_API_CONASAMA_V1}/auth/log/`;
+        const url = `${BASE_API_CONASAMA_V1}/auth/login/`;
 
         const params = {
             method: "POST",
@@ -46,9 +46,17 @@ export async function loginApiConasama(formValue, typeLogin) {
     }
 }
 
-export async function getMeApi(token) {
+const ME_URL_MAP = {
+  1: `${BASE_API}auth/me/`,
+  2: `${BASE_API_F1}/auth/me/`,
+  3: `${BASE_API_CONASAMA_V1}/auth/me/`,
+};
+
+export async function getMeApi(token, typeLogin) {
+    console.log("typeLogin en getMeApi:", typeLogin);
     try {
-        const url = `${BASE_API}auth/me/`;
+        const url = ME_URL_MAP[typeLogin] ?? ME_URL_MAP[1];
+        console.log("URL auth/me:", url);
         const params = {
             headers: {
                 Authorization: `Bearer ${token}`,
