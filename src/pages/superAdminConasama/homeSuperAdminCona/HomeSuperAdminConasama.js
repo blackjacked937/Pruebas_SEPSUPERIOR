@@ -1,5 +1,5 @@
 import {useEffect} from 'react'
-import './HomaAdminConasama.css'
+import './HomeSuperAdminConasama.css'
 import { useDashboardAdmin } from '../../../hooks';
 import { CardInfoNavigation, DemoCardInfoNavigation } from '../../../components/common'
 import { Row } from 'react-bootstrap';
