@@ -19,22 +19,31 @@ export function LeftMenu(props) {
 
     return (
         <div className="side-menu-admin">
-            <MenuLeft pathname={pathname} typeLogin={typeLogin} />
-            <div className="content">{children}</div>
+        <MenuLeft
+            pathname={pathname}
+            typeLogin={auth?.typeLogin}
+            isSuperUser={auth?.is_superuser}
+            isStaff={auth?.is_staff}
+        />
+        <div className="content">{children}</div>
         </div>
-    )
+    );
 }
 
-function MenuLeft(props) {
-    const { pathname, typeLogin } = props;
+function MenuLeft({ pathname, typeLogin, isSuperUser, isStaff }) {
+  const menusByTypeLogin = {
+    1: <MenuAdmin pathname={pathname} />,
+    2: <MenuAdminFase1 pathname={pathname} />,
+    3: (
+      <MenuAdminConasama
+        pathname={pathname}
+        isSuperUser={isSuperUser}
+        isStaff={isStaff}
+      />
+    ),
+  };
 
-    const menusByTypeLogin = {
-        1: <MenuAdmin pathname={pathname} />,
-        2: <MenuAdminFase1 pathname={pathname} />,
-        3: <MenuAdminConasama pathname={pathname} />,
-    };
-
-    return menusByTypeLogin[typeLogin] ?? null;
+  return menusByTypeLogin[typeLogin] ?? null;
 }
 
 function MenuAdmin(props) {

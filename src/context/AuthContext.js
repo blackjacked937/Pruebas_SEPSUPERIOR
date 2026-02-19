@@ -17,30 +17,44 @@ export function AuthProvider(props) {
     useEffect(() => {
         (async () => {
             const token = getToken();
-            const typeLogin = localStorage.getItem("typeLogin"); // 👈 recuperar al recargar
+            const typeLogin = localStorage.getItem("typeLogin");
 
             if (token && typeLogin) {
-                const { exp } = jwtDecode(token);
-                const expirationTime = exp * 1000 - 60000;
-                if (Date.now() >= expirationTime) {
-                    removeToken();
-                    localStorage.removeItem("typeLogin");
-                    setAuth(null);
-                } else {
-                    const me = await getMe(token, typeLogin); // 👈 pasar typeLogin
-                    setAuth({ token, me, typeLogin });
-                }
-            } else {
+            const { exp } = jwtDecode(token);
+            const expirationTime = exp * 1000 - 60000;
+
+            if (Date.now() >= expirationTime) {
+                removeToken();
+                localStorage.removeItem("typeLogin");
                 setAuth(null);
+            } else {
+                const me = await getMe(token, typeLogin);
+
+                setAuth({
+                token,
+                typeLogin,
+                me,
+                is_superuser: me?.is_superuser ?? false,
+                is_staff: me?.is_staff ?? false,
+                });
+            }
+            } else {
+            setAuth(null);
             }
         })();
-    }, []);
+        }, []);
 
     const login = async (token, typeLogin) => {
         setToken(token);
         localStorage.setItem("typeLogin", typeLogin); // 👈 guardar el tipo de login
         const me = await getMe(token, typeLogin);     // 👈 pasar typeLogin
-        setAuth({ token, me, typeLogin });
+        setAuth({ 
+            token, 
+            me, 
+            typeLogin,
+            is_superuser: me?.is_superuser ?? false,
+            is_staff: me?.is_staff ?? false,
+         });
     };
 
     const logout = () => {
