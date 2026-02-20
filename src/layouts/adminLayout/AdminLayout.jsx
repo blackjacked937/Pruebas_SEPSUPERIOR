@@ -3,7 +3,7 @@ import { Container, Row } from 'react-bootstrap';
 import { useLocation, Navigate } from 'react-router-dom';
 import { HeaderAdmin, LeftMenu } from '../../components/admin';
 import { useAuth } from '../../hooks/useAuth';
-import { LoginLayout } from '../../pages/login';
+import { LoginLayout } from '../../pages/login/LoginLayout';
 import './AdminLayout.css';
 
 export function AdminLayout(props) {
