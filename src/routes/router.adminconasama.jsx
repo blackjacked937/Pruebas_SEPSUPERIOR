@@ -3,23 +3,21 @@ import {
     EstadisticaConasama,
     ColumbiaPageCona,
     HomaAdminConasama
-   
-   
 } from '../pages/adminConasama';
 
 const routesAdminConasama = [
     {
-        path: "/admin/conasama",
+        path: "/admin/gestor/conasama",
         layout: AdminLayout,
         component: HomaAdminConasama,
     },
     {
-        path: "/admin/conasama/estadisticas",
+        path: "/admin/gestor/conasama/estadisticas",
         layout: AdminLayout,
         component: EstadisticaConasama,
     },
     {
-        path: "/admin/conasama/columbia",
+        path: "/admin/gestor/conasama/columbia",
         layout: AdminLayout,
         component: ColumbiaPageCona,
     }

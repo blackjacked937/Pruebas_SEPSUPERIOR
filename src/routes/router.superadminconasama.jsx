@@ -9,27 +9,27 @@ import {
 
 const routesAdminConasama = [
     {
-        path: "/super-gestor/conasama",
+        path: "/admin/super-gestor/conasama",
         layout: AdminLayout,
         component: HomeSuperAdminConasama,
     },
     {
-        path: "/super-gestor/conasama/graficas",
+        path: "/admin/super-gestor/conasama/graficas",
         layout: AdminLayout,
         component: GraficasSuperAdminConasama,
     },
     {
-        path: "/super-gestor/conasama/pacientes-riesgo",
+        path: "/admin/super-gestor/conasama/pacientes-riesgo",
         layout: AdminLayout,
         component: PacientesSuperAdminConasama,
     },
     {
-        path: "/super-gestor/conasama/gestores",
+        path: "/admin/super-gestor/conasama/gestores",
         layout: AdminLayout,
         component: GestoresSuperAdminConasama,
     },
     {
-        path: "/super-gestor/conasama/noticias",
+        path: "/admin/super-gestor/conasama/noticias",
         layout: AdminLayout,
         component: NoticiasSuperAdminConasama,
     }

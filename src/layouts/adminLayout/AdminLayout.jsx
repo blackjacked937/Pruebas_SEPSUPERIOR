@@ -19,7 +19,8 @@ export function AdminLayout(props) {
     console.log(`Ruta actual: ${pathname}, Tipo de Login: ${auth.typeLogin}`);
 
     const isAdminF1Route = pathname.startsWith('/admin/f1');
-    const isAdminCONASAMARoute = pathname.startsWith('/admin/conasama');
+    const isGestorConasamaRoute = pathname.startsWith("/admin/gestor/conasama");
+    const isSuperConasamaRoute = pathname.startsWith("/admin/super-gestor/conasama");
     
 
     if (auth.typeLogin === 1) {
@@ -33,10 +34,22 @@ export function AdminLayout(props) {
             return <Navigate to="/admin/f1/" />;
         }
     }
-     if (auth.typeLogin === 3) {
-        if (!isAdminCONASAMARoute) {
-            return <Navigate to="/admin/conasama/" />;
+    if (auth.typeLogin === 3) {
+
+        // PATH BASE SUPER GESTOR
+        if (auth.is_superuser) {
+            if (!isSuperConasamaRoute) {
+            return <Navigate to="/admin/super-gestor/conasama" replace />;
+            }
         }
+
+        // PATH BASE GESTOR
+        else if (auth.is_staff) {
+            if (!isGestorConasamaRoute) {
+            return <Navigate to="/admin/gestor/conasama" replace />;
+            }
+        }
+
     }
     return (
         <Container fluid className="admin-layout">

@@ -161,66 +161,143 @@ function MenuAdminFase1(props) {
     );
 }
 
-function MenuAdminConasama(props) {
+function MenuAdminConasama({ pathname, isSuperUser, isStaff }) {
 
-    const { pathname } = props;
-    return (
-        <Nav
-            activeKey="/admin"
-            className="nav-conteiner"
-        >
-            <Nav.Item className="menu-sub">
+  return (
+    <Nav activeKey="/admin" className="nav-conteiner">
 
-                <Nav.Link
-                    className="text-nav"
-                    as={Link}
-                    to={"/admin/conasama"}
-                    active={pathname === "/admin"}
-                >
-                    <div>
-                        <img src={image} alt="Logo" style={{
-                            width: "100%",
-                            marginBottom: "1rem",
-                            marginTop: "2rem",
-                            }}
-                        />
-                    </div>
-                </Nav.Link>
-            </Nav.Item>
+      {/* ============================= */}
+      {/* ======== MENU GESTOR ======== */}
+      {/* ============================= */}
+      {isStaff && !isSuperUser && (
+        <>
+          <Nav.Item className="menu-sub">
+            <Nav.Link as={Link} to="/admin/gestor/conasama" className="text-nav">
+              <div>
+                <img
+                  src={image}
+                  alt="Logo"
+                  style={{
+                    width: "100%",
+                    marginBottom: "1rem",
+                    marginTop: "2rem",
+                  }}
+                />
+              </div>
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item className="menu-sub">
+            <Nav.Link
+              className="text-nav"
+              as={Link}
+              to="/admin/gestor/conasama"
+              active={pathname === "/admin/gestor/conasama"}
+            >
+              <FaHome className="icon" /> Inicio
+            </Nav.Link>
+          </Nav.Item>
 
-            <Nav.Item className="menu-sub">
-                <Nav.Link
-                    className="text-nav"
-                    as={Link}
-                    to={"/admin/conasama"}
-                    active={pathname === "/admin"}
-                >
-                    <FaHome className="icon" /> Inicio
-                </Nav.Link>
-            </Nav.Item>
+          <Nav.Item className="menu-sub">
+            <Nav.Link
+              className="text-nav"
+              as={Link}
+              to="/admin/gestor/conasama/estadisticas"
+              active={pathname === "/admin/gestor/conasama/estadisticas"}
+            >
+              <FcStatistics className="icon" /> Dashboard
+            </Nav.Link>
+          </Nav.Item>
 
-            <Nav.Item className="menu-sub">
-                <Nav.Link
-                    className="text-nav"
-                    as={Link}
-                    to={"/admin/conasama/estadisticas"}
-                    active={pathname === "/admin/conasama/estadisticas"}
-                >
-                    <FcStatistics className="icon" /> Dashboard
-                </Nav.Link>
-            </Nav.Item>
+          <Nav.Item className="menu-sub">
+            <Nav.Link
+              className="text-nav"
+              as={Link}
+              to="/admin/gestor/conasama/columbia"
+              active={pathname === "/admin/gestor/conasama/columbia"}
+            >
+              <FcStatistics className="icon" /> Grupo de Riesgos
+            </Nav.Link>
+          </Nav.Item>
+        </>
+      )}
 
-            <Nav.Item className="menu-sub">
-                <Nav.Link
-                    className="text-nav"
-                    as={Link}
-                    to={"/admin/conasama/columbia"}
-                    active={pathname === "/admin/conasama/columbia"}
-                >
-                    <FcStatistics className="icon" /> Grupo de Riesgos
-                </Nav.Link>
-            </Nav.Item>
+      {/* ============================= */}
+      {/* ===== MENU SUPER GESTOR ===== */}
+      {/* ============================= */}
+      {isSuperUser && (
+        <>
+          <Nav.Item className="menu-sub">
+            <Nav.Link as={Link} to="/admin/super-gestor/conasama" className="text-nav">
+              <div>
+                <img
+                  src={image}
+                  alt="Logo"
+                  style={{
+                    width: "100%",
+                    marginBottom: "1rem",
+                    marginTop: "2rem",
+                  }}
+                />
+              </div>
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item className="menu-sub">
+            <Nav.Link
+              className="text-nav"
+              as={Link}
+              to="/admin/super-gestor/conasama"
+              active={pathname === "/admin/super-gestor/conasama"}
+            >
+              <FaHome className="icon" /> Inicio
+            </Nav.Link>
+          </Nav.Item>
 
-        </Nav>
-    );
+          <Nav.Item className="menu-sub">
+            <Nav.Link
+              className="text-nav"
+              as={Link}
+              to="/admin/super-gestor/conasama/graficas"
+              active={pathname === "/admin/super-gestor/conasama/graficas"}
+            >
+              <FcStatistics className="icon" /> Dashboard
+            </Nav.Link>
+          </Nav.Item>
+
+          <Nav.Item className="menu-sub">
+            <Nav.Link
+              className="text-nav"
+              as={Link}
+              to="/admin/super-gestor/conasama/pacientes-riesgo"
+              active={pathname === "/admin/super-gestor/conasama/pacientes-riesgo"}
+            >
+              <FcStatistics className="icon" /> Grupo de Riesgos
+            </Nav.Link>
+          </Nav.Item>
+
+          <Nav.Item className="menu-sub">
+            <Nav.Link
+              className="text-nav"
+              as={Link}
+              to="/admin/super-gestor/conasama/gestores"
+              active={pathname === "/admin/super-gestor/conasama/gestores"}
+            >
+              <FcStatistics className="icon" /> Gestores
+            </Nav.Link>
+          </Nav.Item>
+
+          <Nav.Item className="menu-sub">
+            <Nav.Link
+              className="text-nav"
+              as={Link}
+              to="/admin/super-gestor/conasama/noticias"
+              active={pathname === "/admin/super-gestor/conasama/noticias"}
+            >
+              <FcStatistics className="icon" /> Noticias
+            </Nav.Link>
+          </Nav.Item>
+        </>
+      )}
+
+    </Nav>
+  );
 }
