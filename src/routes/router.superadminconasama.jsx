@@ -6,32 +6,53 @@ import {
     PacientesSuperAdminConasama,
     NoticiasSuperAdminConasama
 } from '../pages/superAdminConasama';
+import { RoleRoute } from '../components/adminconasama/proteccionRutas';
 
 const routesAdminConasama = [
     {
         path: "/admin/super-gestor/conasama",
         layout: AdminLayout,
-        component: HomeSuperAdminConasama,
+        component: (props) => (
+            <RoleRoute allowSuper>
+                <HomeSuperAdminConasama {...props} />
+            </RoleRoute>
+        ),
     },
     {
         path: "/admin/super-gestor/conasama/graficas",
         layout: AdminLayout,
-        component: GraficasSuperAdminConasama,
+        component: (props) => (
+            <RoleRoute allowSuper>
+                <GraficasSuperAdminConasama {...props} />
+            </RoleRoute>
+        ),
     },
     {
         path: "/admin/super-gestor/conasama/pacientes-riesgo",
         layout: AdminLayout,
-        component: PacientesSuperAdminConasama,
+        component: (props) => (
+            <RoleRoute allowSuper>
+                <PacientesSuperAdminConasama {...props} />
+            </RoleRoute>
+        ),
     },
     {
         path: "/admin/super-gestor/conasama/gestores",
         layout: AdminLayout,
-        component: GestoresSuperAdminConasama,
+        component: (props) => (
+            <RoleRoute allowSuper>
+                <GestoresSuperAdminConasama {...props} />
+            </RoleRoute>
+        ),
     },
     {
         path: "/admin/super-gestor/conasama/noticias",
         layout: AdminLayout,
-        component: NoticiasSuperAdminConasama,
+        component: (props) => (
+            <RoleRoute allowSuper>
+                <NoticiasSuperAdminConasama {...props} />
+            </RoleRoute>
+        ),
     }
 ]
 
