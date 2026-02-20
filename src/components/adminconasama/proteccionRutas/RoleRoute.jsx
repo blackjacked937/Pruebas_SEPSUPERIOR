@@ -1,21 +1,44 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 export function RoleRoute({ children, allowSuper, allowStaff }) {
   const { auth } = useAuth();
 
-  if (!auth) return <Navigate to="/login" replace />;
-
   const isSuper = auth?.is_superuser;
   const isStaff = auth?.is_staff;
 
-  // Permisos
-  if (allowSuper && isSuper) return children;
-  if (allowStaff && isStaff && !isSuper) return children;
+  const tienePermiso =
+    (allowSuper && isSuper) ||
+    (allowStaff && isStaff && !isSuper);
 
-  
-  if (isSuper) return <Navigate to="/admin/super-gestor/conasama" replace />;
-  if (isStaff) return <Navigate to="/admin/gestor/conasama" replace />;
+  useEffect(() => {
+    if (auth && !tienePermiso) {
+      const mensaje = isSuper
+        ? "La sección que intentaste entrar es exclusiva para gestores."
+        : "La sección que intentaste entrar es exclusiva para super gestores.";
 
-  return <Navigate to="/login" replace />;
+      toast.info(mensaje, {
+        icon: "🚫",
+        toastId: "no-permission"
+      });
+    }
+  }, [auth, tienePermiso, isSuper]);
+
+  // VALIDACIÓN DE SESIÓN
+  if (!auth) return <Navigate to="/login" replace />;
+
+  // PERMISOS
+  if (!tienePermiso) {
+    if (isSuper) {
+      return <Navigate to="/admin/super-gestor/conasama" replace />;
+    }
+    if (isStaff) {
+      return <Navigate to="/admin/gestor/conasama" replace />;
+    }
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
 }
