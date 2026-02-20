@@ -1,10 +1,12 @@
-import { Navigate } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export function RoleRoute({ children, allowSuper, allowStaff }) {
   const { auth } = useAuth();
+  const navigate = useNavigate();
+  const [redirecting, setRedirecting] = useState(false);
 
   const isSuper = auth?.is_superuser;
   const isStaff = auth?.is_staff;
@@ -14,7 +16,14 @@ export function RoleRoute({ children, allowSuper, allowStaff }) {
     (allowStaff && isStaff && !isSuper);
 
   useEffect(() => {
-    if (auth && !tienePermiso) {
+    if (!auth) {
+      navigate("/login", { replace: true });
+      return;
+    }
+
+    if (!tienePermiso) {
+      setRedirecting(true);
+
       const mensaje = isSuper
         ? "La sección que intentaste entrar es exclusiva para gestores."
         : "La sección que intentaste entrar es exclusiva para super gestores.";
@@ -23,22 +32,45 @@ export function RoleRoute({ children, allowSuper, allowStaff }) {
         icon: "🚫",
         toastId: "no-permission"
       });
-    }
-  }, [auth, tienePermiso, isSuper]);
 
-  // VALIDACIÓN DE SESIÓN
-  if (!auth) return <Navigate to="/login" replace />;
+      // TIEMPO DE ALERTA
+      setTimeout(() => {
+        if (isSuper) {
+          navigate("/admin/super-gestor/conasama", { replace: true });
+        } else if (isStaff) {
+          navigate("/admin/gestor/conasama", { replace: true });
+        } else {
+          navigate("/login", { replace: true });
+        }
+      }, 700);
+    }
+  }, [auth, tienePermiso, isSuper, isStaff, navigate]);
 
-  // PERMISOS
-  if (!tienePermiso) {
-    if (isSuper) {
-      return <Navigate to="/admin/super-gestor/conasama" replace />;
-    }
-    if (isStaff) {
-      return <Navigate to="/admin/gestor/conasama" replace />;
-    }
-    return <Navigate to="/login" replace />;
+  // SIN SESIÓN
+  if (!auth) return null;
+
+  // LOADER
+  if (redirecting) {
+    return (
+      <div
+        style={{
+          height: "60vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+      >
+        <div className="text-center">
+          <div className="spinner-border text-primary" role="status" />
+          <div style={{ marginTop: "10px" }}>
+            Redirigiendo...
+          </div>
+        </div>
+      </div>
+    );
   }
+
+  if (!tienePermiso) return null;
 
   return children;
 }
