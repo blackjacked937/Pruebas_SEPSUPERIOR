@@ -4,7 +4,7 @@ import { Button, Form } from 'react-bootstrap';
 import { GiBrain, } from "react-icons/gi";
 import * as Yup from "yup";
 
-import { loginApi, loginApiConasama } from '../../../api/user';
+import { loginApiISEM, loginApiFase1, loginApiConasama} from '../../../api/user';
 import { useAuth } from '../../../hooks';
 import { InputForm } from '../../ui';
 import './FormLogin.css';
@@ -13,10 +13,13 @@ export function FormLogin(props) {
     const { typeLogin } = props;
     const { login } = useAuth()
 
-    const getLoginApi = (typeLogin) => {
-        if (typeLogin === 3) return loginApiConasama;
-        return loginApi;
+    const loginMap = {
+        1: loginApiISEM,
+        2: loginApiFase1,
+        3: loginApiConasama
     };
+
+    const getLoginApi = (typeLogin) => loginMap[typeLogin] || loginApiISEM;
 
     const formik = useFormik({
         initialValues: initialValues(typeLogin),
