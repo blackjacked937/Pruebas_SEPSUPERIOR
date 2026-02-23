@@ -1,14 +1,11 @@
-import { BASE_API_F1_COPY } from "../../utils/constants";
+import { BASE_API_F1 } from "../../utils/constants";
 
-
-
-export async function getAlertsApi(token) {
+export async function getAlertsColumbiaAPI(token) {
     try {
-        const url = `${BASE_API_F1_COPY}/dashboard/Dashbord_Admin/ConteoPorNivelRiesgo`;
+        const url = `${BASE_API_F1}/dashboards/Dashbord_Admin/ConteoGeneralAlertaColumbia/`;
         const params = {
             headers: {
-                // Authorization: `Bearer ${token}`,
-                'ngrok-skip-browser-warning': 'true'
+                Authorization: `Bearer ${token}`,
             },
         };
 
