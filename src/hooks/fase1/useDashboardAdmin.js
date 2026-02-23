@@ -1,28 +1,32 @@
 import { useState } from "react";
+
+import {
+    getAlertsColumbiaAPI
+} from '../../api/fase1/dashboardAdminPage';
 import { useAuth } from "../useAuth";
-import { getAlertsApi } from '../../api/fase1/dashboardAdminPage';
 
 export function useDashboardAdmin() {
+    const [alertsColumbia, setAlertsColumbia] = useState(undefined);
+    const [loadingAlertsColumbia, setLoadingAlertsColumbia] = useState(false)
+    const [errorAlertsColumbia, setErrorAlertsColumbia] = useState(undefined);
     const { auth } = useAuth();
-    const [alerts, setAlerts] = useState(undefined);
-    const [loadingAlerts, setLoadingAlerts] = useState(false)
 
-    const getAlerts = async () => {
+    const getAlertsColumbia = async () => {
         try {
-            setLoadingAlerts(true);
-            const response = await getAlertsApi(auth.token);
-            console.log('response: ',response)
-            setAlerts(response);
-            setLoadingAlerts(false);
+            setLoadingAlertsColumbia(true);
+            const response = await getAlertsColumbiaAPI(auth.token);
+            setAlertsColumbia(response);
+            setLoadingAlertsColumbia(false);
         } catch (error) {
-            setLoadingAlerts(false);
-            console.log('error:',error);
+            setErrorAlertsColumbia(error);
+            setLoadingAlertsColumbia(false);
         }
     };
 
     return{
-        alerts,
-        loadingAlerts,
-        getAlerts,
+        alertsColumbia,
+        loadingAlertsColumbia,
+        errorAlertsColumbia,
+        getAlertsColumbia,
     }
 }
