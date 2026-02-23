@@ -8,20 +8,21 @@ export function RoleRoute({ children, allowSuper, allowStaff }) {
   const navigate = useNavigate();
   const [redirecting, setRedirecting] = useState(false);
 
+  // Validaciones
+  const isConasama = Number(auth?.typeLogin) === 3;
   const isSuper = auth?.is_superuser;
   const isStaff = auth?.is_staff;
 
   const tienePermiso =
+  // Si no es CONASAMA ignora validaciones
+    !isConasama || 
     (allowSuper && isSuper) ||
     (allowStaff && isStaff && !isSuper);
 
   useEffect(() => {
-    if (!auth) {
-      navigate("/login", { replace: true });
-      return;
-    }
+    if (!auth) return;
 
-    if (!tienePermiso) {
+    if (!tienePermiso && isConasama) {
       setRedirecting(true);
 
       const mensaje = isSuper
@@ -33,7 +34,6 @@ export function RoleRoute({ children, allowSuper, allowStaff }) {
         toastId: "no-permission"
       });
 
-      // TIEMPO DE ALERTA
       setTimeout(() => {
         if (isSuper) {
           navigate("/admin/super-gestor/conasama", { replace: true });
@@ -44,9 +44,9 @@ export function RoleRoute({ children, allowSuper, allowStaff }) {
         }
       }, 700);
     }
-  }, [auth, tienePermiso, isSuper, isStaff, navigate]);
+  }, [auth, tienePermiso, isConasama, isSuper, isStaff, navigate]);
 
-  // SIN SESIÓN
+  // RENDERIZADO SEGUN ADMINLAYOUT
   if (!auth) return null;
 
   // LOADER

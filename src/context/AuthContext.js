@@ -34,12 +34,14 @@ export function AuthProvider(props) {
           const isSuper = me?.is_superuser ?? false;
           const isStaff = me?.is_staff ?? false;
 
-          // BLOQUEO DE PACIENTES
-          if (!isSuper && !isStaff) {
-            removeToken();
-            sessionStorage.removeItem("typeLogin");
-            setAuth(null);
-            return;
+          // BLOQUEO DE PACIENTES SOLO PARA CONASAMA
+          if (Number(typeLogin) === 3) {
+            if (!isSuper && !isStaff) {
+              removeToken();
+              sessionStorage.removeItem("typeLogin");
+              setAuth(null);
+              return;
+            }
           }
 
           setAuth({
@@ -65,11 +67,13 @@ export function AuthProvider(props) {
     const isSuper = me?.is_superuser ?? false;
     const isStaff = me?.is_staff ?? false;
 
-    // BLOQUEO DE PACIENTES
-    if (!isSuper && !isStaff) {
-      removeToken();
-      sessionStorage.removeItem("typeLogin");
-      throw new Error("Tu cuenta es de Paciente y no tiene acceso a esta plataforma.");
+    // BLOQUEO DE PACIENTES SOLO PARA CONASAMA
+    if (Number(typeLogin) === 3) {
+      if (!isSuper && !isStaff) {
+        removeToken();
+        sessionStorage.removeItem("typeLogin");
+        throw new Error("Tu cuenta no tiene acceso a esta plataforma.");
+      }
     }
 
     setAuth({
@@ -87,7 +91,6 @@ export function AuthProvider(props) {
     setAuth(null);
   };
 
-  // RENDER DE SESIÓN
   if (auth === undefined) return null;
 
   return (
