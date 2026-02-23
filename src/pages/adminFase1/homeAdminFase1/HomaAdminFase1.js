@@ -1,37 +1,69 @@
-import {useEffect} from 'react'
-import './HomaAdminFase1.css'
+import React, {useState, useEffect} from 'react'
+
+import { 
+    CardInfoNavigation, 
+    DemoCardInfoNavigation 
+} from '../../../components/common'
 import { useDashboardAdmin } from '../../../hooks';
-import { CardInfoNavigation, DemoCardInfoNavigation } from '../../../components/common'
-import { Row } from 'react-bootstrap';
+
+import './HomaAdminFase1.css'
 
 export function HomaAdminFase1() {
-
-    const { loadingAlerts, alerts, getAlerts } = useDashboardAdmin();
-
-    useEffect(() => {
-        getAlerts();
-    }, []);
-
+      const { 
+        alertsColumbia, 
+        loadingAlertsColumbia, 
+        getAlertsColumbia
+      } = useDashboardAdmin();
+    
+      const getData = async () => {
+        await getAlertsColumbia();
+      }
+    
+      useEffect(() => {
+        getData()
+      }, [])
+      
     return (
-        <Row className="container-home-admin-fase-1">
-            {loadingAlerts && (
-                <div className="col-12 text-center">
-                <h3>Cargando...</h3>
-                </div>
-            )}
-
-            {!loadingAlerts && alerts?.map((alerta) => (
-                <div key={alerta.id_cuestionaro} className="card-info col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
-                    <CardInfoNavigation
-                        riskLevel={alerta.score === 0 ? 1 : alerta.score >= 5 ? 3 : 2}
-                        account={alerta.score}
-                        title="Pacientes en riesgo"
-                        subTitle={`Cuestionario de ${alerta.cuestionario}`}
-                        textLink="Ver más detalles"
-                        link={`/admin/f1/${alerta.id_cuestionaro}`}
-                    />
-                </div>
-            ))}
-        </Row>
+        <div className="container-home-admin-fase-1">
+            <div className="box">
+                <CardInfoNavigation
+                    riskLevel = {1}
+                    account = {1}
+                    title = "Ver dashboard de analíticas"
+                    subTitle = "Cuestionario de Columbia"
+                    textLink = "Ver más detalles"
+                    link = "/admin/f1/estadisticas"
+                />
+            </div>
+            <div className="box">
+                <CardInfoNavigation
+                    riskLevel = {2}
+                    account = {2}
+                    title = "Pacientes en riesgo"
+                    subTitle = "Cuestionario Alcoholismo"
+                    textLink = "Ver más detalles"
+                    link = "/admin/f1/"
+                />
+            </div>
+            <div className="box">
+                {
+                    loadingAlertsColumbia 
+                    ? <h1>Cargando</h1>
+                    :  
+                        <CardInfoNavigation
+                            riskLevel = {alertsColumbia?.pacientes_en_alerta === 0 ? 1: 3}
+                            account = {alertsColumbia?.pacientes_en_alerta}
+                            title = "Pacientes en riesgo"
+                            subTitle = "Cuestionario de Columbia"
+                            textLink = "Ver más detalles"
+                            link = "/admin/f1/columbia"
+                        />
+                }
+                
+            </div>
+            <div className="box">
+                <DemoCardInfoNavigation/>
+            </div>
+        </div>
     )
 }
