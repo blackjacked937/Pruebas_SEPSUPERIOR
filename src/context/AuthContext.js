@@ -5,7 +5,7 @@ import { useUser } from '../hooks';
 
 export const AuthContext = createContext({
     auth: undefined,
-    login: () => null,
+    login: async () => {},
     logout: () => null,
 })
 
@@ -32,6 +32,17 @@ export function AuthProvider(props) {
                 } else {
                     const me = await getMe(token, typeLogin);
 
+                    const isSuper = me?.is_superuser ?? false;
+                    const isStaff = me?.is_staff ?? false;
+
+                    // BLOQUEO DE PACIENTES
+                    if (!isSuper && !isStaff) {
+                        removeToken();
+                        localStorage.removeItem("typeLogin");
+                        setAuth(null);
+                        return;
+                    }
+
                     setAuth({
                         token,
                         typeLogin,
@@ -50,6 +61,16 @@ export function AuthProvider(props) {
         setToken(token);
         localStorage.setItem("typeLogin", typeLogin);
         const me = await getMe(token, typeLogin);
+
+        const isSuper = me?.is_superuser ?? false;
+        const isStaff = me?.is_staff ?? false;
+
+        // BLOQUEO DE PACIENTES
+        if (!isSuper && !isStaff) {
+            removeToken();
+            localStorage.removeItem("typeLogin");
+            throw new Error("Tu cuenta no tiene acceso a esta plataforma.");
+        }
 
         setAuth({
             token,

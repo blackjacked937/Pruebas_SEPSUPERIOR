@@ -3,6 +3,7 @@ import React from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { GiBrain, } from "react-icons/gi";
 import * as Yup from "yup";
+import { toast } from "react-toastify";
 
 import { loginApiISEM, loginApiFase1, loginApiConasama} from '../../../api/user';
 import { useAuth } from '../../../hooks';
@@ -27,11 +28,11 @@ export function FormLogin(props) {
         validateOnChange: false,
         onSubmit: async (formvalue) => {
             try {
-            const response = await getLoginApi(typeLogin)(formvalue, typeLogin);
-            const { access } = response;
-            login(access, typeLogin);
+                const response = await getLoginApi(typeLogin)(formvalue, typeLogin);
+                const { access } = response;
+                await login(access, typeLogin);
             } catch (error) {
-            alert(error.message);
+                toast.info(error.message);
             }
         },
     });
