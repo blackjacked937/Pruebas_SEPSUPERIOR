@@ -1,97 +1,98 @@
 import { jwtDecode } from "jwt-decode";
 import React, { createContext, useEffect, useState } from "react";
-import { getToken, removeToken, setToken } from '../api/token';
-import { useUser } from '../hooks';
+import { getToken, removeToken, setToken } from "../api/token";
+import { useUser } from "../hooks";
 
 export const AuthContext = createContext({
-    auth: undefined,
-    login: async () => {},
-    logout: () => null,
-})
+  auth: undefined,
+  login: async () => {},
+  logout: () => null,
+});
 
 export function AuthProvider(props) {
-    const { children } = props;
+  const { children } = props;
 
-    const [auth, setAuth] = useState(undefined);
+  const [auth, setAuth] = useState(undefined);
+  const { getMe } = useUser();
 
-    const { getMe } = useUser();
+  useEffect(() => {
+    (async () => {
+      const token = getToken();
+      const typeLogin = sessionStorage.getItem("typeLogin");
 
-    useEffect(() => {
-        (async () => {
-            const token = getToken();
-            const typeLogin = localStorage.getItem("typeLogin");
+      if (token && typeLogin) {
+        const { exp } = jwtDecode(token);
+        const expirationTime = exp * 1000 - 60000;
 
-            if (token && typeLogin) {
-                const { exp } = jwtDecode(token);
-                const expirationTime = exp * 1000 - 60000;
+        if (Date.now() >= expirationTime) {
+          removeToken();
+          sessionStorage.removeItem("typeLogin");
+          setAuth(null);
+        } else {
+          const me = await getMe(token, typeLogin);
 
-                if (Date.now() >= expirationTime) {
-                    removeToken();
-                    localStorage.removeItem("typeLogin");
-                    setAuth(null);
-                } else {
-                    const me = await getMe(token, typeLogin);
+          const isSuper = me?.is_superuser ?? false;
+          const isStaff = me?.is_staff ?? false;
 
-                    const isSuper = me?.is_superuser ?? false;
-                    const isStaff = me?.is_staff ?? false;
-
-                    // BLOQUEO DE PACIENTES
-                    if (!isSuper && !isStaff) {
-                        removeToken();
-                        localStorage.removeItem("typeLogin");
-                        setAuth(null);
-                        return;
-                    }
-
-                    setAuth({
-                        token,
-                        typeLogin,
-                        me,
-                        is_superuser: me?.is_superuser ?? false,
-                        is_staff: me?.is_staff ?? false,
-                    });
-                }
-            } else {
-                setAuth(null);
-            }
-        })();
-    }, []);
-
-    const login = async (token, typeLogin) => {
-        setToken(token);
-        localStorage.setItem("typeLogin", typeLogin);
-        const me = await getMe(token, typeLogin);
-
-        const isSuper = me?.is_superuser ?? false;
-        const isStaff = me?.is_staff ?? false;
-
-        // BLOQUEO DE PACIENTES
-        if (!isSuper && !isStaff) {
+          // BLOQUEO DE PACIENTES
+          if (!isSuper && !isStaff) {
             removeToken();
-            localStorage.removeItem("typeLogin");
-            throw new Error("Tu cuenta no tiene acceso a esta plataforma.");
-        }
+            sessionStorage.removeItem("typeLogin");
+            setAuth(null);
+            return;
+          }
 
-        setAuth({
+          setAuth({
             token,
-            me,
             typeLogin,
-            is_superuser: me?.is_superuser ?? false,
-            is_staff: me?.is_staff ?? false,
-        });
-    };
-
-    const logout = () => {
-        removeToken();
-        localStorage.removeItem("typeLogin");
+            me,
+            is_superuser: isSuper,
+            is_staff: isStaff,
+          });
+        }
+      } else {
         setAuth(null);
-    };
+      }
+    })();
+  }, []);
 
-    if (auth === undefined) return null;
+  const login = async (token, typeLogin) => {
+    setToken(token);
+    sessionStorage.setItem("typeLogin", typeLogin);
 
-    return (
-        <AuthContext.Provider value={{ auth, login, logout }}>
-            {children}
-        </AuthContext.Provider>
-    );
+    const me = await getMe(token, typeLogin);
+
+    const isSuper = me?.is_superuser ?? false;
+    const isStaff = me?.is_staff ?? false;
+
+    // BLOQUEO DE PACIENTES
+    if (!isSuper && !isStaff) {
+      removeToken();
+      sessionStorage.removeItem("typeLogin");
+      throw new Error("Tu cuenta es de Paciente y no tiene acceso a esta plataforma.");
+    }
+
+    setAuth({
+      token,
+      me,
+      typeLogin,
+      is_superuser: isSuper,
+      is_staff: isStaff,
+    });
+  };
+
+  const logout = () => {
+    removeToken();
+    sessionStorage.removeItem("typeLogin");
+    setAuth(null);
+  };
+
+  // RENDER DE SESIÓN
+  if (auth === undefined) return null;
+
+  return (
+    <AuthContext.Provider value={{ auth, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
