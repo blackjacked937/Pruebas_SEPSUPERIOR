@@ -5,20 +5,19 @@ import { Carousel, Card, Container, Row, Col, Spinner } from 'react-bootstrap'
 
 export function EstadisticaFase1() {
     const { 
-        getDashBoardHasAlzheimerRisk, 
-        getDashBoardHasAlcoholEvaluation,
+        //getDashBoardHasAlzheimerRisk, 
+        //getDashBoardHasAlcoholEvaluation,
         getDashBoardHasColumbiaQuestionnaire, 
-        getDashBoardHasDrugsQuestionnaire, 
-        getDashBoardHasEatingBehavior,
-        getDashBoardHasGAD7,
+        //getDashBoardHasDrugsQuestionnaire, 
+        //getDashBoardHasEatingBehavior,
+        //getDashBoardHasGAD7,
         getDashBoardHasPSL5Questionnaire, 
-        getDashBoardHasPhysicalActivity,
-        getDashBoardHasPlutchickQuestionnaire, 
+        //getDashBoardHasPhysicalActivity,
+        //getDashBoardHasPlutchickQuestionnaire, 
         getDashBoardHasPsychiatricSymptoms, 
-        getDashBoardHasSleepQuality,
-        getDashBoardHasTraumaticEvents,
+        //getDashBoardHasSleepQuality,
+        //getDashBoardHasTraumaticEvents,
         getOpcionesPreguntaUsuarios,
-
         getHasPHQ9s,
         getHasResilienceScale,
         getHasTobaccoEvaluation
@@ -44,7 +43,6 @@ export function EstadisticaFase1() {
                 getDashBoardHasPSL5Questionnaire(),
                 // getDashBoardHasPhysicalActivity(),
                 // getDashBoardHasPlutchickQuestionnaire(),
-
                 getDashBoardHasPsychiatricSymptoms(),
                 // getDashBoardHasSleepQuality(),
                 // getDashBoardHasTraumaticEvents(),
