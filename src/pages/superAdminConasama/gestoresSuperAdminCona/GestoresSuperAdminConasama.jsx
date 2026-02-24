@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { InitialDashboard } from '../../../components/adminconasama/dashboard'
-import { useDashboardsF1 } from '../../../hooks'
-import { Carousel, Card, Container, Row, Col, Spinner, Button } from 'react-bootstrap'
+import { Container, Row, Col, Spinner, Button } from 'react-bootstrap'
 import { ModalBasic } from '../../../components/ui/modalBasic'
 import { RegisterGestorForm } from '../../../components/adminconasama/gestores/RegisterGestorForm'
 import { TableGestores } from '../../../components/adminconasama/gestores/TableGestores';
@@ -37,6 +35,10 @@ export function GestoresSuperAdminConasama() {
         openModal("Registrar Nuevo Gestor", <RegisterGestorForm onClose={closeModal} onReload={onReload} />);
     };
 
+    const viewGestor = (gestor) => {
+        openModal("Información del Gestor", <RegisterGestorForm gestor={gestor} viewMode={true} onClose={closeModal} />);
+    };
+
     return (
         <Container fluid>
             <Row className="mb-4">
@@ -58,7 +60,7 @@ export function GestoresSuperAdminConasama() {
                     <p>Cargando gestores...</p>
                 </div>
             ) : (
-                <TableGestores gestores={gestores} hospitales={hospitales} />
+                <TableGestores gestores={gestores} hospitales={hospitales} onViewGestor={viewGestor} />
             )}
 
             <ModalBasic

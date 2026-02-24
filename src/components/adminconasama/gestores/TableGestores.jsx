@@ -3,7 +3,7 @@ import { Table, Button, Badge } from 'react-bootstrap';
 import { map } from 'lodash';
 
 export function TableGestores(props) {
-    const { gestores, hospitales } = props;
+    const { gestores, hospitales, onViewGestor } = props;
 
     return (
         <Table striped bordered hover responsive className="mt-4">
@@ -38,11 +38,14 @@ export function TableGestores(props) {
                             )}
                         </td>
                         <td>
-                            <Button variant="info" size="sm" className="me-2" style={{ color: "white" }}>
-                                Ver
-                            </Button>
-                            <Button variant="warning" size="sm" style={{ color: "white" }}>
-                                Editar
+                            <Button
+                                variant="info"
+                                size="sm"
+                                className="me-2"
+                                style={{ color: "white" }}
+                                onClick={() => onViewGestor(gestor)}
+                            >
+                                Ver más
                             </Button>
                         </td>
                     </tr>

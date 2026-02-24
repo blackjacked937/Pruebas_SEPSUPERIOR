@@ -4,11 +4,10 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import { InputForm, SelectForm } from '../../ui';
-import { registerGestorApi } from '../../../api/conasama/gestores';
 import { useGestores } from "../../../hooks/conasama/useGestores";
 
 export function RegisterGestorForm(props) {
-    const { onClose, onReload } = props;
+    const { onClose, onReload, gestor, viewMode } = props;
     const [catalogs, setCatalogs] = useState([]);
     const [hospitals, setHospitals] = useState([]);
     const { getCatalogosGestores, getHospitales, nuevoGestor } = useGestores();
@@ -33,7 +32,7 @@ export function RegisterGestorForm(props) {
     };
 
     const formik = useFormik({
-        initialValues: initialValues(),
+        initialValues: initialValues(gestor),
         validationSchema: Yup.object(newSchema()),
         validateOnChange: false,
         onSubmit: async (formValue) => {
@@ -60,6 +59,7 @@ export function RegisterGestorForm(props) {
                         onChangeInput={formik.handleChange}
                         error={formik.errors.nombre}
                         touched={formik.touched.nombre}
+                        disabled={viewMode}
                     />
                 </Col>
                 <Col md={6}>
@@ -71,6 +71,7 @@ export function RegisterGestorForm(props) {
                         onChangeInput={formik.handleChange}
                         error={formik.errors.apellido_paterno}
                         touched={formik.touched.apellido_paterno}
+                        disabled={viewMode}
                     />
                 </Col>
             </Row>
@@ -85,6 +86,7 @@ export function RegisterGestorForm(props) {
                         onChangeInput={formik.handleChange}
                         error={formik.errors.apellido_materno}
                         touched={formik.touched.apellido_materno}
+                        disabled={viewMode}
                     />
                 </Col>
                 <Col md={6}>
@@ -96,6 +98,7 @@ export function RegisterGestorForm(props) {
                         onChangeInput={formik.handleChange}
                         error={formik.errors.email}
                         touched={formik.touched.email}
+                        disabled={viewMode}
                     />
                 </Col>
             </Row>
@@ -111,6 +114,7 @@ export function RegisterGestorForm(props) {
                         onChangeInput={formik.handleChange}
                         error={formik.errors.password}
                         touched={formik.touched.password}
+                        disabled={viewMode}
                     />
                 </Col>
                 <Col md={6}>
@@ -122,6 +126,7 @@ export function RegisterGestorForm(props) {
                         onChangeInput={formik.handleChange}
                         error={formik.errors.celular_paciente}
                         touched={formik.touched.celular_paciente}
+                        disabled={viewMode}
                     />
                 </Col>
             </Row>
@@ -136,6 +141,7 @@ export function RegisterGestorForm(props) {
                         onChangeInput={formik.handleChange}
                         error={formik.errors.matricula_laboral}
                         touched={formik.touched.matricula_laboral}
+                        disabled={viewMode}
                     />
                 </Col>
                 <Col md={6}>
@@ -147,6 +153,7 @@ export function RegisterGestorForm(props) {
                         onChange={formik.handleChange}
                         error={formik.errors.sede_id}
                         touched={formik.touched.sede_id}
+                        disabled={viewMode}
                     />
                 </Col>
             </Row>
@@ -164,6 +171,7 @@ export function RegisterGestorForm(props) {
                         onChange={formik.handleChange}
                         error={formik.errors.id_grado}
                         touched={formik.touched.id_grado}
+                        disabled={viewMode}
                     />
                 </Col>
                 <Col md={6}>
@@ -175,6 +183,7 @@ export function RegisterGestorForm(props) {
                         onChange={formik.handleChange}
                         error={formik.errors.id_contratacion}
                         touched={formik.touched.id_contratacion}
+                        disabled={viewMode}
                     />
                 </Col>
             </Row>
@@ -189,6 +198,7 @@ export function RegisterGestorForm(props) {
                         onChange={formik.handleChange}
                         error={formik.errors.id_perfil}
                         touched={formik.touched.id_perfil}
+                        disabled={viewMode}
                     />
                 </Col>
                 <Col md={6}>
@@ -200,6 +210,7 @@ export function RegisterGestorForm(props) {
                         onChange={formik.handleChange}
                         error={formik.errors.id_nivel}
                         touched={formik.touched.id_nivel}
+                        disabled={viewMode}
                     />
                 </Col>
             </Row>
@@ -214,6 +225,7 @@ export function RegisterGestorForm(props) {
                         onChange={formik.handleChange}
                         error={formik.errors.id_cargo}
                         touched={formik.touched.id_cargo}
+                        disabled={viewMode}
                     />
                 </Col>
                 <Col md={6}>
@@ -225,38 +237,41 @@ export function RegisterGestorForm(props) {
                         onChange={formik.handleChange}
                         error={formik.errors.id_profesion}
                         touched={formik.touched.id_profesion}
+                        disabled={viewMode}
                     />
                 </Col>
             </Row>
 
-            <div className="d-grid gap-2 mt-4">
-                <Button type="submit" variant="primary" style={{ background: "#4DB6AC", borderColor: "#4DB6AC" }}>
-                    Registrar Gestor
-                </Button>
-            </div>
+            {!viewMode && (
+                <div className="d-grid gap-2 mt-4">
+                    <Button type="submit" variant="primary" style={{ background: "#4DB6AC", borderColor: "#4DB6AC" }}>
+                        Registrar Gestor
+                    </Button>
+                </div>
+            )}
         </Form>
     );
 }
 
-function initialValues() {
+function initialValues(gestor) {
     return {
-        nombre: '',
-        apellido_paterno: '',
-        apellido_materno: '',
-        email: '',
-        password: '',
-        celular_paciente: '',
-        matricula_laboral: '',
-        sede_id: '',
-        is_active: true,
-        estatus: 1,
-        id_grado: '',
-        id_contratacion: '',
-        id_clues: 0,
-        id_perfil: '',
-        id_nivel: '',
-        id_cargo: '',
-        id_profesion: '',
+        nombre: gestor?.nombre || '',
+        apellido_paterno: gestor?.apellido_paterno || '',
+        apellido_materno: gestor?.apellido_materno || '',
+        email: gestor?.email || '',
+        password: gestor ? '********' : '',
+        celular_paciente: gestor?.celular_paciente || '',
+        matricula_laboral: gestor?.matricula_laboral || '',
+        sede_id: gestor?.sede_id || '',
+        is_active: gestor ? gestor.is_active : true,
+        estatus: gestor?.estatus || 1,
+        id_grado: gestor?.id_grado || '',
+        id_contratacion: gestor?.id_contratacion || '',
+        id_clues: gestor?.id_clues || 0,
+        id_perfil: gestor?.id_perfil || '',
+        id_nivel: gestor?.id_nivel || '',
+        id_cargo: gestor?.id_cargo || '',
+        id_profesion: gestor?.id_profesion || '',
     };
 }
 
