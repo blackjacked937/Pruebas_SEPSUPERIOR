@@ -170,7 +170,7 @@ export function RegisterGestorForm(props) {
                     <SelectForm
                         label="Tipo de Contratación"
                         name="id_contratacion"
-                        options={getOptions("Tipo de contratación")}
+                        options={getOptions("Tipo de Contratación")}
                         value={formik.values.id_contratacion}
                         onChange={formik.handleChange}
                         error={formik.errors.id_contratacion}

@@ -4,11 +4,22 @@ import { useDashboardsF1 } from '../../../hooks'
 import { Carousel, Card, Container, Row, Col, Spinner, Button } from 'react-bootstrap'
 import { ModalBasic } from '../../../components/ui/modalBasic'
 import { RegisterGestorForm } from '../../../components/adminconasama/gestores/RegisterGestorForm'
+import { TableGestores } from '../../../components/adminconasama/gestores/TableGestores';
+import { useGestores } from "../../../hooks/conasama/useGestores";
 
 export function GestoresSuperAdminConasama() {
     const [showModal, setShowModal] = useState(false);
     const [titleModal, setTitleModal] = useState("");
     const [contentModal, setContentModal] = useState(null);
+    const { loading, getGestores, gestores, getHospitales, hospitales } = useGestores();
+    const [reload, setReload] = useState(false);
+
+    useEffect(() => {
+        getGestores();
+        getHospitales();
+    }, [reload]);
+
+    const onReload = () => setReload((prev) => !prev);
 
     const openModal = (title, content) => {
         setTitleModal(title);
@@ -23,14 +34,14 @@ export function GestoresSuperAdminConasama() {
     };
 
     const addGestor = () => {
-        openModal("Registrar Nuevo Gestor", <RegisterGestorForm onClose={closeModal} onReload={() => console.log("Reloading...")} />);
+        openModal("Registrar Nuevo Gestor", <RegisterGestorForm onClose={closeModal} onReload={onReload} />);
     };
 
     return (
-        <>
+        <Container fluid>
             <Row className="mb-4">
                 <Col>
-                    <h1> Pagina para crear Gestores SuperGestor CONASAMAs </h1>
+                    <h1 style={{ color: "#4DB6AC" }}> Gestión de Gestores SuperAdmin </h1>
                 </Col>
                 <Col className="text-end">
                     <Button variant="primary" onClick={addGestor} style={{ background: "#4DB6AC", borderColor: "#4DB6AC" }}>
@@ -39,6 +50,17 @@ export function GestoresSuperAdminConasama() {
                 </Col>
             </Row>
 
+            <hr />
+
+            {loading && !gestores ? (
+                <div className="text-center mt-5">
+                    <Spinner animation="border" variant="primary" />
+                    <p>Cargando gestores...</p>
+                </div>
+            ) : (
+                <TableGestores gestores={gestores} hospitales={hospitales} />
+            )}
+
             <ModalBasic
                 show={showModal}
                 onClose={closeModal}
@@ -46,6 +68,6 @@ export function GestoresSuperAdminConasama() {
                 children={contentModal}
                 size="lg"
             />
-        </>
+        </Container>
     )
 }

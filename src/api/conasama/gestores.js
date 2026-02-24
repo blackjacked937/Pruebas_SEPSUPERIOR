@@ -22,3 +22,23 @@ export async function registerGestorApi(data, token) {
         throw error;
     }
 }
+
+export async function getGestoresApi(token) {
+    try {
+        const url = `${BASE_API_CONASAMA_V1}/Super-Gestores/gestores/`;
+        const params = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        };
+
+        const response = await fetch(url, params);
+        if (response.status !== 200) {
+            throw new Error("Error al obtener la lista de gestores");
+        }
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        throw error;
+    }
+}

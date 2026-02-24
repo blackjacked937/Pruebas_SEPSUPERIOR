@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useAuth } from "..";
 import { getOptionsCatalogoApi, getHospitalesApi } from "../../api/conasama/catalogo";
-import { registerGestorApi } from "../../api/conasama/gestores";
+import { registerGestorApi, getGestoresApi } from "../../api/conasama/gestores";
 
 export function useGestores() {
     const { auth } = useAuth();
     const [loading, setLoading] = useState(false);
+    const [gestores, setGestores] = useState(null);
+    const [hospitales, setHospitales] = useState(null);
 
     const getCatalogosGestores = async () => {
         setLoading(true);
@@ -24,6 +26,21 @@ export function useGestores() {
         setLoading(true);
         try {
             const result = await getHospitalesApi(auth.token);
+            setHospitales(result);
+            return result;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const getGestores = async () => {
+        setLoading(true);
+        try {
+            const result = await getGestoresApi(auth.token);
+            setGestores(result);
             return result;
         } catch (error) {
             console.error(error);
@@ -48,8 +65,11 @@ export function useGestores() {
 
     return {
         loading,
+        gestores,
+        hospitales,
         getCatalogosGestores,
         getHospitales,
+        getGestores,
         nuevoGestor
     }
 }
