@@ -105,7 +105,7 @@ export function RegisterGestorForm(props) {
 
             <Row>
                 <Col md={6}>
-                    <InputForm
+                    {!viewMode && <InputForm
                         label="Contraseña"
                         nameInput="password"
                         type="password"
@@ -115,7 +115,7 @@ export function RegisterGestorForm(props) {
                         error={formik.errors.password}
                         touched={formik.touched.password}
                         disabled={viewMode}
-                    />
+                    />}
                 </Col>
                 <Col md={6}>
                     <InputForm
