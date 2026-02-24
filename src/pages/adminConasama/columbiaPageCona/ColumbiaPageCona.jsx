@@ -1,20 +1,41 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 
-import { useColumbia } from '../../../hooks';
+import { usePacientesSensibles } from '../../../hooks/conasama';
 import { DividerIcon } from '../../../components/common';
-import { TableColumbiaRisk } from '../../../components/adminconasama';
-import { Row, Col } from 'react-bootstrap'
+import { TablePacientesSensibles } from '../../../components/adminconasama/columbia/tablePacientesSensibles';
 
 
 export function ColumbiaPageCona() {
+  const {
+    pacientesSensibles,
+    loadingPacientes,
+    getPacientesSensibles
+  } = usePacientesSensibles();
 
-  return(
+  const [refetch, setRefetch] = useState(false);
+  const onRefetch = () => setRefetch((prev) => !prev);
 
-    <Row> 
-        <h1> Pagina Grupo de Riesgos CONASAMA </h1>
-    </Row>
+  useEffect(() => {
+    getPacientesSensibles();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [refetch])
 
-    )
+  return (
+    <div>
+      <DividerIcon
+        titulo="Pacientes por grupo de riesgo"
+      />
+      {
+        loadingPacientes 
+          ? <h3>Cargando...</h3>
+          : 
+            <TablePacientesSensibles
+              data={pacientesSensibles}
+              onRefetch={onRefetch}
+            />
+      }
+    </div>
+  )
   /*
   const {
     columbiaPatiensInAlert,

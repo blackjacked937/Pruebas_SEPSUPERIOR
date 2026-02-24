@@ -1,0 +1,81 @@
+.nivel-riesgo-tabs-container {
+  margin-top: 20px;
+}
+
+.sede-table-container {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.sede-title {
+  margin-bottom: 20px;
+  color: #495057;
+  font-weight: 600;
+}
+
+.badge-riesgo {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: normal;
+  line-height: 1.4;
+  text-align: center;
+  min-width: 200px;
+}
+
+.badge-danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+.badge-warning {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.badge-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.badge-default {
+  background-color: #6c757d;
+  color: white;
+}
+
+.nivel-riesgo-tabs-container .nav-tabs {
+  border-bottom: 2px solid #dee2e6;
+}
+
+.nivel-riesgo-tabs-container .nav-tabs .nav-link {
+  color: #495057;
+  font-weight: 500;
+  border: none;
+  border-bottom: 3px solid transparent;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+}
+
+.nivel-riesgo-tabs-container .nav-tabs .nav-link:hover {
+  border-color: transparent;
+  background-color: #f8f9fa;
+}
+
+.nivel-riesgo-tabs-container .nav-tabs .nav-link.active {
+  color: #007bff;
+  border-color: transparent transparent #007bff transparent;
+  background-color: transparent;
+  font-weight: 600;
+}
+
+.btn-asignar-paciente {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-asignar-paciente:hover {
+  transform: scale(1.1);
+}
