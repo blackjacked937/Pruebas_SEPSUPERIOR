@@ -3,9 +3,10 @@ import React, { useEffect, useState } from 'react'
 import { useNivelRiesgoBySede } from '../../../hooks/conasama';
 import { DividerIcon } from '../../../components/common';
 import { TableNivelRiesgoBySede } from '../../../components/adminconasama/dashboard/tableNivelRiesgoBySede';
-
+import { useParams } from 'react-router-dom';
 
 export function PacientesSuperAdminConasama() {
+  const { id } = useParams();
   const {
     dataBySede,
     loadingBySede,
@@ -34,6 +35,7 @@ export function PacientesSuperAdminConasama() {
               dataBySede={dataBySede}
               sedesIds={SEDES_IDS}
               onRefetch={onRefetch}
+              idSedeSeleccionada={id}
             />
       }
     </div>

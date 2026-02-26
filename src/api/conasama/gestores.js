@@ -42,3 +42,55 @@ export async function getGestoresApi(token) {
         throw error;
     }
 }
+
+//super Admin Conasama
+
+export async function getConteoNivelRiesgoApi(id, token) {
+    try {
+        const url = `${BASE_API_CONASAMA_V1}/dashboard/Dashbord_Admin/ConteoPorNivelRiesgo/${id}/`;
+        
+        const params = {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        };
+
+        const response = await fetch(url, params);
+        const result = await response.json();
+
+        if (response.status !== 200) {
+            throw new Error(result.message || "Error al obtener el conteo de nivel de riesgo");
+        }
+
+        return result;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//Admin Conasama
+
+export async function getConteoNivelRiesgoAdminApi(token) {
+    try {
+        const url = `${BASE_API_CONASAMA_V1}/dashboard/Dashbord_Admin/ConteoPorNivelRiesgo/`;
+        const params = {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        };
+
+        const response = await fetch(url, params);
+        const result = await response.json();
+
+        if (response.status !== 200) {
+            throw new Error(result.message || "Error al obtener datos de Admin");
+        }
+        return result;
+    } catch (error) {
+        throw error;
+    }
+}
