@@ -4,14 +4,14 @@ import { Button, Form } from 'react-bootstrap';
 import { GiBrain, } from "react-icons/gi";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
-
+import Icono_home from "../../../assets/img/Icono_home.jpeg";
 import { loginApiISEM, loginApiFase1, loginApiConasama} from '../../../api/user';
 import { useAuth } from '../../../hooks';
 import { InputForm } from '../../ui';
 import './FormLogin.css';
 
 export function FormLogin(props) {
-    const { typeLogin } = props;
+    const { typeLogin, onBack } = props;
     const { login } = useAuth()
 
     const loginMap = {
@@ -38,50 +38,68 @@ export function FormLogin(props) {
     });
 
     return (
-        <Form onSubmit={formik.handleSubmit}>
-            <div>
-                <center>
-                    <GiBrain size={'3rem'} />
-                    <br />
-                    <br />
-                </center>
+        <div className="login-bg">
+            <div className="login-wrapper">
+
+            {/* HEADER */}
+            <div className="login-header">
+                <h2>Bienvenido de Nuevo</h2>
+                <p>Accede a tu espacio</p>
+
+                <div className="logo-circle">
+                <img src={Icono_home} alt="logo" />
+                </div>
             </div>
-            <div className="form-login-input">
+
+            {/* FORM CARD */}
+            <div className="login-card">
+                <Form onSubmit={formik.handleSubmit}>
+
                 <InputForm
-                    className="form-login-input"
-                    label="Usuario"
-                    labelDirection="center"
+                    label={typeLogin === 2 ? "Correo Electrónico" : "Usuario"}
+                    labelDirection="left"
                     nameInput={typeLogin === 2 ? "email" : "username"}
-                    placeHolderInput={typeLogin === 2 ? "email" : "username"}
+                    placeHolderInput={typeLogin === 2 ? "correo@example.com" : "usuario"}
                     valueInput={typeLogin === 2 ? formik.values.email : formik.values.username}
                     onChangeInput={formik.handleChange}
                     type="text"
                     error={typeLogin === 2 ? formik.errors.email : formik.errors.username}
                     touched={typeLogin === 2 ? formik.touched.email : formik.touched.username}
-                    size="sm"
                 />
-            </div>
-            <div className="form-login-input">
+
                 <InputForm
                     label="Contraseña"
-                    labelDirection="center"
+                    labelDirection="left"
                     nameInput="password"
-                    placeHolderInput="password"
+                    placeHolderInput="••••••••"
                     valueInput={formik.values.password}
                     onChangeInput={formik.handleChange}
                     type="password"
                     error={formik.errors.password}
                     touched={formik.touched.password}
-                    size="sm"
                 />
+
+                <Button type="submit" className="login-btn">
+                    Iniciar Sesión
+                </Button>
+                <Button
+                    type="button"
+                    className="login-btn login-btn-secondary"
+                    onClick={onBack}
+                >
+                    Regresar
+                </Button>
+
+                </Form>
             </div>
 
-            <div className='conteiner-select'>
-                <Button type="submit" style={{ background: "#4DB6AC", fontWeight: 800, borderColor: "#4DB6AC" }}>
-                    Iniciar sesión
-                </Button>
+            {/* FOOTER */}
+            <div className="login-footer">
+                🔒 Tu privacidad es nuestra prioridad. Todos tus datos están cifrados y protegidos.
             </div>
-        </Form>
+
+            </div>
+        </div>
     )
 }
 

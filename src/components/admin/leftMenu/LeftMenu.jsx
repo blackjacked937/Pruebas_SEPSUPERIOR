@@ -3,8 +3,10 @@ import { Nav } from "react-bootstrap";
 import { FaHome } from "react-icons/fa";
 import { FcStatistics } from "react-icons/fc";
 import { GiBrain, GiBrainStem } from "react-icons/gi";
+import { VscGraph } from "react-icons/vsc";
 import { SiJupyter } from "react-icons/si";
 
+import logoMCA from '../../../assets/img/logoMCA.png'
 import image from '../../../assets/img/logoColor.png'
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../../hooks";
@@ -175,8 +177,8 @@ function MenuAdminConasama({ pathname, isSuperUser, isStaff }) {
             <Nav.Link as={Link} to="/admin/gestor/conasama" className="text-nav">
               <div>
                 <img
-                  src={image}
-                  alt="Logo"
+                  src={logoMCA}
+                  alt="LogoMCA"
                   style={{
                     width: "100%",
                     marginBottom: "1rem",
@@ -204,7 +206,7 @@ function MenuAdminConasama({ pathname, isSuperUser, isStaff }) {
               to="/admin/gestor/conasama/estadisticas"
               active={pathname === "/admin/gestor/conasama/estadisticas"}
             >
-              <FcStatistics className="icon" /> Dashboard
+              <VscGraph className="icon" /> Graficas
             </Nav.Link>
           </Nav.Item>
 
@@ -230,8 +232,8 @@ function MenuAdminConasama({ pathname, isSuperUser, isStaff }) {
             <Nav.Link as={Link} to="/admin/super-gestor/conasama" className="text-nav">
               <div>
                 <img
-                  src={image}
-                  alt="Logo"
+                  src={logoMCA}
+                  alt="logoMCA"
                   style={{
                     width: "100%",
                     marginBottom: "1rem",
@@ -259,7 +261,7 @@ function MenuAdminConasama({ pathname, isSuperUser, isStaff }) {
               to="/admin/super-gestor/conasama/graficas"
               active={pathname === "/admin/super-gestor/conasama/graficas"}
             >
-              <FcStatistics className="icon" /> Dashboard
+              <VscGraph className="icon" /> Graficas
             </Nav.Link>
           </Nav.Item>
 

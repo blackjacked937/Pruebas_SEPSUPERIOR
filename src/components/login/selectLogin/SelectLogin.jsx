@@ -6,6 +6,7 @@ import { FormLogin } from '../formLogin/FormLogin';
 import imagen from '../../../assets/img/logoColor.png'
 import isem from '../../../assets/img/Colibri_Vertical_FondoClaro 02.png'
 import jupyter from '../../../assets/img/Jupyter_log.png'
+import logoMCA from '../../../assets/img/logoMCA.png'
 import './SelectLogin.css'
 
 
@@ -14,11 +15,11 @@ export function SelectLogin() {
     const [view, setView] = useState(0)
 
     const views = [
-        <SelectLogin />,
-        <FormLogin typeLogin={1}/>,
-        <FormLogin typeLogin={2}/>,
-        <FormLogin typeLogin={3}/>
-    ]
+    <SelectLogin key="menu" />,
+        <FormLogin key="isem" typeLogin={1} onBack={() => setView(0)} />,
+        <FormLogin key="fase1" typeLogin={2} onBack={() => setView(0)} />,
+        <FormLogin key="conasama" typeLogin={3} onBack={() => setView(0)} />
+    ];
 
     return views[view]
 
@@ -46,7 +47,7 @@ export function SelectLogin() {
                     />
                     <IconButton
                         text="Mente Conecta Conasama"
-                        image={imagen}
+                        image={logoMCA}
                         onChangeMethod={() => setView(3)}
                     />
                 </div>

@@ -50,24 +50,59 @@ export function InitialDashboard({ data, title }) {
             originalScore: d.score // Guardar el valor original también para casos no normalizados
         }));
     }
+    const axisCount = normalizedData.length;
+    const radius = axisCount >= 5 ? "60%" : "65%";
 
     return (
-        <div style={{ width: '100%', height: 400, marginBottom: "2rem", overflow: "hidden" }}>
-            <h4 style={{ textAlign: "center", whiteSpace: "normal", wordBreak: 'break-word', overflow: "hidden", textOverflow: "ellipsis" }}>{title}</h4>
+        <div style={{ width: '100%', height: 400, marginBottom: "2rem"}}>
+            <h4 style={{ textAlign: "center", marginBottom: 10 }}>{title}</h4>
             <ResponsiveContainer>
-                <RadarChart cx="50%" cy="50%" outerRadius="80%" data={normalizedData}>
+                <RadarChart
+                    cx="50%"
+                    cy="58%"
+                    outerRadius={radius}
+                    data={normalizedData}
+                >
                     <PolarGrid />
-                    <PolarAngleAxis 
+                    <PolarAngleAxis
                         dataKey="name"
-                        tickFormatter={truncateLabel}
-                        tick={{ 
-                            fontSize: 13, 
-                            whiteSpace: "nowrap", 
-                            overflow: "hidden", 
-                            textOverflow: "ellipsis" 
-                        }} 
+                        tick={(props) => {
+                            const { x, y, payload, textAnchor } = props;
+
+                            const clean = payload.value.replace(/^usuarios con\s*/i, "");
+                            const words = clean.split(" ");
+
+                            // 👉 agrupar palabras de 2 en 2
+                            const lines = [];
+                            for (let i = 0; i < words.length; i += 2) {
+                            lines.push(words.slice(i, i + 2).join(" "));
+                            }
+
+                            const lineHeight = 14;
+                            const offsetY = -(lines.length - 1) * (lineHeight / 2);
+
+                            return (
+                            <text
+                                x={x}
+                                y={y + offsetY}
+                                textAnchor={textAnchor}
+                                fontSize={12}
+                                fontWeight={500}
+                            >
+                                {lines.map((line, index) => (
+                                <tspan key={index} x={x} dy={index === 0 ? 0 : lineHeight}>
+                                    {line}
+                                </tspan>
+                                ))}
+                            </text>
+                            );
+                        }}
                     />
-                    <PolarRadiusAxis domain={[0, maxValue]} />
+                    <PolarRadiusAxis 
+                        domain={[0, maxValue]} 
+                        tick={false}
+                        axisLine={false}
+                    />
                     <Tooltip content={<CustomTooltip />} />
                     <Radar
                         name={title}
