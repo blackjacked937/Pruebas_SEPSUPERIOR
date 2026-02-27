@@ -87,7 +87,7 @@ export function HomeSuperAdminConasama() {
                                                     account={item.score}
                                                     title={item.Cuestionario}
                                                     textLink="Ver análisis"
-                                                    link={`/admin/super-gestor/conasama/pacientes-riesgo/${id}/`}
+                                                    link={`/admin/super-gestor/conasama/pacientes-riesgo`}
                                                 />
                                             </Col>
                                         ))
