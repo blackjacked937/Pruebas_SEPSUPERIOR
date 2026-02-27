@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 
-import { usePacientesSensibles } from '../../../hooks/conasama';
-import { DividerIcon } from '../../../components/common';
-import { TablePacientesSensibles } from '../../../components/adminconasama/columbia/tablePacientesSensibles';
-
+import { usePacientesSensibles } from "../../../hooks/conasama";
+import { DividerIcon } from "../../../components/common";
+import { TablePacientesSensibles } from "../../../components/adminconasama/columbia/tablePacientesSensibles";
 
 export function ColumbiaPageCona() {
-  const {
-    pacientesSensibles,
-    loadingPacientes,
-    getPacientesSensibles
-  } = usePacientesSensibles();
+  const { pacientesSensibles, loadingPacientes, getPacientesSensibles } =
+    usePacientesSensibles();
 
   const [refetch, setRefetch] = useState(false);
   const onRefetch = () => setRefetch((prev) => !prev);
@@ -18,24 +14,25 @@ export function ColumbiaPageCona() {
   useEffect(() => {
     getPacientesSensibles();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refetch])
+  }, [refetch]);
 
   return (
     <div>
-      <DividerIcon
-        titulo="Pacientes por grupo de riesgo"
-      />
-      {
-        loadingPacientes 
-          ? <h3>Cargando...</h3>
-          : 
-            <TablePacientesSensibles
-              data={pacientesSensibles}
-              onRefetch={onRefetch}
-            />
-      }
+      <center>
+        <h1 style={{ color: "#4DB6AC" }}>
+          Pacientes por grupo de riesgo
+        </h1>
+      </center>
+      {loadingPacientes ? (
+        <h3>Cargando...</h3>
+      ) : (
+        <TablePacientesSensibles
+          data={pacientesSensibles}
+          onRefetch={onRefetch}
+        />
+      )}
     </div>
-  )
+  );
   /*
   const {
     columbiaPatiensInAlert,

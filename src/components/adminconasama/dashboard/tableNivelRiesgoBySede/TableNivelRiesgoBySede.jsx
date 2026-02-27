@@ -1,132 +1,135 @@
-import React, { useState } from "react";
-import { Tabs, Tab, Button } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil } from "@fortawesome/free-solid-svg-icons";
-import DataTable from "react-data-table-component";
-import "./TableNivelRiesgoBySede.css";
+    import React, { useState } from "react";
+    import DataTable from "react-data-table-component";
+    import Button from "react-bootstrap/Button";
+    import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+    import { faPencil } from "@fortawesome/free-solid-svg-icons";
+    import "./TableNivelRiesgoBySede.css";
 
-export function TableNivelRiesgoBySede(props) {
-  const { dataBySede, sedesIds } = props;
-  const [activeTab, setActiveTab] = useState("1");
+    export function TableNivelRiesgoBySede(props) {
+    const { dataBySede } = props;
+    const [activeTab, setActiveTab] = useState(1);
 
-  // Nombres de las sedes (puedes ajustarlos según tus necesidades)
-  const sedesNames = {
-    1: "Sede 1",
-    2: "Sede 2",
-    3: "Sede 3",
-    4: "Sede 4",
-    5: "Sede 5",
-    6: "Sede 6"
-  };
+    // Define sedesNames for tab titles
+    const sedesNames = {
+      1: "Ciudad de México",
+      2: "Morelos",
+      3: "Tlaxcala",
+      4: "Hidalgo"
+    };
 
-  const columns = [
-    { 
-      name: "ID",
-      selector: (row) => row.id || row._id || '',
-      sortable: true,
-      width: '80px'
-    },
-    {
-      name: "Paciente",
-      selector: (row) => {
-        // Intentar acceder a usuario.nombre o directamente a nombre
-        if (row.usuario) {
-          return `${row.usuario.nombre || ''}`.trim();
+    const columns = [
+        {
+          name: "ID",
+          selector: (row) => row.usuario?.id || row.id || row._id || '',
+          sortable: true,
+          width: '80px'
+        },
+        {
+          name: "Paciente",
+          selector: (row) => row.usuario?.nombre || row.paciente_nombre || row.nombre || '',
+          sortable: true,
+          wrap: true,
+          minWidth: '200px'
+        },
+        {
+          name: "Correo",
+          selector: (row) => row.usuario?.email || row.paciente_correo || row.email || row.correo || '',
+          sortable: true,
+          wrap: true,
+          minWidth: '200px'
+        },
+        {
+          name: "Clasificación Médica",
+          selector: (row) => {
+            const grupo = row.grupo || '';
+            const status = row.status || row.estado || '';
+            return `${grupo} ${status}`.trim();
+          },
+          sortable: true,
+          minWidth: '220px',
+          wrap: true
+        },
+        {
+          name: "Celular De Emergencia",
+          selector: (row) => {
+            const celularUsuario = row.usuario?.celular_paciente || row.usuario?.celular || row.celular_paciente || row.celular;
+            if (celularUsuario) return celularUsuario;
+            if (Array.isArray(row.usuario?.contactos_emergencia) && row.usuario.contactos_emergencia.length > 0) {
+              return row.usuario.contactos_emergencia[0].celular || '';
+            }
+            return '';
+          },
+          sortable: true,
+          width: '150px'
+        },
+        {
+          name: "Parentesco",
+          selector: (row) => {
+            if (Array.isArray(row.usuario?.contactos_emergencia) && row.usuario.contactos_emergencia.length > 0) {
+              return row.usuario.contactos_emergencia[0].parentesco || '';
+            }
+            return '';
+          },
+          sortable: true,
+          width: '120px'
+        },
+        {
+          name: "Fecha de Evaluación",
+          selector: (row) => row.fecha_evaluacion || row.fecha || '',
+          sortable: true,
+          minWidth: '180px',
+          format: (row) => {
+            const fechaRaw = row.fecha_evaluacion || row.fecha;
+            if (!fechaRaw) return '';
+            const fecha = new Date(fechaRaw);
+            return fecha.toLocaleString('es-MX', {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+              hour: '2-digit',
+              minute: '2-digit'
+            });
+          }
         }
-        return row.nombre`${row.nombre || ''} `.trim();
-      },
-      sortable: true,
-      wrap: true,
-      minWidth: '200px'
-    },
-    {
-      name: "Correo",
-      selector: (row) => row.usuario?.email || row.email || row.correo,
-      sortable: true,
-      wrap: true,
-      minWidth: '200px'
-    },
-    {
-      name: "Nivel de Riesgo",
-      selector: (row) => row.nivel_riesgo || row.riesgo,
-      sortable: true,
-      minWidth: '300px',
-      wrap: true
-    },
-    {
-      name: "Puntaje",
-      selector: (row) => row.evaluacion_score,
-      sortable: true,
-      width: '100px'
-    },
-    {
-      name: "Fecha de Evaluación",
-      selector: (row) => row.fecha_evaluacion,
-      sortable: true,
-      minWidth: '180px',
-      format: (row) => {
-        if (!row.fecha_evaluacion) return '';
-        const fecha = new Date(row.fecha_evaluacion);
-        return fecha.toLocaleString('es-MX', { 
-          year: 'numeric', 
-          month: '2-digit', 
-          day: '2-digit',
-          hour: '2-digit',
-          minute: '2-digit'
-        });
-      }
-    },
-    {
-      name: "Asignar paciente",
-      button: true,
-      width: '150px',
-      cell: (row) => (
-        <Button
-          size="sm"
-          variant="success"
-          className="btn-asignar-paciente"
-        >
-          <FontAwesomeIcon icon={faPencil} />
-        </Button>
-      )
-    }
-  ];
+      ];
 
-  return (
-    <div className="nivel-riesgo-tabs-container">
-      <Tabs
-        id="sedes-tabs"
-        activeKey={activeTab}
-        onSelect={(k) => setActiveTab(k)}
-        className="mb-3"
-      >
-        {sedesIds.map((sedeId) => (
-          <Tab
-            eventKey={String(sedeId)}
-            title={sedesNames[sedeId] || `Sede ${sedeId}`}
-            key={sedeId}
-          >
-            <div className="sede-table-container">
-              <h5 className="sede-title">
-                {sedesNames[sedeId] || `Sede ${sedeId}`}
-                <span className="badge bg-primary ms-2">
-                  {dataBySede[sedeId]?.length || 0} pacientes
-                </span>
-              </h5>
-              <DataTable
-                columns={columns}
-                data={dataBySede[sedeId] || []}
-                defaultSortField="name"
-                striped
-                pagination
-                paginationPerPage={10}
-                paginationRowsPerPageOptions={[10, 20, 30, 50]}
-                noDataComponent={<span>No hay registros disponibles para esta sede</span>}
-              />
+      return (
+        <div className="nivel-riesgo-tabs-container">
+          <div className="tabs-sedes">
+            {Object.entries(sedesNames).map(([key, name]) => (
+              <button
+                key={key}
+                className={`tab-sede-btn${parseInt(key) === activeTab ? ' active' : ''}`}
+                onClick={() => setActiveTab(parseInt(key))}
+              >
+                {name}
+              </button>
+            ))}
+          </div>
+          <div className="sede-table-container">
+            <div className="sede-header">
+              <span className="sede-title">{sedesNames[activeTab] || `Sede ${activeTab}`}</span>
+              <span className="badge-sede">
+                {Array.isArray(dataBySede[activeTab])
+                  ? dataBySede[activeTab].filter(p => p.usuario?.sede_id === activeTab).length
+                  : 0
+                } pacientes
+              </span>
             </div>
-          </Tab>
-        ))}
-      </Tabs>
-    </div>
-  );
-}
+            <DataTable
+              columns={columns}
+              data={Array.isArray(dataBySede[activeTab])
+                ? dataBySede[activeTab].filter(p => p.usuario?.sede_id === activeTab)
+                : []
+              }
+              defaultSortField="name"
+              striped
+              pagination
+              paginationPerPage={10}
+              paginationRowsPerPageOptions={[10, 20, 30, 50]}
+              noDataComponent={<span>No hay registros disponibles para esta sede</span>}
+            />
+          </div>
+        </div>
+      );
+    }

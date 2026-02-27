@@ -28,7 +28,7 @@ const routesAdminConasama = [
         ),
     },
     {
-        path: "/admin/super-gestor/conasama/pacientes-riesgo/:id/",
+        path: "/admin/super-gestor/conasama/pacientes-riesgo",
         layout: AdminLayout,
         component: (props) => (
             <RoleRoute allowSuper>

@@ -15,13 +15,11 @@ export function usePacientesSensibles() {
             setLoadingPacientes(true);
             setErrorPacientes(null);
             const response = await getPacientesSensiblesApi(auth.token);
-            console.log('Pacientes sensibles:', response);
             setPacientesSensibles(response);
             setLoadingPacientes(false);
         } catch (error) {
             setLoadingPacientes(false);
             setErrorPacientes(error);
-            console.log('Error al obtener pacientes sensibles:', error);
         }
     };
 

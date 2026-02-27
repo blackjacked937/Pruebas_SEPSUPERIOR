@@ -1,5 +1,3 @@
-// API PARA NIVEL DE RIESGO POR SEDE CONASAMA
-
 import { BASE_API_CONASAMA_V1 } from "../../utils/constants";
 
 export async function getNivelRiesgoBySede(token, sedeId) {

@@ -1,5 +1,3 @@
-// HOOK PARA NIVEL DE RIESGO POR SEDE CONASAMA
-
 import { useState } from "react";
 import { useAuth } from "../useAuth";
 import { getNivelRiesgoBySede } from '../../api/conasama/nivelRiesgoBySede';
@@ -10,8 +8,8 @@ export function useNivelRiesgoBySede() {
     const [loadingBySede, setLoadingBySede] = useState(false);
     const [errorBySede, setErrorBySede] = useState(null);
 
-    // IDs de sedes hardcodeadas (del 1 al 6)
-    const SEDES_IDS = [1, 2, 3, 4, 5, 6];
+    // IDs de sedes actualizadas (solo 4 sedes)
+    const SEDES_IDS = [1, 2, 3, 4];
 
     const getAllSedesData = async () => {
         try {
@@ -27,20 +25,17 @@ export function useNivelRiesgoBySede() {
                     const response = await getNivelRiesgoBySede(auth.token, sedeId);
                     allData[sedeId] = response;
                 } catch (error) {
-                    console.log(`Error al obtener datos de sede ${sedeId}:`, error);
                     allData[sedeId] = [];
                 }
             });
 
             await Promise.all(promises);
             
-            console.log('Datos de todas las sedes:', allData);
             setDataBySede(allData);
             setLoadingBySede(false);
         } catch (error) {
             setLoadingBySede(false);
             setErrorBySede(error);
-            console.log('Error al obtener datos de sedes:', error);
         }
     };
 
@@ -53,7 +48,6 @@ export function useNivelRiesgoBySede() {
             }));
             return response;
         } catch (error) {
-            console.log(`Error al obtener datos de sede ${sedeId}:`, error);
             throw error;
         }
     };
