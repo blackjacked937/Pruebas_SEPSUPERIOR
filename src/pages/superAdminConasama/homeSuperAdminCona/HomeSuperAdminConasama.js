@@ -6,6 +6,8 @@ import { getConteoNivelRiesgoApi } from '../../../api/conasama/gestores';
 
 import './HomeSuperAdminConasama.css'; 
 
+const idsSedes = [1, 2, 3, 4];
+
 export function HomeSuperAdminConasama() {
     const { auth } = useAuth();
     const [sedesData, setSedesData] = useState({});
@@ -18,8 +20,6 @@ export function HomeSuperAdminConasama() {
         3: "Tlaxcala",
         4: "Hidalgo"
     };
-
-    const idsSedes = [1, 2, 3, 4];
 
     useEffect(() => {
         (async () => {
