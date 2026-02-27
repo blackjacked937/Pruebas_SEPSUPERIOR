@@ -50,7 +50,7 @@ export function RegisterGestorForm(props) {
     return (
         <Form onSubmit={formik.handleSubmit}>
             <Row>
-                <Col md={6}>
+                <Col xs={12} md={6} className="mb-3">
                     <InputForm
                         label="Nombre"
                         nameInput="nombre"
@@ -62,7 +62,7 @@ export function RegisterGestorForm(props) {
                         disabled={viewMode}
                     />
                 </Col>
-                <Col md={6}>
+                <Col xs={12} md={6} className="mb-3">
                     <InputForm
                         label="Apellido Paterno"
                         nameInput="apellido_paterno"
@@ -77,7 +77,7 @@ export function RegisterGestorForm(props) {
             </Row>
 
             <Row>
-                <Col md={6}>
+                <Col xs={12} md={6} className="mb-3">
                     <InputForm
                         label="Apellido Materno"
                         nameInput="apellido_materno"
@@ -89,7 +89,7 @@ export function RegisterGestorForm(props) {
                         disabled={viewMode}
                     />
                 </Col>
-                <Col md={6}>
+                <Col xs={12} md={6} className="mb-3">
                     <InputForm
                         label="Email"
                         nameInput="email"
@@ -104,7 +104,7 @@ export function RegisterGestorForm(props) {
             </Row>
 
             <Row>
-                <Col md={6}>
+                <Col xs={12} md={6} className="mb-3">
                     {!viewMode && <InputForm
                         label="Contraseña"
                         nameInput="password"
@@ -117,7 +117,7 @@ export function RegisterGestorForm(props) {
                         disabled={viewMode}
                     />}
                 </Col>
-                <Col md={6}>
+                <Col xs={12} md={6} className="mb-3">
                     <InputForm
                         label="Celular"
                         nameInput="celular_paciente"
@@ -132,7 +132,7 @@ export function RegisterGestorForm(props) {
             </Row>
 
             <Row>
-                <Col md={6}>
+                <Col xs={12} md={6} className="mb-3">
                     <InputForm
                         label="Matrícula Laboral"
                         nameInput="matricula_laboral"
@@ -144,7 +144,7 @@ export function RegisterGestorForm(props) {
                         disabled={viewMode}
                     />
                 </Col>
-                <Col md={6}>
+                <Col xs={12} md={6} className="mb-3">
                     <SelectForm
                         label="Sede"
                         name="sede_id"
@@ -162,7 +162,7 @@ export function RegisterGestorForm(props) {
             <h5 className="text-center mb-3">Información Profesional</h5>
 
             <Row>
-                <Col md={6}>
+                <Col xs={12} md={6} className="mb-3">
                     <SelectForm
                         label="Grado"
                         name="id_grado"
@@ -174,11 +174,11 @@ export function RegisterGestorForm(props) {
                         disabled={viewMode}
                     />
                 </Col>
-                <Col md={6}>
+                <Col xs={12} md={6} className="mb-3">
                     <SelectForm
                         label="Tipo de Contratación"
                         name="id_contratacion"
-                        options={getOptions("Tipo de Contratación")}
+                        options={getOptions("Tipo de contratación")}
                         value={formik.values.id_contratacion}
                         onChange={formik.handleChange}
                         error={formik.errors.id_contratacion}
@@ -189,7 +189,7 @@ export function RegisterGestorForm(props) {
             </Row>
 
             <Row>
-                <Col md={6}>
+                <Col xs={12} md={6} className="mb-3">
                     <SelectForm
                         label="Perfil"
                         name="id_perfil"
@@ -201,7 +201,7 @@ export function RegisterGestorForm(props) {
                         disabled={viewMode}
                     />
                 </Col>
-                <Col md={6}>
+                <Col xs={12} md={6} className="mb-3">
                     <SelectForm
                         label="Nivel"
                         name="id_nivel"
@@ -216,7 +216,7 @@ export function RegisterGestorForm(props) {
             </Row>
 
             <Row>
-                <Col md={6}>
+                <Col xs={12} md={6} className="mb-3">
                     <SelectForm
                         label="Cargo"
                         name="id_cargo"
@@ -228,7 +228,7 @@ export function RegisterGestorForm(props) {
                         disabled={viewMode}
                     />
                 </Col>
-                <Col md={6}>
+                <Col xs={12} md={6} className="mb-3">
                     <SelectForm
                         label="Profesión"
                         name="id_profesion"

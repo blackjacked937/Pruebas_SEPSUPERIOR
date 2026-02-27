@@ -30,7 +30,7 @@ export function InputForm(props) {
                     size={size}
                     style={{
                         borderColor: touched && error ? "red" : "#4DB6AC57",
-                        width: "22rem"
+                        width: "100%"
                     }}
                 />
             </center>
