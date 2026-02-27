@@ -15,7 +15,8 @@ export async function registerGestorApi(data, token) {
         const response = await fetch(url, params);
         const result = await response.json();
         if (response.status !== 200 && response.status !== 201) {
-            throw new Error(result.message || "Error al registrar el gestor");
+            const errorMessage = result.email?.[0] || result.message || "Error al registrar";
+            throw new Error(errorMessage);
         }
         return result;
     } catch (error) {
@@ -48,7 +49,7 @@ export async function getGestoresApi(token) {
 export async function getConteoNivelRiesgoApi(id, token) {
     try {
         const url = `${BASE_API_CONASAMA_V1}/dashboard/Dashbord_Admin/ConteoPorNivelRiesgo/${id}/`;
-        
+
         const params = {
             method: "GET",
             headers: {

@@ -121,7 +121,7 @@ export function RegisterGestorForm(props) {
                     <InputForm
                         label="Celular"
                         nameInput="celular_paciente"
-                        placeHolderInput="5550438408"
+                        placeHolderInput="5512345678"
                         valueInput={formik.values.celular_paciente}
                         onChangeInput={formik.handleChange}
                         error={formik.errors.celular_paciente}
@@ -136,7 +136,7 @@ export function RegisterGestorForm(props) {
                     <InputForm
                         label="Matrícula Laboral"
                         nameInput="matricula_laboral"
-                        placeHolderInput="3432434343"
+                        placeHolderInput="0000000000"
                         valueInput={formik.values.matricula_laboral}
                         onChangeInput={formik.handleChange}
                         error={formik.errors.matricula_laboral}
@@ -283,7 +283,7 @@ function newSchema() {
         email: Yup.string().email('Email no válido').required('El email es obligatorio'),
         password: Yup.string().min(8, 'La contraseña debe tener al menos 8 caracteres').required('La contraseña es obligatoria'),
         celular_paciente: Yup.string().min(10, 'El celular debe tener al menos 10 caracteres').max(10, 'El celular debe tener al menos 10 caracteres').required('El celular es obligatorio'),
-        matricula_laboral: Yup.string().required('La matrícula es obligatoria'),
+        matricula_laboral: Yup.string().min(10, 'La matrícula debe tener al menos 10 caracteres').max(10, 'La matrícula debe tener al menos 10 caracteres').required('La matrícula es obligatoria'),
         sede_id: Yup.number().required('El ID de sede es obligatorio'),
         id_grado: Yup.number().required('El grado es obligatorio'),
         id_contratacion: Yup.number().required('El tipo de contratación es obligatorio'),
