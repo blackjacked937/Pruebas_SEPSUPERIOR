@@ -11,7 +11,7 @@ export default function SedeTabs({ value, onChange, organizacion }) {
       { id: 4, nombre: "Hidalgo" },
     ],
     2: [
-      { id: 5, nombre: "UPEM EDOMEX" },
+      { id: 5, nombre: "UPEM Ecatepec" },
       { id: 6, nombre: "UPEM Tecamac" },
       { id: 7, nombre: "Dra. Alma" },
     ],

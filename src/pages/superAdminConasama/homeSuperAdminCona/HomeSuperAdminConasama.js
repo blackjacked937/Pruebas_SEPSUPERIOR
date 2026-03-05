@@ -14,7 +14,7 @@ const sedesPorOrganizacion = {
     4: "Hidalgo",
   },
   2: {
-    5: "UPEM EDOMEX",
+    5: "UPEM Ecatepec",
     6: "UPEM Tecamac",
     7: "Dra. Alma",
   }
