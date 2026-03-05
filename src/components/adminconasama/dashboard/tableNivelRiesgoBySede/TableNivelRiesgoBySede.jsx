@@ -6,16 +6,7 @@
     import "./TableNivelRiesgoBySede.css";
 
     export function TableNivelRiesgoBySede(props) {
-    const { dataBySede } = props;
-    const [activeTab, setActiveTab] = useState(1);
-
-    // Define sedesNames for tab titles
-    const sedesNames = {
-      1: "Ciudad de México",
-      2: "Morelos",
-      3: "Tlaxcala",
-      4: "Hidalgo"
-    };
+    const { dataBySede, sedesIds, nombresSedes, activeSede, onChangeSede } = props;
 
     const columns = [
         {
@@ -96,33 +87,34 @@
       return (
         <div className="nivel-riesgo-tabs-container">
           <div className="tabs-sedes">
-            {Object.entries(sedesNames).map(([key, name]) => (
+            {sedesIds.map((id) => (
               <button
-                key={key}
-                className={`tab-sede-btn${parseInt(key) === activeTab ? ' active' : ''}`}
-                onClick={() => setActiveTab(parseInt(key))}
+                key={id}
+                className={`tab-sede-btn${Number(id) === Number(activeSede) ? ' active' : ''}`}
+                onClick={() => onChangeSede(Number(id))}
               >
-                {name}
+                {nombresSedes[id]}
               </button>
             ))}
           </div>
           <div className="sede-table-container">
             <div className="sede-header">
-              <span className="sede-title">{sedesNames[activeTab] || `Sede ${activeTab}`}</span>
+              <span className="sede-title">
+                {nombresSedes[activeSede] || `Sede ${activeSede}`}
+              </span>
               <span className="badge-sede">
-                {Array.isArray(dataBySede[activeTab])
-                  ? dataBySede[activeTab].filter(p => p.usuario?.sede_id === activeTab).length
+                {Array.isArray(dataBySede[activeSede])
+                  ? dataBySede[activeSede].length
                   : 0
                 } pacientes
               </span>
             </div>
             <DataTable
               columns={columns}
-              data={Array.isArray(dataBySede[activeTab])
-                ? dataBySede[activeTab].filter(p => p.usuario?.sede_id === activeTab)
+              data={Array.isArray(dataBySede[activeSede])
+                ? dataBySede[activeSede]
                 : []
               }
-              defaultSortField="name"
               striped
               pagination
               paginationPerPage={10}

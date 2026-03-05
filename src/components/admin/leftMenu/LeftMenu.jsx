@@ -18,6 +18,10 @@ export function LeftMenu(props) {
     const { pathname } = useLocation();
     const { auth } = useAuth();
     const typeLogin = auth?.typeLogin;
+    const organizacion = auth?.me?.organizacion;
+    const puedeGestionarUsuarios = organizacion === 1;
+
+    
 
     return (
         <div className="side-menu-admin">
@@ -26,13 +30,14 @@ export function LeftMenu(props) {
             typeLogin={auth?.typeLogin}
             isSuperUser={auth?.is_superuser}
             isStaff={auth?.is_staff}
+            puedeGestionarUsuarios={puedeGestionarUsuarios}
         />
         <div className="content">{children}</div>
         </div>
     );
 }
 
-function MenuLeft({ pathname, typeLogin, isSuperUser, isStaff }) {
+function MenuLeft({ pathname, typeLogin, isSuperUser, isStaff, puedeGestionarUsuarios }) {
   const menusByTypeLogin = {
     1: <MenuAdmin pathname={pathname} />,
     2: <MenuAdminFase1 pathname={pathname} />,
@@ -41,6 +46,7 @@ function MenuLeft({ pathname, typeLogin, isSuperUser, isStaff }) {
         pathname={pathname}
         isSuperUser={isSuperUser}
         isStaff={isStaff}
+        puedeGestionarUsuarios={puedeGestionarUsuarios}
       />
     ),
   };
@@ -163,7 +169,16 @@ function MenuAdminFase1(props) {
     );
 }
 
-function MenuAdminConasama({ pathname, isSuperUser, isStaff }) {
+function MenuAdminConasama({ pathname, isSuperUser, isStaff, puedeGestionarUsuarios  }) {
+  const { auth } = useAuth();
+  const organizacion = auth?.me?.organizacion;
+
+  const logos = {
+    1: logoMCA,
+    2: image
+  };
+
+  const logoOrganizacion = logos[organizacion] || logoMCA;
 
   return (
     <Nav activeKey="/admin" className="nav-conteiner">
@@ -232,8 +247,8 @@ function MenuAdminConasama({ pathname, isSuperUser, isStaff }) {
             <Nav.Link as={Link} to="/admin/super-gestor/conasama" className="text-nav">
               <div>
                 <img
-                  src={logoMCA}
-                  alt="logoMCA"
+                  src={logoOrganizacion}
+                  alt="Logo"
                   style={{
                     width: "100%",
                     marginBottom: "1rem",
@@ -276,16 +291,18 @@ function MenuAdminConasama({ pathname, isSuperUser, isStaff }) {
             </Nav.Link>
           </Nav.Item>
 
-          <Nav.Item className="menu-sub">
-            <Nav.Link
-              className="text-nav"
-              as={Link}
-              to="/admin/super-gestor/conasama/gestores"
-              active={pathname === "/admin/super-gestor/conasama/gestores"}
-            >
-              <FcStatistics className="icon" /> Gestores
-            </Nav.Link>
-          </Nav.Item>
+          {puedeGestionarUsuarios && (
+            <Nav.Item className="menu-sub">
+              <Nav.Link
+                className="text-nav"
+                as={Link}
+                to="/admin/super-gestor/conasama/gestores"
+                active={pathname === "/admin/super-gestor/conasama/gestores"}
+              >
+                <FcStatistics className="icon" /> Gestores
+              </Nav.Link>
+            </Nav.Item>
+          )}
 
           <Nav.Item className="menu-sub">
             <Nav.Link

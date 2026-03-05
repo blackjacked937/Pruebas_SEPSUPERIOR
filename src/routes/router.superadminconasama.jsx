@@ -40,7 +40,7 @@ const routesAdminConasama = [
         path: "/admin/super-gestor/conasama/gestores",
         layout: AdminLayout,
         component: (props) => (
-            <RoleRoute allowSuper>
+            <RoleRoute allowSuper allowOrganizaciones={[1]}>
                 <GestoresSuperAdminConasama {...props} />
             </RoleRoute>
         ),

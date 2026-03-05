@@ -3,21 +3,25 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-export function RoleRoute({ children, allowSuper, allowStaff }) {
+export function RoleRoute({ children, allowSuper, allowStaff, allowOrganizaciones }) {
   const { auth } = useAuth();
   const navigate = useNavigate();
   const [redirecting, setRedirecting] = useState(false);
 
-  // Validaciones
   const isConasama = Number(auth?.typeLogin) === 3;
   const isSuper = auth?.is_superuser;
   const isStaff = auth?.is_staff;
+  const organizacion = auth?.me?.organizacion;
 
-  const tienePermiso =
-  // Si no es CONASAMA ignora validaciones
-    !isConasama || 
+  const rolPermitido =
+    !isConasama ||
     (allowSuper && isSuper) ||
     (allowStaff && isStaff && !isSuper);
+
+  const organizacionPermitida =
+    !allowOrganizaciones || allowOrganizaciones.includes(organizacion);
+
+  const tienePermiso = rolPermitido && organizacionPermitida;
 
   useEffect(() => {
     if (!auth) return;
@@ -25,9 +29,11 @@ export function RoleRoute({ children, allowSuper, allowStaff }) {
     if (!tienePermiso && isConasama) {
       setRedirecting(true);
 
-      const mensaje = isSuper
-        ? "La sección que intentaste entrar es exclusiva para gestores."
-        : "La sección que intentaste entrar es exclusiva para super gestores.";
+      const mensaje = !organizacionPermitida
+      ? "Tu organización no tiene acceso a esta sección."
+      : isSuper
+      ? "La sección que intentaste entrar es exclusiva para gestores."
+      : "La sección que intentaste entrar es exclusiva para super gestores.";
 
       toast.info(mensaje, {
         icon: "🚫",

@@ -6,45 +6,61 @@ import { getConteoNivelRiesgoApi } from '../../../api/conasama/gestores';
 
 import './HomeSuperAdminConasama.css'; 
 
-const idsSedes = [1, 2, 3, 4];
+const sedesPorOrganizacion = {
+  1: {
+    1: "Ciudad de México",
+    2: "Morelos",
+    3: "Tlaxcala",
+    4: "Hidalgo",
+  },
+  2: {
+    5: "UPEM EDOMEX",
+    6: "UPEM Tecamac",
+    7: "Dra. Alma",
+  }
+};
 
 export function HomeSuperAdminConasama() {
     const { auth } = useAuth();
-    const [sedesData, setSedesData] = useState({});
-    const [loading, setLoading] = useState(true);
-    const [key, setKey] = useState('1');
 
-    const nombresSedes = {
-        1: "Ciudad de México",
-        2: "Morelos",
-        3: "Tlaxcala",
-        4: "Hidalgo"
-    };
+    const organizacion = auth?.me?.organizacion;
+
+    const sedesDisponibles = sedesPorOrganizacion[organizacion] || {};
+    const idsSedes = Object.keys(sedesDisponibles);
+
+    const [key, setKey] = useState(null);
+    const [sedesData, setSedesData] = useState({});
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        (async () => {
-            try {
-                setLoading(true);
-                const resultadosTemporales = {};
+        if (idsSedes.length > 0) {
+            setKey(idsSedes[0]);
+        }
+    }, [organizacion]);
 
-                await Promise.all(
-                    idsSedes.map(async (id) => {
-                        try {
-                            const data = await getConteoNivelRiesgoApi(id, auth.token);
-                            resultadosTemporales[id] = data;
-                        } catch (err) {
-                            resultadosTemporales[id] = [];
-                        }
-                    })
-                );
-                setSedesData(resultadosTemporales);
+    useEffect(() => {
+        if (!key || !auth?.token) return;
+
+        const fetchData = async () => {
+            try {
+            setLoading(true);
+
+            const data = await getConteoNivelRiesgoApi(Number(key), auth.token);
+
+            setSedesData((prev) => ({
+                ...prev,
+                [key]: data || []
+            }));
+
             } catch (error) {
-                console.error(error);
+            console.error(error);
             } finally {
-                setLoading(false);
+            setLoading(false);
             }
-        })();
-    }, [auth.token]);
+        };
+
+        fetchData();
+    }, [key, auth?.token]);
 
     return (
         <Container className="mt-4 container-home-admin-fase-1" style={{ display: 'flex', flexDirection: 'column' }}>
@@ -61,45 +77,52 @@ export function HomeSuperAdminConasama() {
                 </div>
             ) : (
                 <Tabs
-                    id="tabs-sedes-admin"
                     activeKey={key}
                     onSelect={(k) => setKey(k)}
                     className="mb-4 custom-tabs"
-                    fill 
+                    fill
                 >
-                    {idsSedes.map((id) => (
-                        <Tab 
-                            eventKey={id.toString()} 
-                            title={nombresSedes[id]} 
-                            key={id}
-                        >
-                            <div className="p-4 bg-light rounded shadow-sm border">
-                                
-                                <h3 className="mb-4 text-secondary">
-                                    Sede: {nombresSedes[id]}
-                                </h3>
-                                <Row>
-                                    {sedesData[id] && sedesData[id].length > 0 ? (
-                                        sedesData[id].map((item) => (
-                                            <Col key={`${id}-${item.id_cuestionario}`} xs={12} sm={6} lg={4} className="mb-4">
-                                                <CardInfoNavigation
-                                                    riskLevel={item.score}
-                                                    account={item.score}
-                                                    title={item.Cuestionario}
-                                                    textLink="Ver análisis"
-                                                    link={`/admin/super-gestor/conasama/pacientes-riesgo`}
-                                                />
-                                            </Col>
-                                        ))
-                                    ) : (
-                                        <Col xs={12} className="text-center py-5">
-                                            <p className="text-muted italic">No se encontraron datos para {nombresSedes[id]}.</p>
-                                        </Col>
-                                    )}
-                                </Row>
-                            </div>
-                        </Tab>
-                    ))}
+                {idsSedes.map((id) => (
+                    <Tab
+                        eventKey={id}
+                        title={sedesDisponibles[id]}
+                        key={id}
+                    >
+                    <div className="p-4 bg-light rounded shadow-sm border">
+                        <h3 className="mb-4 text-secondary">
+                        Sede: {sedesDisponibles[id]}
+                        </h3>
+
+                        <Row>
+                        {sedesData[id]?.length > 0 ? (
+                            sedesData[id].map((item) => (
+                            <Col
+                                key={`${id}-${item.id_cuestionario}`}
+                                xs={12}
+                                sm={6}
+                                lg={4}
+                                className="mb-4"
+                            >
+                                <CardInfoNavigation
+                                riskLevel={item.score}
+                                account={item.score}
+                                title={item.Cuestionario}
+                                textLink="Ver análisis"
+                                link={`/admin/super-gestor/conasama/pacientes-riesgo`}
+                                />
+                            </Col>
+                            ))
+                        ) : (
+                            <Col xs={12} className="text-center py-5">
+                            <p className="text-muted italic">
+                                No se encontraron datos para {sedesDisponibles[id]}.
+                            </p>
+                            </Col>
+                        )}
+                        </Row>
+                    </div>
+                    </Tab>
+                ))}
                 </Tabs>
             )}
         </Container>
