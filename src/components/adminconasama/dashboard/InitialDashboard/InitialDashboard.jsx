@@ -2,7 +2,7 @@ import React from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip } from 'recharts';
 
 const pastelColors = [
-    "#64B5F6",
+    "#b251ca",
 ];
 
 // Tooltip personalizado

@@ -7,6 +7,15 @@ import { getConteoNivelRiesgoApi } from '../../../api/conasama/gestores';
 import './HomeSuperAdminConasama.css'; 
 
 const sedesPorOrganizacion = {
+  0: {
+    1: "Ciudad de México",
+    2: "Morelos",
+    3: "Tlaxcala",
+    4: "Hidalgo",
+    5: "UPEM Ecatepec",
+    6: "UPEM Tecamac",
+    7: "Dra. Alma",
+  },
   1: {
     1: "Ciudad de México",
     2: "Morelos",
