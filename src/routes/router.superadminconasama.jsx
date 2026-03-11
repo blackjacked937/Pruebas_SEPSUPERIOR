@@ -4,7 +4,8 @@ import {
     GestoresSuperAdminConasama,
     GraficasSuperAdminConasama,
     PacientesSuperAdminConasama,
-    NoticiasSuperAdminConasama
+    NoticiasSuperAdminConasama,
+    ReportesSuperAdminConasama
 } from '../pages/superAdminConasama';
 import { RoleRoute } from '../components/adminconasama/proteccionRutas';
 
@@ -53,7 +54,16 @@ const routesAdminConasama = [
                 <NoticiasSuperAdminConasama {...props} />
             </RoleRoute>
         ),
-    }
+    },
+    {
+        path: "/admin/super-gestor/conasama/reportes",
+        layout: AdminLayout,
+        component: (props) => (
+            <RoleRoute allowSuper allowOrganizaciones={[0]}>
+                <ReportesSuperAdminConasama {...props} />
+            </RoleRoute>
+        ),
+    },
 ]
 
 export default routesAdminConasama;

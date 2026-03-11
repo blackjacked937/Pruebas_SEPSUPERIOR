@@ -3,8 +3,11 @@ import { Nav } from "react-bootstrap";
 import { FaHome } from "react-icons/fa";
 import { FcStatistics } from "react-icons/fc";
 import { GiBrain, GiBrainStem } from "react-icons/gi";
+import { FaUserDoctor } from "react-icons/fa6";
 import { VscGraph } from "react-icons/vsc";
+import { IoNewspaperOutline } from "react-icons/io5";
 import { SiJupyter } from "react-icons/si";
+import { HiUserGroup, HiDocumentReport } from "react-icons/hi";
 
 import logoMCA from '../../../assets/img/logoMCA.png'
 import image from '../../../assets/img/logoColor.png'
@@ -20,6 +23,7 @@ export function LeftMenu(props) {
     const typeLogin = auth?.typeLogin;
     const organizacion = auth?.me?.organizacion;
     const puedeGestionarUsuarios = organizacion === 1;
+    const puedeGenerarReportes = organizacion === 0;
 
     
 
@@ -31,13 +35,14 @@ export function LeftMenu(props) {
             isSuperUser={auth?.is_superuser}
             isStaff={auth?.is_staff}
             puedeGestionarUsuarios={puedeGestionarUsuarios}
+            puedeGenerarReportes={puedeGenerarReportes}
         />
         <div className="content">{children}</div>
         </div>
     );
 }
 
-function MenuLeft({ pathname, typeLogin, isSuperUser, isStaff, puedeGestionarUsuarios }) {
+function MenuLeft({ pathname, typeLogin, isSuperUser, isStaff, puedeGestionarUsuarios, puedeGenerarReportes }) {
   const menusByTypeLogin = {
     1: <MenuAdmin pathname={pathname} />,
     2: <MenuAdminFase1 pathname={pathname} />,
@@ -47,6 +52,7 @@ function MenuLeft({ pathname, typeLogin, isSuperUser, isStaff, puedeGestionarUsu
         isSuperUser={isSuperUser}
         isStaff={isStaff}
         puedeGestionarUsuarios={puedeGestionarUsuarios}
+        puedeGenerarReportes={puedeGenerarReportes}
       />
     ),
   };
@@ -169,7 +175,7 @@ function MenuAdminFase1(props) {
     );
 }
 
-function MenuAdminConasama({ pathname, isSuperUser, isStaff, puedeGestionarUsuarios  }) {
+function MenuAdminConasama({ pathname, isSuperUser, isStaff, puedeGestionarUsuarios, puedeGenerarReportes  }) {
   const { auth } = useAuth();
   const organizacion = auth?.me?.organizacion;
 
@@ -232,7 +238,7 @@ function MenuAdminConasama({ pathname, isSuperUser, isStaff, puedeGestionarUsuar
               to="/admin/gestor/conasama/columbia"
               active={pathname === "/admin/gestor/conasama/columbia"}
             >
-              <FcStatistics className="icon" /> Grupo de Riesgos
+              <HiUserGroup className="icon" /> Grupo de Riesgos
             </Nav.Link>
           </Nav.Item>
         </>
@@ -287,7 +293,7 @@ function MenuAdminConasama({ pathname, isSuperUser, isStaff, puedeGestionarUsuar
               to="/admin/super-gestor/conasama/pacientes-riesgo"
               active={pathname === "/admin/super-gestor/conasama/pacientes-riesgo"}
             >
-              <FcStatistics className="icon" /> Grupo de Riesgos
+              <HiUserGroup className="icon" /> Grupo de Riesgos
             </Nav.Link>
           </Nav.Item>
 
@@ -299,7 +305,20 @@ function MenuAdminConasama({ pathname, isSuperUser, isStaff, puedeGestionarUsuar
                 to="/admin/super-gestor/conasama/gestores"
                 active={pathname === "/admin/super-gestor/conasama/gestores"}
               >
-                <FcStatistics className="icon" /> Gestores
+                <FaUserDoctor className="icon" /> Gestores
+              </Nav.Link>
+            </Nav.Item>
+          )}
+
+          {puedeGenerarReportes && (
+            <Nav.Item className="menu-sub">
+              <Nav.Link
+                className="text-nav"
+                as={Link}
+                to="/admin/super-gestor/conasama/reportes"
+                active={pathname === "/admin/super-gestor/conasama/reportes"}
+              >
+                <HiDocumentReport className="icon" /> Reportes
               </Nav.Link>
             </Nav.Item>
           )}
@@ -311,7 +330,7 @@ function MenuAdminConasama({ pathname, isSuperUser, isStaff, puedeGestionarUsuar
               to="/admin/super-gestor/conasama/noticias"
               active={pathname === "/admin/super-gestor/conasama/noticias"}
             >
-              <FcStatistics className="icon" /> Noticias
+              <IoNewspaperOutline className="icon" /> Noticias
             </Nav.Link>
           </Nav.Item>
         </>
