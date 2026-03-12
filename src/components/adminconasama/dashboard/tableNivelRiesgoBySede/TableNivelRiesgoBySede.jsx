@@ -118,7 +118,13 @@
               striped
               pagination
               paginationPerPage={10}
-              paginationRowsPerPageOptions={[10, 20, 30, 50]}
+              paginationRowsPerPageOptions={[10, 20, 30, 40, 50]}
+              paginationComponentOptions={{
+                rowsPerPageText: 'Filas por página:',
+                rangeSeparatorText: 'de',
+                selectAllRowsItem: true,
+                selectAllRowsItemText: 'Todos'
+              }}
               noDataComponent={<span>No hay registros disponibles para esta sede</span>}
             />
           </div>

@@ -6,6 +6,7 @@
 
     export function TableReportesEvaluacionesBySede(props) {
     const { dataBySede, sedesIds, nombresSedes, activeSede, onChangeSede } = props;
+    const [filterText, setFilterText] = useState("");
 
     const columns = [
         {
@@ -304,10 +305,21 @@
             type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         });
 
-        const sedeNombre = nombresSedes[activeSede] || `Sede_${activeSede}`;
+        const sedeNombre = (nombresSedes[activeSede] || `Sede_${activeSede}`)
+            .replace(/[^\w\-]/g, "");
 
-        saveAs(file, `reporte_${sedeNombre}.xlsx`);
+        const today = new Date().toISOString().split("T")[0];
+
+        saveAs(file, `Reporte_${sedeNombre}_${today}.xlsx`);
     };
+
+    const data = Array.isArray(dataBySede[activeSede])
+        ? dataBySede[activeSede]
+        : [];
+
+        const filteredData = data.filter((item) =>
+        JSON.stringify(item).toLowerCase().includes(filterText.toLowerCase())
+    );
 
       return (
         <div className="nivel-riesgo-tabs-container">
@@ -340,16 +352,27 @@
                 Exportar Excel
               </button>
             </div>
+            <div className="table-search">
+                <input
+                    type="text"
+                    placeholder="Buscar..."
+                    value={filterText}
+                    onChange={(e) => setFilterText(e.target.value)}
+                />
+            </div>
             <DataTable
               columns={columns}
-              data={Array.isArray(dataBySede[activeSede])
-                ? dataBySede[activeSede]
-                : []
-              }
+              data={filteredData}
               striped
               pagination
               paginationPerPage={10}
-              paginationRowsPerPageOptions={[10, 20, 30, 50]}
+              paginationRowsPerPageOptions={[10, 15, 20, 25]}
+              paginationComponentOptions={{
+                rowsPerPageText: 'Filas por página:',
+                rangeSeparatorText: 'de',
+                selectAllRowsItem: true,
+                selectAllRowsItemText: 'Todos'
+              }}
               noDataComponent={<span>No hay registros disponibles para esta sede</span>}
             />
           </div>
