@@ -272,23 +272,23 @@
             "Sexo": row.sexo,
             "País": row.pais,
             "Orientación Sexual": row.orientacion_sexual,
-            "Educación": row.nivel_educacion,
+            "Nivel de Educación": row.nivel_educacion,
             "Estado Civil": row.estado_civil,
             "Nivel de Ingresos": row.ingreso_mensual,
             "Ansiedad Resultado": row.gad7_score_resultado,
-            "Ansiedad Estado": row.gad7_estado,
+            "Ansiedad Estatus": row.gad7_estado,
             "Depresión Resultado": row.phq9_score_resultado,
-            "Depresión Estado": row.phq9_estado,
+            "Depresión Estatus": row.phq9_estado,
             "Alcohol Resultado": row.alcohol_score_resultado,
-            "Alcohol Estado": row.alcohol_estado,
+            "Alcohol Estatus": row.alcohol_estado,
             "Drogas Resultado": row.drogas_score_resultado,
-            "Drogas Estado": row.drogas_estado,
+            "Drogas Estatus": row.drogas_estado,
             "Tabaco Resultado": row.tabaco_score_resultado,
-            "Tabaco Estado": row.tabaco_estado,
+            "Tabaco Estatus": row.tabaco_estado,
             "Conducta Alimentaria Resultado": row.conducta_alimentaria_score_resultado,
-            "Conducta Alimentaria Estado": row.conducta_alimentaria_estado,
+            "Conducta Alimentaria Estatus": row.conducta_alimentaria_estado,
             "Riesgo Suicidio Resultado": row.columbia_score_resultado,
-            "Riesgo Suicidio Estado": row.columbia_estado,
+            "Riesgo Suicidio Estatus": row.columbia_estado,
         }));
 
         const worksheet = XLSX.utils.json_to_sheet(formattedData);
@@ -355,10 +355,20 @@
             <div className="table-search">
                 <input
                     type="text"
-                    placeholder="Buscar..."
+                    placeholder="🔍 Buscar..."
                     value={filterText}
                     onChange={(e) => setFilterText(e.target.value)}
                 />
+
+                {filterText && (
+                    <button
+                    className="clear-search"
+                    onClick={() => setFilterText("")}
+                    >
+                    Limpiar
+                    </button>
+                )}
+
             </div>
             <DataTable
               columns={columns}

@@ -252,3 +252,16 @@
   border: 1px solid #ccc;
   width: 1050px;
 }
+
+.clear-search{
+  background:#e53935;
+  color:white;
+  border:none;
+  padding:5px 10px;
+  border-radius:5px;
+  cursor:pointer;
+}
+
+.clear-search:hover{
+  background:#c62828;
+}
