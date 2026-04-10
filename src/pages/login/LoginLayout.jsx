@@ -13,8 +13,18 @@ export function LoginLayout() {
                 <p>Accede a tu espacio</p>
                 <img src="/image/welcome.png" alt="welcome-image" />
             </div> */}
-            <div className='sub-conteiner'>
-                <div>
+            <div
+                style={{
+                    backgroundColor: "aliceblue",
+                    margin: "10px auto",
+                    border: "0.8px solid #F3F4F6",
+                    borderRadius: "25px",
+                    padding: "15px",
+                    boxShadow: "0px 20px 12px 2px rgba(0,0,0,0.1)",
+                    width: '88%'
+                }}
+            >
+                <div className='flex'>
                     <div>
                         <SelectLogin />
                     </div>
@@ -27,6 +37,6 @@ export function LoginLayout() {
                 <FcLock size={20} className='me-2' />
                 <span>Tu privacidad es nuestra prioridad. Todos tus datos están crifados y protegidos.</span>
             </div> */}
-        </div>
+        </div >
     )
 }

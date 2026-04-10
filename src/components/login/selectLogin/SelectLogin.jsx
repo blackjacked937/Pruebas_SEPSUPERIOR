@@ -15,10 +15,12 @@ export function SelectLogin() {
     const [view, setView] = useState(0)
 
     const views = [
-    <SelectLogin key="menu" />,
+        <SelectLogin key="menu" />,
         <FormLogin key="isem" typeLogin={1} onBack={() => setView(0)} />,
         <FormLogin key="fase1" typeLogin={2} onBack={() => setView(0)} />,
-        <FormLogin key="conasama" typeLogin={3} onBack={() => setView(0)} />
+        <FormLogin key="conasama" typeLogin={3} onBack={() => setView(0)} />,
+        // form de las SEP
+        <FormLogin key="sep" typeLogin={4} onBack={() => setView(0)} />
     ];
 
     return views[view]
@@ -34,7 +36,8 @@ export function SelectLogin() {
                         text="Mente Conecta ISEM"
                         onChangeMethod={() => setView(1)}
                     />
-                    <a href='http://menteconecta.net/jupyterhub/'>
+                    {/* <a href='http://menteconecta.net/jupyterhub/'> */}
+                    <a href='#'>
                         <IconButton
                             text="Jupyter Notebook"
                             image={jupyter}
@@ -49,6 +52,12 @@ export function SelectLogin() {
                         text="Mente Conecta Conasama"
                         image={logoMCA}
                         onChangeMethod={() => setView(3)}
+                    />
+                    {/* Adaptar en base a la sep */}
+                    <IconButton
+                        text="Mente Conecta SEP"
+                        image={logoMCA}
+                        onChangeMethod={() => setView(4)}
                     />
                 </div>
                 <br />

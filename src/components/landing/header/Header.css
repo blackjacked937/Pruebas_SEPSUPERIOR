@@ -86,3 +86,79 @@
         display: none;
     }
 }
+/* HAMBURGUESA */
+.hamburger-btn {
+    font-size: 28px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* OVERLAY */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    z-index: 998;
+}
+
+/* DRAWER */
+.side-drawer {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 300px;
+    height: 100%;
+    background: white;
+    z-index: 999;
+    transition: right 0.3s ease;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ABIERTO */
+.side-drawer.open {
+    right: 0;
+}
+
+/* HEADER */
+.drawer-header {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* BOTÓN CERRAR */
+.close-btn {
+    font-size: 24px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+/* MENÚ */
+.drawer-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.drawer-menu button {
+    border: none;
+    background: none;
+    text-align: left;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* BOTÓN PRINCIPAL */
+.drawer-menu .primary {
+    background-color: #4DB6AC;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+}
