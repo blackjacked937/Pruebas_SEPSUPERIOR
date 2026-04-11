@@ -1,23 +1,26 @@
 import { useFormik } from 'formik';
-import React from 'react';
-import { Button, Form } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Button, Form, Spinner } from 'react-bootstrap';
 import { GiBrain, } from "react-icons/gi";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import Icono_home from "../../../assets/img/Icono_home.jpeg";
-import { loginApiISEM, loginApiFase1, loginApiConasama} from '../../../api/user';
+import { loginApiISEM, loginApiFase1, loginApiConasama, loginApiSEP } from '../../../api/user';
 import { useAuth } from '../../../hooks';
 import { InputForm } from '../../ui';
 import './FormLogin.css';
 
 export function FormLogin(props) {
     const { typeLogin, onBack } = props;
-    const { login } = useAuth()
+    const { login } = useAuth();
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     const loginMap = {
         1: loginApiISEM,
         2: loginApiFase1,
-        3: loginApiConasama
+        3: loginApiConasama,
+        4: loginApiSEP, // SEP usa su propia API
     };
 
     const getLoginApi = (typeLogin) => loginMap[typeLogin] || loginApiISEM;
@@ -28,11 +31,39 @@ export function FormLogin(props) {
         validateOnChange: false,
         onSubmit: async (formvalue) => {
             try {
+                setIsLoading(true);
+                setError(null);
+                console.log(`[FormLogin] Iniciando login para typeLogin: ${typeLogin}`);
+                
+                // PASO 1: Llamar API de login
+                console.log(`[FormLogin] Llamando API de login...`);
                 const response = await getLoginApi(typeLogin)(formvalue, typeLogin);
                 const { access } = response;
+                console.log(`[FormLogin] ✓ Token recibido exitosamente`);
+                
+                // PASO 2: Guardar en contexto
+                console.log(`[FormLogin] Guardando token en AuthContext...`);
                 await login(access, typeLogin);
+                console.log(`[FormLogin] ✓ Login completado. Esperando redirección...`);
+                
+                toast.success("Iniciando sesión...");
+                
             } catch (error) {
-                toast.info(error.message);
+                console.error(`[FormLogin]  Error en login:`, error);
+                setError(error.message);
+                
+                // Mostrar diferentes mensajes según el tipo de error
+                if (error.message.includes("404") || error.message.includes("no encontrado")) {
+                    toast.error("Usuario o contraseña incorrectos");
+                } else if (error.message.includes("no tiene acceso")) {
+                    toast.error("Tu cuenta no tiene acceso a esta plataforma");
+                } else if (error.message.includes("token")) {
+                    toast.error("Error de autenticación. Intenta de nuevo");
+                } else {
+                    toast.error(error.message || "Error al iniciar sesión");
+                }
+            } finally {
+                setIsLoading(false);
             }
         },
     });
@@ -53,6 +84,19 @@ export function FormLogin(props) {
 
             {/* FORM CARD */}
             <div className="login-card">
+                
+                {/* Mostrar error persistente si existe */}
+                {error && (
+                    <div className="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Error:</strong> {error}
+                        <button 
+                            type="button" 
+                            className="btn-close" 
+                            onClick={() => setError(null)}
+                        ></button>
+                    </div>
+                )}
+
                 <Form onSubmit={formik.handleSubmit}>
 
                 <InputForm
@@ -65,6 +109,7 @@ export function FormLogin(props) {
                     type="text"
                     error={typeLogin === 2 || typeLogin===4 ? formik.errors.email : formik.errors.username}
                     touched={typeLogin === 2 || typeLogin===4 ? formik.touched.email : formik.touched.username}
+                    disabled={isLoading}
                 />
 
                 <InputForm
@@ -77,15 +122,39 @@ export function FormLogin(props) {
                     type="password"
                     error={formik.errors.password}
                     touched={formik.touched.password}
+                    disabled={isLoading}
                 />
 
-                <Button type="submit" className="login-btn">
-                    Iniciar Sesión
+                {/* Botón Iniciar Sesión con Spinner */}
+                <Button 
+                    type="submit" 
+                    className="login-btn"
+                    disabled={isLoading}
+                    style={{ opacity: isLoading ? 0.7 : 1 }}
+                >
+                    {isLoading ? (
+                        <>
+                            <Spinner
+                                as="span"
+                                animation="border"
+                                size="sm"
+                                role="status"
+                                aria-hidden="true"
+                                className="me-2"
+                            />
+                            Iniciando sesión...
+                        </>
+                    ) : (
+                        "Iniciar Sesión"
+                    )}
                 </Button>
+
+                {/* Botón Regresar */}
                 <Button
                     type="button"
                     className="login-btn login-btn-secondary"
                     onClick={onBack}
+                    disabled={isLoading}
                 >
                     Regresar
                 </Button>
@@ -104,7 +173,7 @@ export function FormLogin(props) {
 }
 
 function initialValues(typeLogin) {
-    if (typeLogin === 2) {
+    if (typeLogin === 2 || typeLogin === 4) {
         return {
             email: "",
             password: "",
@@ -117,7 +186,7 @@ function initialValues(typeLogin) {
 }
 
 function newSchema(typeLogin) {
-    if (typeLogin === 2) {
+    if (typeLogin === 2 || typeLogin === 4) {
         return {
             email: Yup
                 .string("Ingrese su correo electrónico")

@@ -1,4 +1,4 @@
-import { BASE_API, BASE_API_F1, BASE_API_CONASAMA_V1 } from "../utils/constants";
+import { BASE_API, BASE_API_F1, BASE_API_CONASAMA_V1, BASE_API_SEP_V1 } from "../utils/constants";
 
 export async function loginApiISEM(formValue) {
     try {
@@ -69,10 +69,34 @@ export async function loginApiConasama(formValue) {
     }
 }
 
+export async function loginApiSEP(formValue) {
+    try {
+        const url = `${BASE_API_SEP_V1}/auth/login/`;
+
+        const params = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formValue),
+        };
+
+        const response = await fetch(url, params);
+        if (response.status !== 200) {
+            throw new Error("Usuario o contraseña incorrectos");
+        }
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        throw error;
+    }
+}
+
 const ME_URL_MAP = {
   1: `${BASE_API}auth/me/`,
   2: `${BASE_API_F1}/auth/me/`,
   3: `${BASE_API_CONASAMA_V1}/auth/me/`,
+  4: `${BASE_API_SEP_V1}/auth/me/`,
 };
 
 export async function getMeApi(token, typeLogin) {

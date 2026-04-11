@@ -34,8 +34,8 @@ export function AuthProvider(props) {
           const isSuper = me?.is_superuser ?? false;
           const isStaff = me?.is_staff ?? false;
 
-          // BLOQUEO DE PACIENTES SOLO PARA CONASAMA
-          if (Number(typeLogin) === 3) {
+          // BLOQUEO DE PACIENTES PARA CONASAMA Y SEP
+          if (Number(typeLogin) === 3 || Number(typeLogin) === 4) {
             if (!isSuper && !isStaff) {
               removeToken();
               sessionStorage.removeItem("typeLogin");
@@ -67,8 +67,8 @@ export function AuthProvider(props) {
     const isSuper = me?.is_superuser ?? false;
     const isStaff = me?.is_staff ?? false;
 
-    // BLOQUEO DE PACIENTES SOLO PARA CONASAMA
-    if (Number(typeLogin) === 3) {
+    // BLOQUEO DE PACIENTES PARA CONASAMA Y SEP
+    if (Number(typeLogin) === 3 || Number(typeLogin) === 4) {
       if (!isSuper && !isStaff) {
         removeToken();
         sessionStorage.removeItem("typeLogin");
