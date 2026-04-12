@@ -5,8 +5,9 @@ import {
   registerGestorSeP,
   getConteoNivelRiesgoSePBySedeApi,
   getConteoNivelRiesgoSePAdminApi,
+  getCiudadesByEstadoApi,
 } from '../../api/sep';
-import { getTiposPacienteSeP, getHospitalesSeP } from '../../api/sep';
+import { getTiposPacienteSeP, getHospitalesSeP, getPaisApi,getEstadosByPaisApi} from '../../api/sep';
 
 /**
  * Hook para gestión de gestores en SEP
@@ -99,7 +100,47 @@ export function useGestoresSEP() {
     },
     [auth.token]
   );
+  const getPaises=useCallback(async ()=>{
+        setLoading(true);
+        try{
+            const result=  await getPaisApi();
+            return result;
 
+        }
+        catch(error){
+            console.log(error);
+            throw error;
+        }finally {
+            setLoading(false);
+        }
+    });
+
+    const getEstadosByPais= useCallback(async (idPais ) => {
+      setLoading(true);
+      try{
+        const result=await getEstadosByPaisApi(idPais);
+        return result;
+      }
+      catch(error){
+            console.log(error);
+            throw error;
+        }finally {
+            setLoading(false);
+        }
+    });
+    const getCiudadesByEstado =useCallback(async (idEstado) => {
+      setLoading(true);
+      try{
+        const result=await getCiudadesByEstadoApi(idEstado);
+        return result;
+      }
+      catch(error){
+            console.log(error);
+            throw error;
+        }finally {
+            setLoading(false);
+        }
+    });
   const getConteoNivelRiesgoAdmin = useCallback(async () => {
     try {
       setLoading(true);
@@ -125,5 +166,8 @@ export function useGestoresSEP() {
     nuevoGestor,
     getConteoNivelRiesgo,
     getConteoNivelRiesgoAdmin,
+    getPaises,
+    getEstadosByPais,
+    getCiudadesByEstado,
   };
 }

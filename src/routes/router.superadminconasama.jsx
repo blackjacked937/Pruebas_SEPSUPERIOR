@@ -46,6 +46,7 @@ const routesAdminConasama = [
             </RoleRoute>
         ),
     },
+    // En sep no habra apartado de noticias
     {
         path: "/admin/super-gestor/conasama/noticias",
         layout: AdminLayout,
@@ -55,6 +56,7 @@ const routesAdminConasama = [
             </RoleRoute>
         ),
     },
+    // No habra apartado de reportes para SEP
     {
         path: "/admin/super-gestor/conasama/reportes",
         layout: AdminLayout,

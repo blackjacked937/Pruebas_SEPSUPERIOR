@@ -57,20 +57,20 @@ export async function registerGestorSeP(data, token) {
 export async function getConteoNivelRiesgoSePBySedeApi(id, token) {
   try {
     const url = `${BASE_API_SEP_V1}/dashboard/Dashbord_Admin/ConteoPorNivelRiesgo/${id}/`;
-    
+
     const params = {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     };
     const response = await fetch(url, params);
-    
+
     if (response.status !== 200) {
       throw new Error("Error al obtener conteo por nivel de riesgo SEP");
     }
-    
+
     let result = await response.json();
-    
+
     // Si la respuesta está vacía, retornar estructura de cuestionarios con score 0
     if (!result || (Array.isArray(result) && result.length === 0)) {
       result = [
@@ -83,7 +83,7 @@ export async function getConteoNivelRiesgoSePBySedeApi(id, token) {
         { id_cuestionario: 7, Cuestionario: "Tabaco", score: 0 },
       ];
     }
-    
+
     return result;
   } catch (error) {
     console.error("[getConteoNivelRiesgoSePBySedeApi] Error:", error);
@@ -112,13 +112,13 @@ export async function getConteoNivelRiesgoSePAdminApi(token) {
       },
     };
     const response = await fetch(url, params);
-    
+
     if (response.status !== 200) {
       throw new Error("Error al obtener conteo por nivel de riesgo para admin SEP");
     }
-    
+
     let result = await response.json();
-    
+
     // Si la respuesta está vacía, retornar estructura de cuestionarios con score 0
     if (!result || (Array.isArray(result) && result.length === 0)) {
       result = [
@@ -131,7 +131,7 @@ export async function getConteoNivelRiesgoSePAdminApi(token) {
         { id_cuestionario: 7, Cuestionario: "Tabaco", score: 0 },
       ];
     }
-    
+
     return result;
   } catch (error) {
     console.error("[getConteoNivelRiesgoSePAdminApi] Error:", error);
@@ -145,5 +145,65 @@ export async function getConteoNivelRiesgoSePAdminApi(token) {
       { id_cuestionario: 6, Cuestionario: "Riesgo de Suicidio", score: 0 },
       { id_cuestionario: 7, Cuestionario: "Tabaco", score: 0 },
     ];
+  }
+}
+export async function getPaisApi() {
+  try {
+    const url = `${BASE_API_SEP_V1}/catalogo/pais/`
+    const params = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const response = await fetch(url, params);
+    const result = await response.json();
+    if (response.status !== 200) {
+      throw new Error(result.message || "Error al obtener datos de pais");
+    }
+    return result;
+  }
+  catch (error) {
+    throw error;
+  }
+}
+export async function getEstadosByPaisApi(idPais) {
+  try {
+    const url = `${BASE_API_SEP_V1}/catalogo/estado/bypais/${idPais}/`
+    const params = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const response = await fetch(url, params);
+    const result = await response.json();
+    if (response.status !== 200) {
+      throw new Error(result.message || "Error al obtener datos de pais");
+    }
+    return result;
+  }
+  catch (error) {
+    throw error;
+  }
+}
+export async function getCiudadesByEstadoApi(idEstado) {
+  try {
+    const url = `${BASE_API_SEP_V1}/catalogo/ciudad/byestado/${idEstado}/`
+    const params = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const response = await fetch(url, params);
+    const result = await response.json();
+    if (response.status !== 200) {
+      throw new Error(result.message || "Error al obtener datos de pais");
+    }
+    return result;
+  }
+  catch (error) {
+    throw error;
   }
 }

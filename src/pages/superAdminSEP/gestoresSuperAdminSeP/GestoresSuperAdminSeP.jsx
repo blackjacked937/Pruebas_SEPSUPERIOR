@@ -32,7 +32,7 @@ export function GestoresSuperAdminSeP() {
     };
 
     const addGestor = () => {
-        openModal("Registrar Nuevo Gestor", <RegisterGestorForm onClose={closeModal} onReload={onReload} />);
+        openModal("Registrar Director, Profesor u Orientador", <RegisterGestorForm onClose={closeModal} onReload={onReload} />);
     };
 
     const viewGestor = (gestor) => {
@@ -47,7 +47,7 @@ export function GestoresSuperAdminSeP() {
                 </Col>
                 <Col className="text-end">
                     <Button variant="primary" onClick={addGestor} style={{ background: "#4DB6AC", borderColor: "#4DB6AC" }}>
-                        Registrar Nuevo Gestor
+                        Registrar Director, Profesor u Orientador
                     </Button>
                 </Col>
             </Row>

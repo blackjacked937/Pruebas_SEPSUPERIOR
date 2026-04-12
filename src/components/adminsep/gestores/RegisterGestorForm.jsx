@@ -9,15 +9,20 @@ import { useGestoresSEP } from "../../../hooks/sep/useGestoresSEP";
 export function RegisterGestorForm(props) {
     const { onClose, onReload, gestor, viewMode } = props;
     const [catalogs, setCatalogs] = useState([]);
+    const [countries, setCountries] = useState([]);
     const [hospitals, setHospitals] = useState([]);
-    const { getCatalogosGestores, getHospitales, nuevoGestor } = useGestoresSEP();
+    const [estados, setEstados] = useState([]);
+    const [ciudades, setCiudades] = useState([]);
+    const { getCatalogosGestores, getHospitales, nuevoGestor, getPaises, getEstadosByPais, getCiudadesByEstado } = useGestoresSEP();
 
     useEffect(() => {
         (async () => {
             try {
-
                 const result = await getCatalogosGestores();
                 const host = await getHospitales();
+                const pais = await getPaises();// 👈 NUEVO
+
+                setCountries(pais);
                 setCatalogs(result);
                 setHospitals(host);
             } catch (error) {
@@ -28,8 +33,17 @@ export function RegisterGestorForm(props) {
 
     const getOptions = (name) => {
         const catalog = catalogs.find((c) => c.nombre === name);
-        return catalog ? catalog.data : [];
+
+        const opciones = catalog
+            ? catalog.data.filter(
+                (d) => d.opcion !== "Tecnico" && d.opcion !== "Estudiante" 
+                && d.opcion !== "Pasante" && d.opcion !== "A fin"
+                && d.opcion !== "Rama Medica" && d.opcion !== "Otro"
+            )
+            : [];
+        return opciones;
     };
+
 
     const formik = useFormik({
         initialValues: initialValues(gestor),
@@ -46,6 +60,41 @@ export function RegisterGestorForm(props) {
             }
         },
     });
+    useEffect(() => {
+        const loadEstados = async () => {
+            if (formik.values.id_pais) {
+                try {
+                    const res = await getEstadosByPais(formik.values.id_pais);
+                    setEstados(res);
+                } catch (error) {
+                    console.error("Error cargando estados", error);
+                    setEstados([]);
+                }
+            } else {
+                setEstados([]);
+            }
+        };
+
+        loadEstados();
+    }, [formik.values.id_pais]);
+
+    useEffect(() => {
+        const loadEstados = async () => {
+            if (formik.values.id_estado) {
+                try {
+                    const res = await getCiudadesByEstado(formik.values.id_estado);
+                    setCiudades(res);
+                } catch (error) {
+                    console.error("Error cargando estados", error);
+                    setCiudades([]);
+                }
+            } else {
+                setCiudades([]);
+            }
+        };
+
+        loadEstados();
+    }, [formik.values.id_estado]);
 
     return (
         <Form onSubmit={formik.handleSubmit}>
@@ -148,7 +197,7 @@ export function RegisterGestorForm(props) {
                     <SelectForm
                         label="Sede"
                         name="sede_id"
-                        options={hospitals.map(h => ({ id: h.id, opcion: h.nombre }))}
+                        options={hospitals.filter(h => h.organizacion === 1).map(h => ({ id: h.id, opcion: h.nombre }))}
                         value={formik.values.sede_id}
                         onChange={formik.handleChange}
                         error={formik.errors.sede_id}
@@ -178,7 +227,7 @@ export function RegisterGestorForm(props) {
                     <SelectForm
                         label="Tipo de Contratación"
                         name="id_contratacion"
-                        options={getOptions("Tipo de contratación")}
+                        options={getOptions("Tipo de contrato")}
                         value={formik.values.id_contratacion}
                         onChange={formik.handleChange}
                         error={formik.errors.id_contratacion}
@@ -187,29 +236,45 @@ export function RegisterGestorForm(props) {
                     />
                 </Col>
             </Row>
-
             <Row>
                 <Col xs={12} md={6} className="mb-3">
                     <SelectForm
-                        label="Perfil"
-                        name="id_perfil"
-                        options={getOptions("Perfil")}
-                        value={formik.values.id_perfil}
+                        label="Cargo"
+                        name="id_cargo"
+                        options={getOptions("Sep")}
+                        value={formik.values.id_cargo}
                         onChange={formik.handleChange}
-                        error={formik.errors.id_perfil}
-                        touched={formik.touched.id_perfil}
+                        error={formik.errors.id_cargo}
+                        touched={formik.touched.id_cargo}
+                        disabled={viewMode}
+                    />
+                </Col>
+            </Row>
+            <Row>
+                <Col xs={12} md={6} className="mb-3">
+                    <SelectForm
+                        label="Pais"
+                        name="id_pais"
+                        options={countries.map(p => ({ id: p.id, opcion: p.descripcion }))}
+                        value={formik.values.id_pais}
+                        onChange={formik.handleChange}
+                        error={formik.errors.id_pais}
+                        touched={formik.touched.id_pais}
                         disabled={viewMode}
                     />
                 </Col>
                 <Col xs={12} md={6} className="mb-3">
                     <SelectForm
-                        label="Nivel"
-                        name="id_nivel"
-                        options={getOptions("Nivel")}
-                        value={formik.values.id_nivel}
+                        label="Estado"
+                        name="id_estado"
+                        options={estados.map(e => ({
+                            id: e.id,
+                            opcion: e.descripcion
+                        }))}
+                        value={formik.values.id_estado}
                         onChange={formik.handleChange}
-                        error={formik.errors.id_nivel}
-                        touched={formik.touched.id_nivel}
+                        error={formik.errors.id_estado}
+                        touched={formik.touched.id_estado}
                         disabled={viewMode}
                     />
                 </Col>
@@ -218,25 +283,13 @@ export function RegisterGestorForm(props) {
             <Row>
                 <Col xs={12} md={6} className="mb-3">
                     <SelectForm
-                        label="Cargo"
-                        name="id_cargo"
-                        options={getOptions("Cargo")}
-                        value={formik.values.id_cargo}
+                        label="Ciudad"
+                        name="id_ciudad"
+                        options={ciudades.map(c => ({ id: c.id, opcion: c.descripcion }))}
+                        value={formik.values.id_ciudad}
                         onChange={formik.handleChange}
-                        error={formik.errors.id_cargo}
-                        touched={formik.touched.id_cargo}
-                        disabled={viewMode}
-                    />
-                </Col>
-                <Col xs={12} md={6} className="mb-3">
-                    <SelectForm
-                        label="Profesión"
-                        name="id_profesion"
-                        options={getOptions("Profesión")}
-                        value={formik.values.id_profesion}
-                        onChange={formik.handleChange}
-                        error={formik.errors.id_profesion}
-                        touched={formik.touched.id_profesion}
+                        error={formik.errors.id_ciudad}
+                        touched={formik.touched.id_ciudad}
                         disabled={viewMode}
                     />
                 </Col>
@@ -287,9 +340,6 @@ function newSchema() {
         sede_id: Yup.number().required('El ID de sede es obligatorio'),
         id_grado: Yup.number().required('El grado es obligatorio'),
         id_contratacion: Yup.number().required('El tipo de contratación es obligatorio'),
-        id_perfil: Yup.number().required('El perfil es obligatorio'),
-        id_nivel: Yup.number().required('El nivel es obligatorio'),
         id_cargo: Yup.number().required('El cargo es obligatorio'),
-        id_profesion: Yup.number().required('La profesión es obligatoria'),
     };
 }

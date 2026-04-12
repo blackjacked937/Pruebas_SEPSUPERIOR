@@ -7,7 +7,7 @@ import { BASE_API_SEP_V1 } from '../../utils/constants';
  */
 export async function getTiposPacienteSeP(token) {
   try {
-    const url = `${BASE_API_SEP_V1}/catalogo/tipos-paciente/`;
+    const url = `${BASE_API_SEP_V1}/catalogo/tipo_paciente_opciones/`;
     const params = {
       headers: {
         Authorization: `Bearer ${token}`,
