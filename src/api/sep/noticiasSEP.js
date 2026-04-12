@@ -50,7 +50,7 @@ export async function createNoticiaSeP(data, token) {
 /**
  * Elimina una noticia en SEP (solo SuperGestores)
  */
-export async function deleteNoticiaSeP(idNoticia, token) {
+export async function deleteNoticiaSeP(token, idNoticia) {
   try {
     const url = `${BASE_API_SEP_V1}/catalogo/noticias/${idNoticia}/`;
     const params = {

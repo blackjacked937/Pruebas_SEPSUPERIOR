@@ -31,7 +31,7 @@ export function HomeAdminSeP() {
     };
 
     
-    const idSedeUsuario = auth?.me?.sede_id || 1; 
+    const idSedeUsuario = auth?.me?.sede_id || 8; 
     const nombreSedeActual = nombresSedes[idSedeUsuario] || "Sede General";
 
     useEffect(() => {
@@ -53,7 +53,7 @@ export function HomeAdminSeP() {
             
             <div className="admin-header mb-5">
                 <h1 className="fw-bold text-primary">
-                    Panel de Administración SEP: {nombreSedeActual}
+                    Panel de Administración: {nombreSedeActual}
                 </h1>
                 <p className="lead text-secondary">
                     Resumen de indicadores de riesgo para esta región.

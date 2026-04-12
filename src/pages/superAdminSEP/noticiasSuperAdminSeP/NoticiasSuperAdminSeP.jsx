@@ -65,7 +65,7 @@ export function NoticiasSuperAdminSeP() {
     const confirmDelete = async (idNoticia) => {
         try {
             setErrorMsg("");
-            await deleteNoticiaSeP(idNoticia, auth.token);
+            await deleteNoticiaSeP(auth.token, idNoticia);
             onReload();
             closeModal();
         } catch (error) {
