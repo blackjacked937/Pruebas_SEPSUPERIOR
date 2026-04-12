@@ -1,0 +1,25 @@
+/* Estilos para HomeSuperAdminSeP */
+.header-dashboard {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.custom-tabs {
+    border-bottom: 2px solid #04547B;
+}
+
+.custom-tabs .nav-link {
+    color: #04547B;
+    border: none;
+    border-bottom: 3px solid transparent;
+}
+
+.custom-tabs .nav-link.active {
+    color: #fff;
+    background-color: #04547B;
+    border-bottom: 3px solid #04547B;
+}
+
+.custom-tabs .nav-link:hover {
+    color: #035874;
+}

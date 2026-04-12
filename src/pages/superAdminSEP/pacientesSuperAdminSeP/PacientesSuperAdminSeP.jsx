@@ -1,91 +1,85 @@
-import React, { useEffect, useState } from 'react';
-import { useAuth } from '../../../hooks';
-import { usePacientesSensiblesSeP } from '../../../hooks/sep';
-import { RoleRouteSEP } from '../../../components/adminsep';
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../../../hooks";
+import { useNivelRiesgoBySedeSeP } from "../../../hooks/sep";
+import { TableNivelRiesgoBySede } from "../../../components/adminsep/dashboard/tableNivelRiesgoBySede";
+
+const sedesPorOrganizacion = {
+  0: {
+    8: "Ciudad de México",
+    9: "Morelos",
+    10: "Tlaxcala",
+    11: "Hidalgo",
+    12: "UPEM Ecatepec",
+    13: "UPEM Tecamac",
+    14: "Dra. Alma",
+  },
+  1: {
+    8: "Ciudad de México",
+    9: "Morelos",
+    10: "Tlaxcala",
+    11: "Hidalgo",
+  },
+  2: {
+    12: "UPEM Ecatepec",
+    13: "UPEM Tecamac",
+    14: "Dra. Alma",
+  },
+};
 
 /**
  * Página de Pacientes en Riesgo para SuperGestores de SEP
- * Muestra pacientes identificados en riesgo de múltiples sedes
+ * Muestra pacientes identificados en riesgo por sede
  * 
  * Acceso: is_superuser === true (SuperGestor)
  * Protección: RoleRoute allowSuper
  */
 export function PacientesSuperAdminSeP() {
-  const auth = useAuth();
-  const { getPacientesSensibles, pacientes, loading, error } =
-    usePacientesSensiblesSeP();
+  const { auth } = useAuth();
+  const { dataBySede, loadingBySede, getSedeData } =
+    useNivelRiesgoBySedeSeP();
 
+  const organizacion = auth?.me?.organizacion;
+  const sedesDisponibles = sedesPorOrganizacion[organizacion] || {};
+  const idsSedes = Object.keys(sedesDisponibles);
+
+  const [activeSede, setActiveSede] = useState(null);
+
+  // Inicio de Sede por Organizacion del Super Gestor
   useEffect(() => {
-    getPacientesSensibles();
-  }, []);
+    if (idsSedes.length > 0) {
+      setActiveSede(idsSedes[0]);
+    }
+  }, [organizacion]);
+
+  // Mostrado de Sede Activa en TAB
+  useEffect(() => {
+    if (!activeSede || loadingBySede[activeSede]) return;
+
+    if (!dataBySede[activeSede]) {
+      getSedeData(Number(activeSede));
+    }
+  }, [activeSede]);
 
   return (
-    <RoleRouteSEP allowSuper>
-      <div className="container-fluid p-4">
-        <h1 className="mb-4" style={{ color: '#04547B' }}>
-          <b>Pacientes en Riesgo - SuperGestor SEP</b>
+    <div>
+      <center>
+        <h1 style={{ color: "#4DB6AC" }}>
+          Pacientes en Grupo de Riesgo por Sede
         </h1>
+      </center>
 
-        {loading && <div className="spinner-border" role="status"><span className="visually-hidden">Cargando...</span></div>}
-
-        {error && <div className="alert alert-danger">{error}</div>}
-
-        <div className="card">
-          <div className="card-body">
-            <h5 className="card-title">
-              Pacientes Identificados en Riesgo ({pacientes.length})
-            </h5>
-
-            {pacientes.length === 0 ? (
-              <p className="text-muted">
-                No hay pacientes identificados en riesgo en este momento.
-              </p>
-            ) : (
-              <div className="table-responsive">
-                <table className="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Nombre</th>
-                      <th>Nivel de Riesgo</th>
-                      <th>Sede</th>
-                      <th>Fecha Evaluación</th>
-                      <th>Acciones</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {pacientes.map((paciente) => (
-                      <tr key={paciente.id}>
-                        <td>{paciente.id}</td>
-                        <td>{paciente.nombre || 'N/A'}</td>
-                        <td>
-                          <span className="badge bg-danger">
-                            {paciente.nivel_riesgo || 'Alto'}
-                          </span>
-                        </td>
-                        <td>{paciente.sede || 'N/A'}</td>
-                        <td>{paciente.fecha_evaluacion || 'N/A'}</td>
-                        <td>
-                          <button className="btn btn-sm btn-primary">
-                            Ver Detalles
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div className="mt-4">
-          <p className="text-muted">
-            Aquí se mostrarán los pacientes en riesgo de todas las sedes.
-          </p>
-        </div>
-      </div>
-    </RoleRouteSEP>
+      {loadingBySede[activeSede] ? (
+        <h3>Cargando datos de la sede...</h3>
+      ) : (
+        <TableNivelRiesgoBySede
+          dataBySede={dataBySede}
+          sedesIds={idsSedes}
+          nombresSedes={sedesDisponibles}
+          activeSede={activeSede}
+          onChangeSede={setActiveSede}
+        />
+      )}
+    </div>
   );
 }
 

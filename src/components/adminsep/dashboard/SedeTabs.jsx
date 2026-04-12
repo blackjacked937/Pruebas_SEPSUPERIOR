@@ -5,24 +5,24 @@ export default function SedeTabs({ value, onChange, organizacion }) {
 
   const sedesPorOrganizacion = {
     0: [
-      { id: 1, nombre: "Ciudad de México" },
-      { id: 2, nombre: "Morelos" },
-      { id: 3, nombre: "Tlaxcala" },
-      { id: 4, nombre: "Hidalgo" },
-      { id: 5, nombre: "UPEM Ecatepec" },
-      { id: 6, nombre: "UPEM Tecamac" },
-      { id: 7, nombre: "Dra. Alma" },
+      { id: 8, nombre: "Ciudad de México" },
+      { id: 9, nombre: "Morelos" },
+      { id: 10, nombre: "Tlaxcala" },
+      { id: 11, nombre: "Hidalgo" },
+      { id: 12, nombre: "UPEM Ecatepec" },
+      { id: 13, nombre: "UPEM Tecamac" },
+      { id: 14, nombre: "Dra. Alma" },
     ],
     1: [
-      { id: 1, nombre: "Ciudad de México" },
-      { id: 2, nombre: "Morelos" },
-      { id: 3, nombre: "Tlaxcala" },
-      { id: 4, nombre: "Hidalgo" },
+      { id: 8, nombre: "Ciudad de México" },
+      { id: 9, nombre: "Morelos" },
+      { id: 10, nombre: "Tlaxcala" },
+      { id: 11, nombre: "Hidalgo" },
     ],
     2: [
-      { id: 5, nombre: "UPEM Ecatepec" },
-      { id: 6, nombre: "UPEM Tecamac" },
-      { id: 7, nombre: "Dra. Alma" },
+      { id: 12, nombre: "UPEM Ecatepec" },
+      { id: 13, nombre: "UPEM Tecamac" },
+      { id: 14, nombre: "Dra. Alma" },
     ],
   };
 

@@ -1,66 +1,37 @@
-import React, { useEffect, useState } from 'react';
-import { useAuth } from '../../../hooks';
-import { RoleRouteSEP } from '../../../components/adminsep';
+import React, { useEffect, useState } from "react";
 
-/**
- * Página de Evaluaciones Columbia para Gestores de SEP
- * Muestra tabla de evaluaciones Columbia de su sede
- * 
- * Acceso: is_staff === true (Gestor)
- * Protección: RoleRoute allowStaff
- */
+import { usePacientesSensiblesSeP } from "../../../hooks/sep";
+import { DividerIcon } from "../../../components/common";
+import { TablePacientesSensibles } from "../../../components/adminsep/columbia/tablePacientesSensibles";
+
 export function ColumbiaPageSeP() {
-  const auth = useAuth();
-  const [evaluaciones, setEvaluaciones] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const { pacientes, loadingPacientes, getPacientesSensibles } =
+    usePacientesSensiblesSeP();
+
+  const [refetch, setRefetch] = useState(false);
+  const onRefetch = () => setRefetch((prev) => !prev);
 
   useEffect(() => {
-    // TODO: Implementar llamada a API de evaluaciones Columbia para SEP
-    setLoading(false);
-  }, []);
+    getPacientesSensibles();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [refetch]);
 
   return (
-    <RoleRouteSEP allowStaff>
-      <div className="container-fluid p-4">
-        <h1 className="mb-4" style={{ color: '#04547B' }}>
-          <b>Evaluaciones Columbia - Mi Sede</b>
+    <div>
+      <center>
+        <h1 style={{ color: "#4DB6AC" }}>
+          Pacientes por grupo de riesgo - SEP
         </h1>
-
-        {loading && <div className="spinner-border" role="status"><span className="visually-hidden">Cargando...</span></div>}
-
-        <div className="card">
-          <div className="card-body">
-            <h5 className="card-title">Tabla de Evaluaciones</h5>
-
-            {evaluaciones.length === 0 ? (
-              <p className="text-muted">
-                No hay evaluaciones disponibles en tu sede.
-              </p>
-            ) : (
-              <table className="table table-striped">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Paciente</th>
-                    <th>Fecha</th>
-                    <th>Estado</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {/* Renderizar evaluaciones aquí */}
-                </tbody>
-              </table>
-            )}
-          </div>
-        </div>
-
-        <div className="mt-4">
-          <p className="text-muted">
-            Aquí se mostrarán las evaluaciones Columbia de tu sede.
-          </p>
-        </div>
-      </div>
-    </RoleRouteSEP>
+      </center>
+      {loadingPacientes ? (
+        <h3>Cargando...</h3>
+      ) : (
+        <TablePacientesSensibles
+          data={pacientes}
+          onRefetch={onRefetch}
+        />
+      )}
+    </div>
   );
 }
 

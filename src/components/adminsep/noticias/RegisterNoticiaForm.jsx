@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Spinner, Alert } from 'react-bootstrap';
 import { useAuth } from '../../../hooks';
-import { createNoticiaApi } from '../../../api/conasama/noticias';
+import { createNoticiaSeP } from '../../../api/sep/noticiasSEP';
 
 export function RegisterNoticiaForm({ onClose, onReload }) {
     const { auth } = useAuth();
@@ -73,7 +73,7 @@ export function RegisterNoticiaForm({ onClose, onReload }) {
                 imagen: formData.imagen
             };
 
-            await createNoticiaApi(auth.token, dataToSend);
+            await createNoticiaSeP(dataToSend, auth.token);
             onReload(); 
             onClose();  
         } catch (error) {

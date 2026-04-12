@@ -1,3 +1,3 @@
-export { HomeAdminSeP } from './homeAdminSeP/HomeAdminSeP';
-export { EstadisticasSeP } from './estadisticasSeP/EstadisticasSeP';
-export { ColumbiaPageSeP } from './columbiaPageSeP/ColumbiaPageSeP';
+export * from "./estadisticasSeP"
+export * from "./columbiaPageSeP"
+export * from "./homeAdminSeP"

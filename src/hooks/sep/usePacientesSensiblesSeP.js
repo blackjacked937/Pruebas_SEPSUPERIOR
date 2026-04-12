@@ -10,7 +10,7 @@ import {
  * Propósito: Listar pacientes identificados en riesgo
  */
 export function usePacientesSensiblesSeP() {
-  const auth = useAuth();
+  const { auth } = useAuth();
   const [loading, setLoading] = useState(false);
   const [pacientes, setPacientes] = useState([]);
   const [error, setError] = useState(null);
@@ -20,11 +20,13 @@ export function usePacientesSensiblesSeP() {
       setLoading(true);
       setError(null);
       const data = await getPacientesSensiblesSeP(auth.token);
-      setPacientes(data);
+      setPacientes(data || []);
       return data;
     } catch (err) {
-      setError(err.message);
-      throw err;
+      // No lanzar el error, solo mostrarlo en el estado
+      console.error("Error al cargar pacientes sensibles SEP:", err);
+      setError(err.message || "Error al obtener pacientes sensibles");
+      setPacientes([]);
     } finally {
       setLoading(false);
     }

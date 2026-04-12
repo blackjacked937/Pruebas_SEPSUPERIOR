@@ -15,7 +15,7 @@ import {
  * Variantes: Por sede (SuperGestor) o su sede (Gestor Admin)
  */
 export function useGraficasSeP() {
-  const auth = useAuth();
+  const { auth } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 

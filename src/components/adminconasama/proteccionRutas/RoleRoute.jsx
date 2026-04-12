@@ -14,9 +14,9 @@ export function RoleRoute({ children, allowSuper, allowStaff, allowOrganizacione
   const organizacion = auth?.me?.organizacion;
 
   const rolPermitido =
-    !isConasama ||
-    (allowSuper && isSuper) ||
-    (allowStaff && isStaff && !isSuper);
+    isConasama &&
+    ((allowSuper && isSuper) ||
+    (allowStaff && isStaff && !isSuper));
 
   const organizacionPermitida =
     !allowOrganizaciones || allowOrganizaciones.includes(organizacion);

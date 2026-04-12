@@ -49,7 +49,7 @@ export async function getConteoPorNivelRiesgoCategoriaSeP(token) {
  */
 export async function getGraficasPreguntasBySedeSeP(idSede, token) {
   try {
-    const url = `${BASE_API_SEP_V1}/dashboard/Dashbord_Admin/Preguntas/${idSede}/`;
+    const url = `${BASE_API_SEP_V1}/dashboard/Dashbord_Admin/GraficaPreguntas/${idSede}/`;
     const params = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -70,7 +70,7 @@ export async function getGraficasPreguntasBySedeSeP(idSede, token) {
  */
 export async function getGraficasPreguntasSeP(token) {
   try {
-    const url = `${BASE_API_SEP_V1}/dashboard/Dashbord_Admin/Preguntas/`;
+    const url = `${BASE_API_SEP_V1}/dashboard/Dashbord_Admin/GraficaPreguntas/`;
     const params = {
       headers: {
         Authorization: `Bearer ${token}`,

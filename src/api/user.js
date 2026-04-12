@@ -100,10 +100,8 @@ const ME_URL_MAP = {
 };
 
 export async function getMeApi(token, typeLogin) {
-    console.log("typeLogin en getMeApi:", typeLogin);
     try {
         const url = ME_URL_MAP[typeLogin] ?? ME_URL_MAP[1];
-        console.log("URL auth/me:", url);
         const params = {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -111,6 +109,9 @@ export async function getMeApi(token, typeLogin) {
         };
 
         const response = await fetch(url, params);
+        if (response.status !== 200) {
+            throw new Error(`Error al obtener datos del usuario: ${response.status}`);
+        }
         const result = await response.json();
         return result;
     } catch (error) {

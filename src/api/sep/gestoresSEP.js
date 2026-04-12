@@ -51,21 +51,52 @@ export async function registerGestorSeP(data, token) {
 /**
  * Obtiene conteo por nivel de riesgo para SuperGestor por sede
  */
+/**
+ * Obtiene conteo por nivel de riesgo para SuperGestor por sede
+ */
 export async function getConteoNivelRiesgoSePBySedeApi(id, token) {
   try {
     const url = `${BASE_API_SEP_V1}/dashboard/Dashbord_Admin/ConteoPorNivelRiesgo/${id}/`;
+    
     const params = {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     };
     const response = await fetch(url, params);
+    
     if (response.status !== 200) {
       throw new Error("Error al obtener conteo por nivel de riesgo SEP");
     }
-    return await response.json();
+    
+    let result = await response.json();
+    
+    // Si la respuesta está vacía, retornar estructura de cuestionarios con score 0
+    if (!result || (Array.isArray(result) && result.length === 0)) {
+      result = [
+        { id_cuestionario: 1, Cuestionario: "Alcohol", score: 0 },
+        { id_cuestionario: 2, Cuestionario: "Ansiedad", score: 0 },
+        { id_cuestionario: 3, Cuestionario: "Conducta Alimentaria", score: 0 },
+        { id_cuestionario: 4, Cuestionario: "Depresión", score: 0 },
+        { id_cuestionario: 5, Cuestionario: "Drogas", score: 0 },
+        { id_cuestionario: 6, Cuestionario: "Riesgo de Suicidio", score: 0 },
+        { id_cuestionario: 7, Cuestionario: "Tabaco", score: 0 },
+      ];
+    }
+    
+    return result;
   } catch (error) {
-    throw error;
+    console.error("[getConteoNivelRiesgoSePBySedeApi] Error:", error);
+    // En caso de error, retornar estructura de cuestionarios con score 0
+    return [
+      { id_cuestionario: 1, Cuestionario: "Alcohol", score: 0 },
+      { id_cuestionario: 2, Cuestionario: "Ansiedad", score: 0 },
+      { id_cuestionario: 3, Cuestionario: "Conducta Alimentaria", score: 0 },
+      { id_cuestionario: 4, Cuestionario: "Depresión", score: 0 },
+      { id_cuestionario: 5, Cuestionario: "Drogas", score: 0 },
+      { id_cuestionario: 6, Cuestionario: "Riesgo de Suicidio", score: 0 },
+      { id_cuestionario: 7, Cuestionario: "Tabaco", score: 0 },
+    ];
   }
 }
 
@@ -81,11 +112,38 @@ export async function getConteoNivelRiesgoSePAdminApi(token) {
       },
     };
     const response = await fetch(url, params);
+    
     if (response.status !== 200) {
       throw new Error("Error al obtener conteo por nivel de riesgo para admin SEP");
     }
-    return await response.json();
+    
+    let result = await response.json();
+    
+    // Si la respuesta está vacía, retornar estructura de cuestionarios con score 0
+    if (!result || (Array.isArray(result) && result.length === 0)) {
+      result = [
+        { id_cuestionario: 1, Cuestionario: "Alcohol", score: 0 },
+        { id_cuestionario: 2, Cuestionario: "Ansiedad", score: 0 },
+        { id_cuestionario: 3, Cuestionario: "Conducta Alimentaria", score: 0 },
+        { id_cuestionario: 4, Cuestionario: "Depresión", score: 0 },
+        { id_cuestionario: 5, Cuestionario: "Drogas", score: 0 },
+        { id_cuestionario: 6, Cuestionario: "Riesgo de Suicidio", score: 0 },
+        { id_cuestionario: 7, Cuestionario: "Tabaco", score: 0 },
+      ];
+    }
+    
+    return result;
   } catch (error) {
-    throw error;
+    console.error("[getConteoNivelRiesgoSePAdminApi] Error:", error);
+    // En caso de error, retornar estructura de cuestionarios con score 0
+    return [
+      { id_cuestionario: 1, Cuestionario: "Alcohol", score: 0 },
+      { id_cuestionario: 2, Cuestionario: "Ansiedad", score: 0 },
+      { id_cuestionario: 3, Cuestionario: "Conducta Alimentaria", score: 0 },
+      { id_cuestionario: 4, Cuestionario: "Depresión", score: 0 },
+      { id_cuestionario: 5, Cuestionario: "Drogas", score: 0 },
+      { id_cuestionario: 6, Cuestionario: "Riesgo de Suicidio", score: 0 },
+      { id_cuestionario: 7, Cuestionario: "Tabaco", score: 0 },
+    ];
   }
 }

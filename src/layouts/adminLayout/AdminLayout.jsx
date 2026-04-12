@@ -21,6 +21,8 @@ export function AdminLayout(props) {
   const isAdminF1Route = pathname.startsWith('/admin/f1');
   const isGestorConasamaRoute = pathname.startsWith("/admin/gestor/conasama");
   const isSuperConasamaRoute = pathname.startsWith("/admin/super-gestor/conasama");
+  const isGestorSePRoute = pathname.startsWith("/admin/gestor/sep");
+  const isSuperSePRoute = pathname.startsWith("/admin/super-gestor/sep");
 
   if (auth.typeLogin === 1) {
     if (isAdminF1Route) return <Navigate to="/admin" replace />;
@@ -38,6 +40,18 @@ export function AdminLayout(props) {
     } else if (auth.is_staff) {
       if (!isGestorConasamaRoute) {
         return <Navigate to="/admin/gestor/conasama" replace />;
+      }
+    }
+  }
+
+  if (auth.typeLogin === 4) {
+    if (auth.is_superuser) {
+      if (!isSuperSePRoute) {
+        return <Navigate to="/admin/super-gestor/sep" replace />;
+      }
+    } else if (auth.is_staff) {
+      if (!isGestorSePRoute) {
+        return <Navigate to="/admin/gestor/sep" replace />;
       }
     }
   }

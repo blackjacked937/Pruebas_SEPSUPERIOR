@@ -38,8 +38,8 @@ export function RoleRouteSEP({
 
   // ================== LÓGICA DE PERMISOS ==================
 
-  // Validar si el rol está permitido
-  const rolPermitido = !isSeP || (allowSuper && isSuper) || (allowStaff && isStaff && !isSuper);
+  // Validar que sea de SEP primero, luego validar el rol
+  const rolPermitido = isSeP && ((allowSuper && isSuper) || (allowStaff && isStaff && !isSuper));
 
   // Validar si la organización está permitida
   const organizacionPermitida =

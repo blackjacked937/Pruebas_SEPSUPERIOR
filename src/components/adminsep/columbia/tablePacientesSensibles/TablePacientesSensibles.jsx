@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "react-bootstrap/Button";
 import DataTable from "react-data-table-component";
 import Modal from "react-bootstrap/Modal";
-import { marcarAtencionPacienteSensibleApi } from "../../../../api/conasama/pacientesSensibles";
+import { marcarAtencionEspecialSeP } from "../../../../api/sep/pacientesSensiblesSEP";
 import { useAuth } from "../../../../hooks/useAuth";
 import "./TablePacientesSensibles.css";
 import React, { useState } from "react";
@@ -124,7 +124,6 @@ function TablePacientesSensibles(props) {
   // Función para marcar atención
   const handleMarcarAtencion = async () => {
     if (!selectedPaciente) return;
-    // Para el nuevo JSON, el id está directamente en el objeto
     const evaluacionId = selectedPaciente.id || selectedPaciente.evaluacion?.[0]?.id || "";
     if (!evaluacionId) {
       setErrorMsg("No se puede asignar: el paciente no tiene evaluación válida.");
@@ -132,12 +131,11 @@ function TablePacientesSensibles(props) {
     }
     setLoading(true);
     try {
-      await marcarAtencionPacienteSensibleApi(auth.token, evaluacionId);
+      await marcarAtencionEspecialSeP(evaluacionId, { atendido: true }, auth.token);
       setShowDialog(false);
       setSelectedPaciente(null);
       setErrorMsg("");
       if (onRefetch) onRefetch();
-      // Opcional: notificación de éxito
     } catch (error) {
       setErrorMsg("Error al asignar paciente. Intenta nuevamente o consulta al administrador.");
     } finally {

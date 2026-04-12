@@ -13,7 +13,7 @@ import { getTiposPacienteSeP, getHospitalesSeP } from '../../api/sep';
  * Propósito: Listar, registrar y configurar gestores
  */
 export function useGestoresSEP() {
-  const auth = useAuth();
+  const { auth } = useAuth();
   const [loading, setLoading] = useState(false);
   const [gestores, setGestores] = useState([]);
   const [hospitales, setHospitales] = useState([]);

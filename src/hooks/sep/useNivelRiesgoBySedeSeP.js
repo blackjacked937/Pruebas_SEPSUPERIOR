@@ -10,7 +10,7 @@ import {
  * Propósito: Indicadores de riesgo por sede con caché
  */
 export function useNivelRiesgoBySedeSeP() {
-  const auth = useAuth();
+  const { auth } = useAuth();
   const [loading, setLoading] = useState(false);
   const [loadingBySede, setLoadingBySede] = useState({});
   const [dataBySede, setDataBySede] = useState({});

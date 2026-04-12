@@ -100,15 +100,15 @@ export function FormLogin(props) {
                 <Form onSubmit={formik.handleSubmit}>
 
                 <InputForm
-                    label={typeLogin === 2 || typeLogin===4 ? "Correo Electrónico" : "Usuario"}
+                    label={typeLogin === 2 ? "Correo Electrónico" : "Usuario"}
                     labelDirection="left"
-                    nameInput={typeLogin === 2 || typeLogin===4 ? "email" : "username"}
-                    placeHolderInput={typeLogin === 2 || typeLogin===4 ? "correo@example.com" : "usuario"}
-                    valueInput={typeLogin === 2 || typeLogin===4 ? formik.values.email : formik.values.username}
+                    nameInput={typeLogin === 2 ? "email" : "username"}
+                    placeHolderInput={typeLogin === 2 ? "correo@example.com" : "usuario"}
+                    valueInput={typeLogin === 2 ? formik.values.email : formik.values.username}
                     onChangeInput={formik.handleChange}
                     type="text"
-                    error={typeLogin === 2 || typeLogin===4 ? formik.errors.email : formik.errors.username}
-                    touched={typeLogin === 2 || typeLogin===4 ? formik.touched.email : formik.touched.username}
+                    error={typeLogin === 2 ? formik.errors.email : formik.errors.username}
+                    touched={typeLogin === 2 ? formik.touched.email : formik.touched.username}
                     disabled={isLoading}
                 />
 
@@ -173,7 +173,7 @@ export function FormLogin(props) {
 }
 
 function initialValues(typeLogin) {
-    if (typeLogin === 2 || typeLogin === 4) {
+    if (typeLogin === 2) {
         return {
             email: "",
             password: "",
@@ -186,7 +186,7 @@ function initialValues(typeLogin) {
 }
 
 function newSchema(typeLogin) {
-    if (typeLogin === 2 || typeLogin === 4) {
+    if (typeLogin === 2) {
         return {
             email: Yup
                 .string("Ingrese su correo electrónico")

@@ -11,7 +11,7 @@ import {
  * Propósito: Reportes por sede con caché
  */
 export function useReporteEvaluacionesBySedeSeP() {
-  const auth = useAuth();
+  const { auth } = useAuth();
   const [loading, setLoading] = useState(false);
   const [loadingBySede, setLoadingBySede] = useState({});
   const [dataBySede, setDataBySede] = useState({});

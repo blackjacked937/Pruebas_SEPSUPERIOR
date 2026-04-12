@@ -4,13 +4,13 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import { InputForm, SelectForm } from '../../ui';
-import { useGestores } from "../../../hooks/conasama/useGestores";
+import { useGestoresSEP } from "../../../hooks/sep/useGestoresSEP";
 
 export function RegisterGestorForm(props) {
     const { onClose, onReload, gestor, viewMode } = props;
     const [catalogs, setCatalogs] = useState([]);
     const [hospitals, setHospitals] = useState([]);
-    const { getCatalogosGestores, getHospitales, nuevoGestor } = useGestores();
+    const { getCatalogosGestores, getHospitales, nuevoGestor } = useGestoresSEP();
 
     useEffect(() => {
         (async () => {

@@ -17,42 +17,49 @@ export function AuthProvider(props) {
 
   useEffect(() => {
     (async () => {
-      const token = getToken();
-      const typeLogin = sessionStorage.getItem("typeLogin");
+      try {
+        const token = getToken();
+        const typeLogin = sessionStorage.getItem("typeLogin");
 
-      if (token && typeLogin) {
-        const { exp } = jwtDecode(token);
-        const expirationTime = exp * 1000 - 60000;
+        if (token && typeLogin) {
+          const { exp } = jwtDecode(token);
+          const expirationTime = exp * 1000 - 60000;
 
-        if (Date.now() >= expirationTime) {
-          removeToken();
-          sessionStorage.removeItem("typeLogin");
-          setAuth(null);
-        } else {
-          const me = await getMe(token, typeLogin);
+          if (Date.now() >= expirationTime) {
+            removeToken();
+            sessionStorage.removeItem("typeLogin");
+            setAuth(null);
+          } else {
+            const me = await getMe(token, typeLogin);
 
-          const isSuper = me?.is_superuser ?? false;
-          const isStaff = me?.is_staff ?? false;
+            const isSuper = me?.is_superuser ?? false;
+            const isStaff = me?.is_staff ?? false;
 
-          // BLOQUEO DE PACIENTES PARA CONASAMA Y SEP
-          if (Number(typeLogin) === 3 || Number(typeLogin) === 4) {
-            if (!isSuper && !isStaff) {
-              removeToken();
-              sessionStorage.removeItem("typeLogin");
-              setAuth(null);
-              return;
+            // BLOQUEO DE PACIENTES PARA CONASAMA Y SEP
+            if (Number(typeLogin) === 3 || Number(typeLogin) === 4) {
+              if (!isSuper && !isStaff) {
+                removeToken();
+                sessionStorage.removeItem("typeLogin");
+                setAuth(null);
+                return;
+              }
             }
-          }
 
-          setAuth({
-            token,
-            typeLogin,
-            me,
-            is_superuser: isSuper,
-            is_staff: isStaff,
-          });
+            setAuth({
+              token,
+              typeLogin,
+              me,
+              is_superuser: isSuper,
+              is_staff: isStaff,
+            });
+          }
+        } else {
+          setAuth(null);
         }
-      } else {
+      } catch (error) {
+        console.error("Error al cargar sesión:", error);
+        removeToken();
+        sessionStorage.removeItem("typeLogin");
         setAuth(null);
       }
     })();
