@@ -11,10 +11,23 @@ export function HomeAdminSeP() {
 
    
     const nombresSedes = {
-        1: "Ciudad de México",
-        2: "Morelos",
-        3: "Tlaxcala",
-        4: "Hidalgo"
+
+        29: "Centro de Estudios Tecnológicos Ecatepec",
+        30: "Preparatoria Oficial No. 128",
+        31: "Secundaria Técnica 55",
+        32: "Universidad Tecnológica de Nezahualcóyotl",
+        33: "CBT No. 2 Nezahualcóyotl",
+        34: "UAEM - Unidad Académica Toluca",
+        35: "Instituto Tecnológico de Toluca",
+        36: "Escuela Secundaria Oficial No. 1",
+        37: "UAM Iztapalapa - Plantel Central",
+        38: "CETIS No. 53 Iztapalapa",
+        39: "Secundaria Diurna No. 115",
+        40: "IPN - Escuela Superior de Ingeniería (ESIME)",
+        41: "Preparatoria Nacional Plantel 9 UNAM",
+        42: "Facultad de Filosofía y Letras UNAM",
+        43: "CBTIS No. 2 Coyoacán",
+        44: "Secundaria Técnica No. 17"
     };
 
     
