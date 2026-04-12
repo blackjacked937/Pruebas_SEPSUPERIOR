@@ -321,10 +321,10 @@ function initialValues(gestor) {
         id_grado: gestor?.id_grado || '',
         id_contratacion: gestor?.id_contratacion || '',
         id_clues: gestor?.id_clues || 0,
-        id_perfil: gestor?.id_perfil || '',
-        id_nivel: gestor?.id_nivel || '',
+        id_pais:gestor?.id_pais || '',
+        id_estado:gestor?.id_estado || '',
+        id_ciudad:gestor?.id_ciudad || '',
         id_cargo: gestor?.id_cargo || '',
-        id_profesion: gestor?.id_profesion || '',
     };
 }
 
@@ -341,5 +341,9 @@ function newSchema() {
         id_grado: Yup.number().required('El grado es obligatorio'),
         id_contratacion: Yup.number().required('El tipo de contratación es obligatorio'),
         id_cargo: Yup.number().required('El cargo es obligatorio'),
+        id_pais: Yup.number().required('El pais es obligatorio'),
+        id_estado: Yup.number().required('El estado es obligatorio'),
+        id_ciudad:Yup.number().required('La ciudad es obligatorio'),
+        
     };
 }
