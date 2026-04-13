@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { useAuth } from '../useAuth';
 import {
   getNivelRiesgoBySedeSeP,
@@ -16,12 +16,15 @@ export function useNivelRiesgoBySedeSeP() {
   const [dataBySede, setDataBySede] = useState({});
   const [error, setError] = useState(null);
   const [errorBySede, setErrorBySede] = useState({});
+  
+  // Usar ref para evitar que getSedeData se recree constantemente
+  const cacheRef = useRef({});
 
   const getSedeData = useCallback(
     async (sedeId) => {
-      // Retornar del caché si existe
-      if (dataBySede[sedeId]) {
-        return dataBySede[sedeId];
+      // Si ya está en caché, retornar directamente sin actualizar estado
+      if (cacheRef.current[sedeId]) {
+        return cacheRef.current[sedeId];
       }
 
       try {
@@ -29,16 +32,22 @@ export function useNivelRiesgoBySedeSeP() {
         setErrorBySede((prev) => ({ ...prev, [sedeId]: null }));
 
         const data = await getNivelRiesgoBySedeSeP(sedeId, auth.token);
+        
+        // Guardar en caché
+        cacheRef.current[sedeId] = data;
+        // Guardar en estado para disparar re-renders
         setDataBySede((prev) => ({ ...prev, [sedeId]: data }));
+        
         return data;
       } catch (err) {
+        console.error(`Error al obtener datos de la sede ${sedeId}:`, err);
         setErrorBySede((prev) => ({ ...prev, [sedeId]: err.message }));
         throw err;
       } finally {
         setLoadingBySede((prev) => ({ ...prev, [sedeId]: false }));
       }
     },
-    [auth.token, dataBySede]
+    [auth.token]
   );
 
   const getAdminData = useCallback(async () => {
@@ -48,6 +57,7 @@ export function useNivelRiesgoBySedeSeP() {
       const data = await getNivelRiesgoAdminSeP(auth.token);
       return data;
     } catch (err) {
+      console.error('Error al obtener datos de admin:', err);
       setError(err.message);
       throw err;
     } finally {

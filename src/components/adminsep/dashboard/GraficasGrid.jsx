@@ -9,9 +9,9 @@ export default function GraficasGrid({ graficas, loading }) {
   }
 
   return (
-    <div className="row g-4">
+    <div className="graficas-grid-responsive">
       {graficas.map((grafica, index) => (
-        <div key={index} className="col-md-6">
+        <div key={index} className="grafica-card">
           <div className="h-100">
             <InitialDashboard
               title={grafica?.title || "Sin título"}

@@ -51,15 +51,16 @@ export function InitialDashboard({ data, title }) {
         }));
     }
     const axisCount = normalizedData.length;
-    const radius = axisCount >= 5 ? "60%" : "65%";
+    const radius = axisCount >= 5 ? "55%" : "60%";
 
     return (
-        <div style={{ width: '100%', height: 400, marginBottom: "2rem"}}>
-            <h4 style={{ textAlign: "center", marginBottom: 10 }}>{title}</h4>
-            <ResponsiveContainer>
-                <RadarChart
-                    cx="50%"
-                    cy="58%"
+        <>
+            <h4 style={{ textAlign: "center", marginBottom: 10, fontSize: "1.25rem", fontWeight: 800, color: "#0F4C75" }}>{title}</h4>
+            <div style={{ width: '100%', height: '100%'}}>
+                <ResponsiveContainer>
+                    <RadarChart
+                        cx="50%"
+                        cy="55%"
                     outerRadius={radius}
                     data={normalizedData}
                 >
@@ -78,7 +79,7 @@ export function InitialDashboard({ data, title }) {
                             lines.push(words.slice(i, i + 2).join(" "));
                             }
 
-                            const lineHeight = 14;
+                            const lineHeight = 13;
                             const offsetY = -(lines.length - 1) * (lineHeight / 2);
 
                             return (
@@ -86,8 +87,9 @@ export function InitialDashboard({ data, title }) {
                                 x={x}
                                 y={y + offsetY}
                                 textAnchor={textAnchor}
-                                fontSize={12}
+                                fontSize={11}
                                 fontWeight={500}
+                                fill="#0F4C75"
                             >
                                 {lines.map((line, index) => (
                                 <tspan key={index} x={x} dy={index === 0 ? 0 : lineHeight}>
@@ -114,6 +116,7 @@ export function InitialDashboard({ data, title }) {
                     />
                 </RadarChart>
             </ResponsiveContainer>
-        </div>
+            </div>
+        </>
     );
 }

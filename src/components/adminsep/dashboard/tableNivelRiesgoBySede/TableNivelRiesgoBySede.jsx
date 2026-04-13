@@ -6,7 +6,7 @@
     import "./TableNivelRiesgoBySede.css";
 
     export function TableNivelRiesgoBySede(props) {
-    const { dataBySede, sedesIds, nombresSedes, activeSede, onChangeSede } = props;
+    const { dataBySede, sedesIds, nombresSedes, activeSede, onChangeSede, hideSedeTabs } = props;
 
     const columns = [
         {
@@ -86,17 +86,19 @@
 
       return (
         <div className="nivel-riesgo-tabs-container">
-          <div className="tabs-sedes">
-            {sedesIds.map((id) => (
-              <button
-                key={id}
-                className={`tab-sede-btn${Number(id) === Number(activeSede) ? ' active' : ''}`}
-                onClick={() => onChangeSede(Number(id))}
-              >
-                {nombresSedes[id]}
-              </button>
-            ))}
-          </div>
+          {!hideSedeTabs && (
+            <div className="tabs-sedes">
+              {sedesIds.map((id) => (
+                <button
+                  key={id}
+                  className={`tab-sede-btn${Number(id) === Number(activeSede) ? ' active' : ''}`}
+                  onClick={() => onChangeSede(Number(id))}
+                >
+                  {nombresSedes[id]}
+                </button>
+              ))}
+            </div>
+          )}
           <div className="sede-table-container">
             <div className="sede-header">
               <span className="sede-title">
@@ -106,7 +108,7 @@
                 {Array.isArray(dataBySede[activeSede])
                   ? dataBySede[activeSede].length
                   : 0
-                } pacientes
+                } Estudiantes
               </span>
             </div>
             <DataTable
