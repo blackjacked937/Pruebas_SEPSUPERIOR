@@ -7,6 +7,7 @@ import imagen from '../../../assets/img/logoColor.png'
 import isem from '../../../assets/img/Colibri_Vertical_FondoClaro 02.png'
 import jupyter from '../../../assets/img/Jupyter_log.png'
 import logoMCA from '../../../assets/img/logoMCA.png'
+import logoSep from '../../../assets/img/logoSep.png'
 import './SelectLogin.css'
 
 
@@ -56,7 +57,7 @@ export function SelectLogin() {
                     {/* Adaptar en base a la sep */}
                     <IconButton
                         text="Mente Conecta SEP"
-                        image={logoMCA}
+                        image={logoSep}
                         onChangeMethod={() => setView(4)}
                     />
                 </div>

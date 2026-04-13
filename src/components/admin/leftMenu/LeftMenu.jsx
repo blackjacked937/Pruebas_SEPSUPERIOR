@@ -10,6 +10,7 @@ import { SiJupyter } from "react-icons/si";
 import { HiUserGroup, HiDocumentReport } from "react-icons/hi";
 
 import logoMCA from '../../../assets/img/logoMCA.png'
+import logoSep from '../../../assets/img/logoSep.png'
 import image from '../../../assets/img/logoColor.png'
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../../hooks";
@@ -372,7 +373,7 @@ function MenuAdminSEP({ pathname, isSuperUser, isStaff, puedeGestionarUsuarios, 
             <Nav.Link as={Link} to="/admin/gestor/sep" className="text-nav">
               <div>
                 <img
-                  src={logoMCA}
+                  src={logoSep}
                   alt="LogoMCA"
                   style={{
                     width: "100%",
@@ -427,7 +428,7 @@ function MenuAdminSEP({ pathname, isSuperUser, isStaff, puedeGestionarUsuarios, 
             <Nav.Link as={Link} to="/admin/super-gestor/sep" className="text-nav">
               <div>
                 <img
-                  src={logoOrganizacion}
+                  src={logoSep}
                   alt="Logo"
                   style={{
                     width: "100%",

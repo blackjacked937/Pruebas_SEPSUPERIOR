@@ -36,7 +36,7 @@ export function GestoresSuperAdminSeP() {
     };
 
     const viewGestor = (gestor) => {
-        openModal("Información del Gestor", <RegisterGestorForm gestor={gestor} viewMode={true} onClose={closeModal} />);
+        openModal("Información del Director, Profesor u Orientador", <RegisterGestorForm gestor={gestor} viewMode={true} onClose={closeModal} />);
     };
 
     return (

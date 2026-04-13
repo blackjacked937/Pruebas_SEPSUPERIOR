@@ -20,7 +20,7 @@ export function RegisterGestorForm(props) {
             try {
                 const result = await getCatalogosGestores();
                 const host = await getHospitales();
-                const pais = await getPaises();// 👈 NUEVO
+                const pais = await getPaises();
 
                 setCountries(pais);
                 setCatalogs(result);
@@ -320,7 +320,6 @@ function initialValues(gestor) {
         estatus: gestor?.estatus || 1,
         id_grado: gestor?.id_grado || '',
         id_contratacion: gestor?.id_contratacion || '',
-        id_clues: gestor?.id_clues || 0,
         id_pais:gestor?.id_pais || '',
         id_estado:gestor?.id_estado || '',
         id_ciudad:gestor?.id_ciudad || '',

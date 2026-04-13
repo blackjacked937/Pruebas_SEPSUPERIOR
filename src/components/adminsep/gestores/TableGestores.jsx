@@ -4,7 +4,7 @@ import { map } from 'lodash';
 
 export function TableGestores(props) {
     const { gestores, hospitales, onViewGestor } = props;
-
+    console.log(gestores);
     return (
         <Table striped bordered hover responsive className="mt-4">
             <thead>
