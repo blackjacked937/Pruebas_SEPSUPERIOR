@@ -1,12 +1,12 @@
 import { Container } from 'react-bootstrap';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useAuth } from '../../../hooks';
 import { CardInfoNavigation } from '../../../components/common';
 import { getConteoNivelRiesgoSePBySedeApi } from '../../../api/sep/gestoresSEP';
 
 import './HomeSuperAdminSeP.css';
 
-const sedesPorEstado = {
+const sedesPorEstadoConstant = {
   'Estado de México': {
     29: "Centro de Estudios Tecnológicos Ecatepec",
     30: "Preparatoria Oficial No. 128",
@@ -36,8 +36,10 @@ export function HomeSuperAdminSeP() {
     const [sedesData, setSedesData] = useState({});
     const [loading, setLoading] = useState(false);
 
-    const sedesDelEstado = sedesPorEstado[estadoSeleccionado] || {};
-    const idsSedes = Object.keys(sedesDelEstado);
+    // Memoizar para evitar recálculos en cada render
+    const sedesPorEstado = useMemo(() => sedesPorEstadoConstant, []);
+    const sedesDelEstado = useMemo(() => sedesPorEstado[estadoSeleccionado] || {}, [estadoSeleccionado, sedesPorEstado]);
+    const idsSedes = useMemo(() => Object.keys(sedesDelEstado), [sedesDelEstado]);
 
     // Inicializar sede cuando cambia el estado
     useEffect(() => {

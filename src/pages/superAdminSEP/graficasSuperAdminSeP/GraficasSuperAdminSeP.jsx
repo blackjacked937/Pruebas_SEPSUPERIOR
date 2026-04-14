@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Container, Spinner } from "react-bootstrap";
 import { useAuth } from "../../../hooks";
 import { useGraficasSeP } from "../../../hooks/sep";
 import GraficasGrid from "../../../components/adminsep/dashboard/GraficasGrid";
 import "./GraficasSuperAdminSeP.css";
 
-const sedesPorEstado = {
+const sedesPorEstadoConstant = {
   'Estado de México': {
     29: "Centro de Estudios Tecnológicos Ecatepec",
     30: "Preparatoria Oficial No. 128",
@@ -36,8 +36,10 @@ export function GraficasSuperAdminSeP() {
   const [graficas, setGraficas] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const sedesDelEstado = sedesPorEstado[estadoSeleccionado] || {};
-  const idsSedes = Object.keys(sedesDelEstado);
+  // Memoizar para evitar recálculos en cada render
+  const sedesPorEstado = useMemo(() => sedesPorEstadoConstant, []);
+  const sedesDelEstado = useMemo(() => sedesPorEstado[estadoSeleccionado] || {}, [estadoSeleccionado, sedesPorEstado]);
+  const idsSedes = useMemo(() => Object.keys(sedesDelEstado), [sedesDelEstado]);
 
   const {
     getConteoPorNivelRiesgoCategoriaBySedeSeP,

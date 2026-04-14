@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { Container, Row, Col, Spinner, Button } from 'react-bootstrap'
 import { ModalBasic } from '../../../components/ui/modalBasic'
 import { RegisterGestorForm } from '../../../components/adminsep/gestores/RegisterGestorForm'
@@ -6,7 +6,7 @@ import { TableGestores } from '../../../components/adminsep/gestores/TableGestor
 import { useGestoresSEP } from "../../../hooks/sep/useGestoresSEP";
 import './GestoresSuperAdminSeP.css';
 
-const sedesPorEstado = {
+const sedesPorEstadoConstant = {
   'Estado de México': {
     29: "Centro de Estudios Tecnológicos Ecatepec",
     30: "Preparatoria Oficial No. 128",
@@ -39,6 +39,10 @@ export function GestoresSuperAdminSeP() {
     const [sedeSeleccionada, setSedeSeleccionada] = useState(null);
     const [gestoresFiltrados, setGestoresFiltrados] = useState([]);
 
+    // Memoizar para evitar recálculos en cada render
+    const sedesPorEstado = useMemo(() => sedesPorEstadoConstant, []);
+    const sedesDelEstado = useMemo(() => sedesPorEstado[estadoSeleccionado] || {}, [estadoSeleccionado, sedesPorEstado]);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         const cargarDatos = async () => {
@@ -50,7 +54,6 @@ export function GestoresSuperAdminSeP() {
 
     // Establecer la primera sede cuando cambia el estado
     useEffect(() => {
-        const sedesDelEstado = sedesPorEstado[estadoSeleccionado] || {};
         const primeraSede = Object.keys(sedesDelEstado)[0];
         setSedeSeleccionada(primeraSede ? Number(primeraSede) : null);
     }, [estadoSeleccionado]);
@@ -118,7 +121,7 @@ export function GestoresSuperAdminSeP() {
                         onChange={(e) => setSedeSeleccionada(Number(e.target.value))}
                         className="filtro-select"
                     >
-                        {Object.entries(sedesPorEstado[estadoSeleccionado] || {}).map(([sedeId, sedeName]) => (
+                        {Object.entries(sedesDelEstado).map(([sedeId, sedeName]) => (
                             <option key={sedeId} value={sedeId}>
                                 {sedeName}
                             </option>
