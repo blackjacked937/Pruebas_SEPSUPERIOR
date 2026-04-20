@@ -50,7 +50,7 @@ export function SelectLogin() {
                         onChangeMethod={() => setView(2)}
                     />
                     <IconButton
-                        text="Mente Conecta Conasama"
+                        text="Mente Conecta Adicciones"
                         image={logoMCA}
                         onChangeMethod={() => setView(3)}
                     />
