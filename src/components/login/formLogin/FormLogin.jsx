@@ -5,7 +5,7 @@ import { GiBrain, } from "react-icons/gi";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import Icono_home from "../../../assets/img/Icono_home.jpeg";
-import { loginApiISEM, loginApiFase1, loginApiConasama, loginApiSEP } from '../../../api/user';
+import { loginApiISEM, loginApiFase1, loginApiConasama, loginApiSEP, loginApiMCSEP } from '../../../api/user';
 import { useAuth } from '../../../hooks';
 import { InputForm } from '../../ui';
 import './FormLogin.css';
@@ -21,6 +21,7 @@ export function FormLogin(props) {
         2: loginApiFase1,
         3: loginApiConasama,
         4: loginApiSEP, // SEP usa su propia API
+        5: loginApiMCSEP,
     };
 
     const getLoginApi = (typeLogin) => loginMap[typeLogin] || loginApiISEM;

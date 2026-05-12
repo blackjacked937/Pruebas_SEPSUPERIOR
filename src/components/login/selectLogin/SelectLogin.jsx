@@ -21,7 +21,8 @@ export function SelectLogin() {
         <FormLogin key="fase1" typeLogin={2} onBack={() => setView(0)} />,
         <FormLogin key="conasama" typeLogin={3} onBack={() => setView(0)} />,
         // form de las SEP
-        <FormLogin key="sep" typeLogin={4} onBack={() => setView(0)} />
+        <FormLogin key="sep" typeLogin={4} onBack={() => setView(0)} />,
+        <FormLogin key="mente-sep" typeLogin={5} onBack={() => setView(0)} />
     ];
 
     return views[view]
@@ -59,6 +60,11 @@ export function SelectLogin() {
                         text="Mente Conecta SEP"
                         image={logoSep}
                         onChangeMethod={() => setView(4)}
+                    />
+                    <IconButton
+                        text="Mente SUPERIOR SEP"
+                        image={logoSep}
+                        onChangeMethod={() => setView(5)}
                     />
                 </div>
                 <br />
