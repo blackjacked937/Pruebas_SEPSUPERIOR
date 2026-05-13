@@ -65,10 +65,94 @@ function MenuLeft({ pathname, typeLogin, isSuperUser, isStaff, puedeGestionarUsu
         puedeGenerarReportes={puedeGenerarReportes}
       />
     ),
+    5: (
+        <MenuSuperiorSEP
+          pathname={pathname}
+          isSuperUser={isSuperUser}
+          isStaff={isStaff}
+        />
+      ),
   };
 
-  return menusByTypeLogin[typeLogin] ?? null;
+  return menusByTypeLogin[Number(typeLogin)] ?? null;
 }
+
+function MenuSuperiorSEP({ pathname, isSuperUser, isStaff }) {
+    return (
+      <Nav activeKey="/admin" className="nav-conteiner">
+        <Nav.Item className="menu-sub">
+          <Nav.Link as={Link} to="/admin/superior-gestor/sep" className="text-nav">
+            <div>
+              <img
+                src={logoSep}
+                alt="LogoSEP"
+                style={{
+                  width: "100%",
+                  marginBottom: "1rem",
+                  marginTop: "2rem",
+                }}
+              />
+            </div>
+          </Nav.Link>
+        </Nav.Item>
+  
+        <Nav.Item className="menu-sub">
+          <Nav.Link
+            className="text-nav"
+            as={Link}
+            to="/admin/superior-gestor/sep"
+            active={pathname === "/admin/superior-gestor/sep"}
+          >
+            <FaHome className="icon" /> Inicio
+          </Nav.Link>
+        </Nav.Item>
+  
+        <Nav.Item className="menu-sub">
+          <Nav.Link
+            className="text-nav"
+            as={Link}
+            to="/admin/superior-gestor/sep/graficas"
+            active={pathname === "/admin/superior-gestor/sep/graficas"}
+          >
+            <VscGraph className="icon" /> Graficas
+          </Nav.Link>
+        </Nav.Item>
+  
+        <Nav.Item className="menu-sub">
+          <Nav.Link
+            className="text-nav"
+            as={Link}
+            to="/admin/superior-gestor/sep/grupo"
+            active={pathname === "/admin/superior-gestor/sep/grupo"}
+          >
+            <HiUserGroup className="icon" /> Grupo de Riesgos
+          </Nav.Link>
+        </Nav.Item>
+  
+        <Nav.Item className="menu-sub">
+          <Nav.Link
+            className="text-nav"
+            as={Link}
+            to="/admin/superior-gestor/sep/gestores"
+            active={pathname === "/admin/superior-gestor/sep/gestores"}
+          >
+            <FaUserDoctor className="icon" /> Gestores
+          </Nav.Link>
+        </Nav.Item>
+  
+        <Nav.Item className="menu-sub">
+          <Nav.Link
+            className="text-nav"
+            as={Link}
+            to="/admin/superior-gestor/sep/noticias"
+            active={pathname === "/admin/superior-gestor/sep/noticias"}
+          >
+            <IoNewspaperOutline className="icon" /> Noticias
+          </Nav.Link>
+        </Nav.Item>
+      </Nav>
+    );
+  }
 
 function MenuAdmin(props) {
 
