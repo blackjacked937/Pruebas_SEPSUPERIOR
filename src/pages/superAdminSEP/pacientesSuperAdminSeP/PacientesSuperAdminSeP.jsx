@@ -1,133 +1,206 @@
-import React, { useEffect, useState, useMemo } from "react";
-import { useAuth } from "../../../hooks";
+import React, { useEffect, useState } from "react";
 import { useNivelRiesgoBySedeSeP } from "../../../hooks/sep";
-import { Container } from 'react-bootstrap';
+import { Container } from "react-bootstrap";
 import { TableNivelRiesgoBySede } from "../../../components/adminsep/dashboard/tableNivelRiesgoBySede/TableNivelRiesgoBySede";
-import './PacientesSuperAdminSeP.css';
+import {
+  getPaises,
+  getMunicipio,
+  getEscuela,
+} from "../../../api/sep";
 
-const sedesPorEstado = {
-  'Estado de México': {
-    29: "Centro de Estudios Tecnológicos Ecatepec",
-    30: "Preparatoria Oficial No. 128",
-    32: "Universidad Tecnológica de Nezahualcóyotl",
-    33: "CBT No. 2 Nezahualcóyotl",
-    34: "UAEM - Unidad Académica Toluca",
-    35: "Instituto Tecnológico de Toluca"
-  },
-  'Ciudad de México': {
-    31: "Secundaria Técnica 55",
-    36: "Escuela Secundaria Oficial No. 1",
-    37: "UAM Iztapalapa - Plantel Central",
-    38: "CETIS No. 53 Iztapalapa",
-    39: "Secundaria Diurna No. 115",
-    40: "IPN - Escuela Superior de Ingeniería (ESIME)",
-    41: "Preparatoria Nacional Plantel 9 UNAM",
-    42: "Facultad de Filosofía y Letras UNAM",
-    43: "CBTIS No. 2 Coyoacán",
-    44: "Secundaria Técnica No. 17"
-  }
-};
+import { SepHeader } from "../../../components/sep/sepHeader";
+import { SepFooter } from "../../../components/sep/sepFooter"; 
 
-/**
- * Página de Pacientes en Riesgo para SuperGestores de SEP
- * Muestra pacientes identificados en riesgo por sede
- * 
- * Acceso: is_superuser === true (SuperGestor)
- * Protección: RoleRoute allowSuper
- */
+import "./PacientesSuperAdminSeP.css";
+
 export function PacientesSuperAdminSeP() {
-  const { auth } = useAuth();
-  const { dataBySede, loadingBySede, getSedeData } =
-    useNivelRiesgoBySedeSeP();
+  const {
+    dataBySede,
+    loadingBySede,
+    getSedeData,
+  } = useNivelRiesgoBySedeSeP();
+  
+  const [estados, setEstados] = useState([]);
+  const [municipios, setMunicipios] = useState([]);
+  const [escuelas, setEscuelas] = useState([]);
+  
+  const [estadoSeleccionado, setEstadoSeleccionado] = useState("");
+  const [municipioSeleccionado, setMunicipioSeleccionado] = useState("");
+  const [sedeSeleccionada, setSedeSeleccionada] = useState("");
 
-  const [estadoSeleccionado, setEstadoSeleccionado] = useState('Estado de México');
-  const [sedeSeleccionada, setSedeSeleccionada] = useState(null);
+  const getMunicipiosByEstado = async (idEstado) => {
+    return await getMunicipio(idEstado);
+  };
 
-  // Memoizar para evitar que se recalcule en cada renderizado
-  const sedesDelEstado = useMemo(() => sedesPorEstado[estadoSeleccionado] || {}, [estadoSeleccionado]);
-  const idsSedes = useMemo(() => Object.keys(sedesDelEstado), [sedesDelEstado]);
+  const getEscuelasByMunicipio = async (idMunicipio) => {
+    return await getEscuela(idMunicipio);
+  };
 
-  // Establecer la primera sede cuando cambia el estado
   useEffect(() => {
-    if (idsSedes.length > 0) {
-      setSedeSeleccionada(Number(idsSedes[0]));
-    }
+    const cargarEstados = async () => {
+      try {
+        const data = await getPaises();
+        setEstados(data || []);
+        if (data?.length > 0) {
+          setEstadoSeleccionado(data[0].id);
+        }
+      } catch (error) {
+        console.error("Error cargando estados:", error);
+      }
+    };
+    cargarEstados();
+  }, []);
+
+  useEffect(() => {
+    if (!estadoSeleccionado) return;
+    const cargarMunicipios = async () => {
+      try {
+        const data = await getMunicipiosByEstado(estadoSeleccionado);
+        setMunicipios(data || []);
+        if (data?.length > 0) {
+          setMunicipioSeleccionado(data[0].id);
+        } else {
+          setMunicipioSeleccionado("");
+          setEscuelas([]);
+          setSedeSeleccionada("");
+        }
+      } catch (error) {
+        console.error("Error cargando municipios:", error);
+      }
+    };
+    cargarMunicipios();
   }, [estadoSeleccionado]);
 
-  // Cargar datos de la sede seleccionada
+  useEffect(() => {
+    if (!municipioSeleccionado) return;
+    const cargarEscuelas = async () => {
+      try {
+        const data = await getEscuelasByMunicipio(municipioSeleccionado);
+        setEscuelas(data || []);
+        if (data?.length > 0) {
+          setSedeSeleccionada(data[0].id);
+        } else {
+          setSedeSeleccionada("");
+        }
+      } catch (error) {
+        console.error("Error cargando escuelas:", error);
+      }
+    };
+    cargarEscuelas();
+  }, [municipioSeleccionado]);
+
   useEffect(() => {
     if (!sedeSeleccionada) return;
+    if (loadingBySede[sedeSeleccionada]) return;
+    if (dataBySede[sedeSeleccionada]) return;
 
-    // Si ya está cargando, no hacer nada
-    if (loadingBySede[sedeSeleccionada]) {
-      return;
-    }
-
-    // Si ya tiene datos, no hacer nada
-    if (dataBySede[sedeSeleccionada]) {
-      return;
-    }
-
-    // Cargar datos
-    getSedeData(sedeSeleccionada).catch(err => {
+    getSedeData(Number(sedeSeleccionada)).catch((err) => {
       console.error(`Error al cargar datos para sede ${sedeSeleccionada}:`, err);
     });
-  }, [sedeSeleccionada]);
+  }, [sedeSeleccionada, dataBySede, loadingBySede, getSedeData]);
+
+  const estadoActual = estados.find((e) => e.id === Number(estadoSeleccionado));
+  const municipioActual = municipios.find((m) => m.id === Number(municipioSeleccionado));
+  const escuelaActual = escuelas.find((e) => e.id === Number(sedeSeleccionada));
+
+  const numEstudiantes = Array.isArray(dataBySede[sedeSeleccionada]) 
+    ? dataBySede[sedeSeleccionada].length 
+    : 0;
+
+  const textoPersonas = numEstudiantes === 1 ? "1 persona" : `${numEstudiantes} personas`;
 
   return (
-    <Container fluid className="pacientes-riesgo-container">
-      <header className="header-dashboard mb-5">
-        <h1>👥 Estudiantes en Grupo de Riesgo por Sede</h1>
-        <p className="lead">Identificación y seguimiento de casos en riesgo</p>
-      </header>
+    <div className="pacientes-sep-layout d-flex flex-column w-100 min-vh-100">
+      
+      <SepHeader 
+        title="Estudiantes en Grupo de Riesgo" 
+        subtitle="Identificación y seguimiento de casos en riesgo" 
+      />
+      <Container fluid className="pacientes-riesgo-content flex-grow-1 mt-4 pb-4">
+        <div className="filtros-flotantes-container mb-4">
+          <div className="filtro-card">
+            <label className="filtro-card-label">
+              <span className="icon">🚩</span> ESTADO
+            </label>
+            <select
+              value={estadoSeleccionado}
+              onChange={(e) => setEstadoSeleccionado(Number(e.target.value))}
+              className="filtro-card-select"
+            >
+              {estados.map((estado) => (
+                <option key={estado.id} value={estado.id}>
+                  {estado.descripcion}
+                </option>
+              ))}
+            </select>
+          </div>
 
-      {/* Filtros en cascada */}
-      <div className="filtros-container mb-5">
-        <div className="filtro-wrapper">
-          <label className="filtro-label">📍 Seleccionar Estado:</label>
-          <select 
-            value={estadoSeleccionado}
-            onChange={(e) => setEstadoSeleccionado(e.target.value)}
-            className="filtro-select"
-          >
-            {Object.keys(sedesPorEstado).map((estado) => (
-              <option key={estado} value={estado}>
-                {estado} ({Object.keys(sedesPorEstado[estado]).length} sedes)
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="filtro-wrapper">
-          <label className="filtro-label">🏢 Seleccionar Sede:</label>
-          <select 
-            value={sedeSeleccionada || ''}
-            onChange={(e) => setSedeSeleccionada(Number(e.target.value))}
-            className="filtro-select"
-          >
-            {Object.entries(sedesDelEstado).map(([sedeId, sedeName]) => (
-              <option key={sedeId} value={sedeId}>
-                {sedeName}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
+          <div className="filtro-card">
+            <label className="filtro-card-label">
+              <span className="icon">🏢</span> MUNICIPIO
+            </label>
+            <select
+              value={municipioSeleccionado}
+              onChange={(e) => setMunicipioSeleccionado(Number(e.target.value))}
+              className="filtro-card-select"
+            >
+              {municipios.map((municipio) => (
+                <option key={municipio.id} value={municipio.id}>
+                  {municipio.descripcion}
+                </option>
+              ))}
+            </select>
+          </div>
 
-      {loadingBySede[sedeSeleccionada] ? (
-        <div className="alert alert-info mt-4">
-          <h5>Cargando datos de la sede...</h5>
+          <div className="filtro-card">
+            <label className="filtro-card-label">
+              <span className="icon">🏫</span> ESCUELA
+            </label>
+            <select
+              value={sedeSeleccionada}
+              onChange={(e) => setSedeSeleccionada(Number(e.target.value))}
+              className="filtro-card-select"
+            >
+              {escuelas.map((escuela) => (
+                <option key={escuela.id} value={escuela.id}>
+                  {escuela.nombre}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
-      ) : (
-        <TableNivelRiesgoBySede
-          dataBySede={dataBySede}
-          sedesIds={idsSedes}
-          nombresSedes={sedesDelEstado}
-          activeSede={sedeSeleccionada}
-          onChangeSede={setSedeSeleccionada}
-          hideSedeTabs={true}
-        />
-      )}
-    </Container>
+
+        <div className="table-wrapper-sep">
+          {escuelaActual && (
+            <div className="resumen-header d-flex align-items-center mb-4">
+              <h3 className="mb-0 mr-3" style={{ fontWeight: '800' }}>
+                {escuelaActual.nombre}
+              </h3>
+              <span className="badge-personas ms-3">{textoPersonas}</span>
+            </div>
+          )}
+
+          {loadingBySede[sedeSeleccionada] ? (
+            <div className="alert alert-info mt-4">
+              <h5>Cargando datos de la escuela...</h5>
+            </div>
+          ) : (
+            <div className="tabla-blanca-container">
+              <TableNivelRiesgoBySede
+                dataBySede={dataBySede}
+                sedesIds={[sedeSeleccionada]}
+                nombresSedes={{
+                  [sedeSeleccionada]: escuelaActual?.nombre || "",
+                }}
+                activeSede={sedeSeleccionada}
+                onChangeSede={setSedeSeleccionada}
+                hideSedeTabs={true}
+              />
+            </div>
+          )}
+        </div>
+      </Container>
+    </div>
   );
 }
 

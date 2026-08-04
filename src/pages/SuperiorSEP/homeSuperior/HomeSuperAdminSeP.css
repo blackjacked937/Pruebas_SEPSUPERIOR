@@ -1,0 +1,311 @@
+/* HOME SUPERIOR - ESTILO MONTE CONECTA*/
+
+.mc-home-superior-sesyn {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+  padding: 0 !important;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  background-color: #ffffff;
+  margin-top: 0 !important;
+  min-height: 100vh;
+}
+
+/* BANNER */
+.mc-banner-wave-sesyn {
+  position: relative;
+  width: 100%;
+  background-color: #6ebeea;
+  padding: 10px clamp(16px, 4vw, 48px) 0px;
+  color: #ffffff;
+}
+
+.mc-banner-wave-sesyn__content {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mc-banner-wave-sesyn__text {
+  flex: 1;
+}
+
+.mc-banner-wave-sesyn__logo {
+  flex-shrink: 0;
+  margin-left: 24px;
+}
+
+.mc-banner-sesyn-logo {
+  height: 90px;
+  width: auto;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+.mc-banner-wave-sesyn__content h1 {
+  font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+  font-weight: 800;
+  margin: 0 0 2px 0;
+  text-shadow: 0 1px 3px rgba(30, 50, 100, 0.25);
+}
+
+.mc-banner-wave-sesyn__content p.lead {
+  font-size: clamp(0.85rem, 1.2vw, 1rem);
+  margin: 0;
+  color: #f4f7fc;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(30, 50, 100, 0.2);
+}
+
+/* ---------------------------------------------------------
+   ONDA DE TRANSICION
+   --------------------------------------------------------- */
+.mc-banner-transition-sesyn {
+  position: relative;
+  width: 100%;
+  margin-top: -1px;
+  height: 40px;
+  line-height: 0;
+  background-color: #6ebeea;
+}
+
+.mc-banner-transition-sesyn svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* WRAPPER DE CONTENIDO  */
+.mc-content-wrapper-sesyn {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 10px clamp(16px, 4vw, 48px) 0px;
+  position: relative;
+  z-index: 10;
+}
+
+.mc-filtros-container-sesyn {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 24px;
+  align-items: stretch;              
+}
+
+.mc-filtro-card-sesyn {
+  background-color: #ffffff;
+  border-radius: 20px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  padding: 24px 20px !important;
+  flex: 1 1 420px;                   
+  max-width: 480px !important;       
+  min-width: 420px;                  
+  display: flex;                     
+  flex-direction: column;            
+  transition: all 0.3s ease;
+}
+
+.mc-filtro-card-sesyn:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+  transform: translateY(-2px);
+}
+
+.mc-filtro-label-sesyn {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-bottom: 16px !important;
+  font-size: 24px !important;                      
+  font-weight: 700 !important;                      
+  line-height: 36px !important;                     
+  letter-spacing: 0px !important;                   
+  color: #031D6C !important;                    
+  text-transform: uppercase !important;
+    white-space: nowrap !important;    
+}
+
+.mc-filtro-select-wrapper-sesyn {
+  border: none !important;
+  padding: 0 !important;
+}
+
+.mc-filtro-select-sesyn {
+  width: 100% !important;
+  height: 75px !important;              
+  padding: 10px 16px !important;
+  border: 3px solid #6EBEEA !important;  
+  border-radius: 20px !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  color: var(--text-dark) !important;
+  background-color: white !important;
+  cursor: pointer !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000000'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 10px center !important;
+  background-size: 48px !important;
+  padding-right: 65px !important;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15) !important;  
+}
+
+.mc-filtro-select-sesyn:hover {
+  border-color: #4dabce !important;   
+  box-shadow: 0 4px 12px rgba(27, 111, 163, 0.18) !important;
+}
+
+.mc-filtro-select-sesyn:focus {
+  outline: none !important;
+  border-color: #6EBEEA !important;
+  box-shadow: 0 0 0 4px rgba(110, 190, 234, 0.2) !important;
+  background-color: white !important;
+}
+
+/* ---------------------------------------------------------
+   GRID DE TARJETAS DE INDICADORES (ESPACIOS REDUCIDOS)
+   --------------------------------------------------------- */
+.mc-indicadores-grid-sesyn {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; 
+  margin-top: 10px; 
+  margin-bottom: 80px; 
+  padding-bottom: 20px; 
+  justify-content: center;
+}
+
+.mc-indicadores-grid-sesyn .container-card-info-1 {
+  width: 100% !important;
+  max-width: 300px !important; 
+  min-width: 320px !important; 
+  border: none !important;              
+  box-shadow: none !important;         
+  padding: 0 !important;               
+  background-color: transparent !important; 
+  position: relative; 
+  z-index: 5; 
+}
+
+/*ONDA DEL FOOTER INFERIOR*/
+.mc-footer-wave-sesyn {
+  position: relative;
+  width: 100%;
+  height: 130px;
+  line-height: 0;
+  background: #f8bc63;
+}
+
+.mc-footer-wave-sesyn__svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transform: scaleY(-1);
+}
+
+.mc-footer-wave-sesyn__base {
+  fill: #f8bc63;
+}
+
+.mc-footer-wave-sesyn__path {
+  fill: #ffffff;
+}
+
+/* ---------------------------------------------------------
+   FOOTER CON PERSONAJES (MÁS GRANDES Y JUNTOS AL CENTRO)
+   ========================================================= */
+.footer-personajes-wrapper-sesyn {
+ position: relative; 
+  width: 100%;
+  height: 0; 
+  z-index: 6; 
+}
+
+/* MASCOTA IZQUIERDA */
+.personaje-izq {
+  position: absolute;
+  bottom: -40px; 
+  left: 50%;
+  margin-left: -600px;
+  width: clamp(300px, 20vw, 340px);
+  height: clamp(300px, 20vw, 340px);
+  z-index: 6; 
+  pointer-events: none;
+  filter: drop-shadow(0px 6px 10px rgba(0, 0, 0, 0.12));
+}
+
+/* MASCOTA DERECHA */
+.personaje-der {
+  position: absolute;
+  bottom: -60px;
+  right: 50%;
+  margin-right: -600px;
+  width: clamp(350px, 15vw, 260px);
+  height: clamp(350px, 15vw, 260px);
+  z-index: 6;
+  pointer-events: none;
+  filter: drop-shadow(0px 6px 10px rgba(0, 0, 0, 0.12));
+}
+
+.personaje-der-home{
+  position: absolute; 
+  bottom: -160px; 
+  right: 5%;
+  width: clamp(350px, 15vw, 260px);
+  height: clamp(350px, 15vh, 260px);
+  z-index: 6;
+  pointer-events: none;
+  filter: drop-shadow(-4px 6px 10px rgba(0, 0, 0, 0.15));
+}
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+   --------------------------------------------------------- */
+@media (max-width: 768px) {
+  .mc-banner-wave-sesyn {
+    padding: 15px 24px 0px;
+  }
+  .personaje-der-home-sesyn {
+    display: none;
+  }
+
+  .mc-banner-wave-sesyn__logo {
+    display: none;
+  }
+
+  .mc-indicadores-grid-sesyn {
+    gap: 15px;
+  }
+
+  .personaje-der,
+  .personaje-izq {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .mc-filtros-container-sesyn {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+  .mc-filtro-card-sesyn {
+    max-width: 100% !important;
+    min-width: 0 !important;
+    width: 100%;
+  }
+  .mc-filtro-label-sesyn {
+    font-size: 20px !important;      
+    white-space: normal !important;  
+  }
+}

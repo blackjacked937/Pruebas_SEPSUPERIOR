@@ -4,6 +4,7 @@
   margin-bottom: 18px;
   flex-wrap: wrap;
 }
+
 .tab-sede-btn {
   background: #f3f6fa;
   color: #5f6c7b;
@@ -16,11 +17,13 @@
   transition: background 0.25s, color 0.25s;
   margin-bottom: 6px;
 }
+
 .tab-sede-btn.active {
   background: linear-gradient(135deg, #1c6ed5, #4dabf7);
   color: #fff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
+
 .tab-sede-btn:hover:not(.active) {
   background: #e4ecf7;
   color: #1c6ed5;
@@ -33,11 +36,13 @@
   margin-bottom: 18px;
   flex-wrap: wrap;
 }
+
 .sede-title {
   font-size: 1.35rem;
   font-weight: 600;
   color: #1c6ed5;
 }
+
 .badge-sede {
   background: #007bff;
   color: #fff;
@@ -53,31 +58,38 @@
     gap: 4px;
     margin-bottom: 12px;
   }
+
   .tab-sede-btn {
     padding: 8px 12px;
     font-size: 0.95rem;
   }
+
   .sede-header {
     gap: 6px;
     margin-bottom: 12px;
   }
+
   .sede-title {
     font-size: 1.05rem;
   }
+
   .badge-sede {
     font-size: 0.9rem;
     padding: 4px 10px;
     margin-left: 4px;
   }
+
   .sede-table-container {
     padding: 8px;
   }
 }
+
 .tabs-sedes {
   display: flex;
   gap: 8px;
   margin-bottom: 18px;
 }
+
 .tab-sede-btn {
   background: #f3f6fa;
   color: #5f6c7b;
@@ -89,11 +101,13 @@
   cursor: pointer;
   transition: background 0.25s, color 0.25s;
 }
+
 .tab-sede-btn.active {
   background: linear-gradient(135deg, #1c6ed5, #4dabf7);
   color: #fff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
+
 .tab-sede-btn:hover:not(.active) {
   background: #e4ecf7;
   color: #1c6ed5;
@@ -105,11 +119,13 @@
   gap: 12px;
   margin-bottom: 18px;
 }
+
 .sede-title {
   font-size: 1.35rem;
   font-weight: 600;
   color: #1c6ed5;
 }
+
 .badge-sede {
   background: #007bff;
   color: #fff;
@@ -119,6 +135,7 @@
   padding: 6px 16px;
   margin-left: 8px;
 }
+
 .nivel-riesgo-tabs-container {
   margin-top: 20px;
 }
@@ -224,5 +241,5 @@
 .customTabs :global(.nav-link.active) {
   background: linear-gradient(135deg, #1c6ed5, #4dabf7);
   color: white !important;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }

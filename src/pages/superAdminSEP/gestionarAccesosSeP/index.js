@@ -1,0 +1,1 @@
+export {GestionarAccesosPage} from './GestionarAccesosPage';

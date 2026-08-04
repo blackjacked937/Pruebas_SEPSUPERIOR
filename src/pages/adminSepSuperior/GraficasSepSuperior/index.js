@@ -1,0 +1,1 @@
+export { GraficasSepSuperior } from './GraficaSepSuperior';

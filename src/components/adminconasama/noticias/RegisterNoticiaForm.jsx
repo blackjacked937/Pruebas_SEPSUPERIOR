@@ -6,7 +6,6 @@ import { createNoticiaApi } from '../../../api/conasama/noticias';
 export function RegisterNoticiaForm({ onClose, onReload }) {
     const { auth } = useAuth();
     const [loading, setLoading] = useState(false);
-    const [statusText, setStatusText] = useState("Guardar Noticia");
     const [error, setError] = useState("");
     
     const [formData, setFormData] = useState({
@@ -56,12 +55,10 @@ export function RegisterNoticiaForm({ onClose, onReload }) {
         setLoading(true);
 
         try {
-            setStatusText("Traduciendo al inglés...");
             const translatedTitle = await translateText(formData.titulo);
             const translatedPrevDesc = await translateText(formData.descripcion_previa);
             const translatedDesc = await translateText(formData.descripcion);
 
-            setStatusText("Guardando en base de datos...");
             const dataToSend = {
                 titulo: formData.titulo,
                 title: translatedTitle, 
@@ -81,7 +78,6 @@ export function RegisterNoticiaForm({ onClose, onReload }) {
             console.error(error);
         } finally {
             setLoading(false);
-            setStatusText("Guardar Noticia");
         }
     };
 
@@ -132,7 +128,7 @@ export function RegisterNoticiaForm({ onClose, onReload }) {
                 </Button>
                 <Button variant="primary" type="submit" disabled={loading} style={{ background: "#4DB6AC", borderColor: "#4DB6AC" }}>
                     {loading && <Spinner as="span" animation="border" size="sm" className="me-2" />} 
-                    {statusText}
+                    Guardar Noticia
                 </Button>
             </div>
         </Form>

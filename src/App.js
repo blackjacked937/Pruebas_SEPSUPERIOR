@@ -3,7 +3,6 @@ import './App.css'
 import { AuthProvider } from './context/AuthContext';
 import { Navigation } from './routes';
 import { ToastContainer } from "react-toastify";
-import ChatBot from './components/Chat/ChatBot';
 import "react-toastify/dist/ReactToastify.css";
 import './App.css';
 
@@ -12,7 +11,6 @@ function App() {
   return (
     <AuthProvider>
       <Navigation />
-      <ChatBot />
       <ToastContainer
         position="top-right"
         autoClose={3500}

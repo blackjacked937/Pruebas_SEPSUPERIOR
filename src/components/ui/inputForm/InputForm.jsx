@@ -10,33 +10,45 @@ export function InputForm(props) {
         valueInput, onChangeInput,
         type, rows, error, touched,
         disabled, size, accept, col,
+        icon,
+        ...rest
     } = props;
 
+    const isError = touched && error;
+    const currentBorderColor = touched && error ? "red" : "#4DB6AC57";
 
     return (
         <Form.Group className={`${col} conteiner-input`} >
-            <Form.Label className={labelDirection}>{label}</Form.Label>
-            <center>
-                <Form.Control
-                    className={`input-control ${labelDirection}`}
-                    name={nameInput}
-                    type={type}
-                    accept={accept}
-                    placeholder={placeHolderInput}
-                    rows={rows}
-                    value={valueInput}
-                    onChange={onChangeInput}
-                    disabled={disabled}
-                    size={size}
-                    style={{
-                        borderColor: touched && error ? "red" : "#4DB6AC57",
-                        width: "100%"
-                    }}
-                />
-            </center>
+            {label && <Form.Label className={labelDirection}>{label}</Form.Label>}
+            <div className="center">
+                <div
+                    className="custom-input-wrapper"
+                    style={{ borderColor: currentBorderColor }}
+                >
+                    {icon && (
+                        <div className="custom-icon-block">
+                            {icon}
+                        </div>
+                    )}
+                    <Form.Control
+                        className={`input-control-borderless ${labelDirection}`}
+                        name={nameInput}
+                        type={type}
+                        accept={accept}
+                        placeholder={placeHolderInput}
+                        rows={rows}
+                        value={valueInput}
+                        onChange={onChangeInput}
+                        disabled={disabled}
+                        size={size}
+                        {...rest}
+                    />
+                </div>
+            </div>
+
             <Form.Text className="text-danger">
-                {touched && error ?
-                    <center><b><div className="text-danger">{error}</div></b></center>
+                {isError ?
+                    <div className="text-danger mt-1">{error}</div>
                     : null}
             </Form.Text>
         </Form.Group>

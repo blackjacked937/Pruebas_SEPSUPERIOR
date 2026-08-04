@@ -1,25 +1,31 @@
-.customTabs {
-  border-bottom: none !important;
+.tabsContainer {
+  display: inline-flex;
+  padding: 4px;
+  background-color: #ffffff;
+  border-radius: 50px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eef2f7;
 }
 
-.customTabs :global(.nav-link) {
-  border-radius: 12px !important;
-  margin-right: 8px;
-  padding: 10px 20px;
-  font-weight: 500;
-  color: #5f6c7b;
-  background-color: #f3f6fa;
-  border: none !important;
-  transition: all 0.25s ease;
+.tabButton {
+  background-color: transparent;
+  color: #64748b;
+  border: none;
+  border-radius: 50px;
+  padding: 10px 28px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
-.customTabs :global(.nav-link:hover) {
-  background-color: #e4ecf7;
-  color: #1c6ed5;
+.tabButton:hover {
+  color: #7DB747;
 }
 
-.customTabs :global(.nav-link.active) {
-  background: linear-gradient(135deg, #1c6ed5, #4dabf7);
-  color: white !important;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+.activeTab {
+  background-color: #7DB747;
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 4px 10px rgba(125, 183, 71, 0.3);
 }

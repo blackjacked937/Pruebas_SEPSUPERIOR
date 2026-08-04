@@ -1,76 +1,63 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { GiMaterialsScience } from "react-icons/gi";
-
 import { IconButton } from '../../ui';
-import { FormLogin } from '../formLogin/FormLogin';
 import imagen from '../../../assets/img/logoColor.png'
 import isem from '../../../assets/img/Colibri_Vertical_FondoClaro 02.png'
 import jupyter from '../../../assets/img/Jupyter_log.png'
 import logoMCA from '../../../assets/img/logoMCA.png'
 import logoSep from '../../../assets/img/logoSep.png'
+import logoSesyn from '../../../assets/img/logoSesyn.png'
 import './SelectLogin.css'
 
 
-export function SelectLogin() {
+export function SelectLogin({ onSelectView }) {
+    const navigate = useNavigate();
 
-    const [view, setView] = useState(0)
-
-    const views = [
-        <SelectLogin key="menu" />,
-        <FormLogin key="isem" typeLogin={1} onBack={() => setView(0)} />,
-        <FormLogin key="fase1" typeLogin={2} onBack={() => setView(0)} />,
-        <FormLogin key="conasama" typeLogin={3} onBack={() => setView(0)} />,
-        // form de las SEP
-        <FormLogin key="sep" typeLogin={4} onBack={() => setView(0)} />,
-        <FormLogin key="mente-sep" typeLogin={5} onBack={() => setView(0)} />
-    ];
-
-    return views[view]
-
-    function SelectLogin() {
-        return (
-            <div>
-                <center style={{ marginTop: '40px', color: '#04547B' }}><h2 ><b>¿A dónde quieres acceder?</b></h2></center>
-                <br />
-                <div className=' card-select-login'>
-                    <IconButton
-                        image={isem}
-                        text="Mente Conecta ISEM"
-                        onChangeMethod={() => setView(1)}
-                    />
-                    {/* <a href='http://menteconecta.net/jupyterhub/'> */}
-                    <a href='#'>
-                        <IconButton
-                            text="Jupyter Notebook"
-                            image={jupyter}
-                        />
-                    </a>
-                    <IconButton
-                        text="Mente Conecta"
-                        image={imagen}
-                        onChangeMethod={() => setView(2)}
-                    />
-                    <IconButton
-                        text="Mente Conecta Adicciones"
-                        image={logoMCA}
-                        onChangeMethod={() => setView(3)}
-                    />
-                    {/* Adaptar en base a la sep */}
-                    <IconButton
-                        text="Mente Conecta SEP"
-                        image={logoSep}
-                        onChangeMethod={() => setView(4)}
-                    />
-                    <IconButton
-                        text="Mente SUPERIOR SEP"
-                        image={logoSep}
-                        onChangeMethod={() => setView(5)}
-                    />
-                </div>
-                <br />
-                <br />
+    return (
+        <div className="select-login-container">
+            <div className="select-login-header">
+                <h1 className="select-login-title">¿A dónde quieres acceder?</h1>
             </div>
-        )
-    }
 
+            <div className='card-select-login'>
+                <IconButton
+                    image={isem}
+                    text="Mente Conecta ISEM"
+                    onChangeMethod={() => navigate('/login/isem')}
+                />
+                <a href='#'>
+                    <IconButton
+                        text="Jupyter Notebook"
+                        image={jupyter}
+                    />
+                </a>
+                <IconButton
+                    text="Mente Conecta"
+                    image={imagen}
+                    onChangeMethod={() => navigate('/login/fase1')}
+                />
+                <IconButton
+                    text="Mente Conecta Adicciones"
+                    image={logoMCA}
+                    onChangeMethod={() => navigate('/login/conasama')}
+                />
+                {/* Adaptar en base a la sep */}
+                <IconButton
+                    text="Mente Conecta SEP"
+                    image={logoSep}
+                    onChangeMethod={() => navigate('/login/sep')}
+                />
+                <IconButton
+                    text="Mente Conecta SESyN"
+                    image={logoSesyn}
+                    onChangeMethod={() => navigate('/login/sesyn')}
+                />
+            </div>
+
+            <div className="select-login-footer">
+                <Link to="/" className="select-login-back-link">Regresar</Link>
+            </div>
+        </div>
+    )
 }

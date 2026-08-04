@@ -1,15 +1,10 @@
-import { FiAlertTriangle, FiCheckCircle, FiInfo } from 'react-icons/fi';
+import { IoWarning } from 'react-icons/io5';
 
-export const cardClasses = (riskLevel) => `risk-card risk-level-${riskLevel}`;
+export const cardClasses = (riskLevel) => {
+  const level = Number(riskLevel) || 0;
+  return `risk-card risk-level-${level} ${level > 0 ? 'risk-level-danger' : 'risk-level-0'}`;
+};
 
 export const getIcon = (riskLevel) => {
-    switch (riskLevel) {
-      case 1:
-        return <FiCheckCircle className="card-icon-navigation" />; 
-      case 2:
-        return <FiInfo className="card-icon-navigation" />;
-      case 3:
-      default:
-        return <FiAlertTriangle className="card-icon-navigation" />; 
-    }
-  };
+  return <IoWarning className="card-icon-navigation" />;
+};

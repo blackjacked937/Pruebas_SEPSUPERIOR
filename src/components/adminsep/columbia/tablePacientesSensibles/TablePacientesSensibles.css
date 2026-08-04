@@ -6,3 +6,35 @@
 .table-pacientes-sensibles__boton:hover {
   transform: scale(1.1);
 }
+
+.table-sensibles-container {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); 
+  overflow-x: auto;
+  border-left: 12px solid #7DB747; 
+  padding: 10px 20px 20px 20px;
+}
+
+.table-sensibles-container .rdt_Table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-sensibles-container .rdt_TableHeadRow {
+  background-color: transparent !important;
+}
+
+.table-sensibles-container .MuiPaper-root, 
+.table-sensibles-container .card {
+  box-shadow: none !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+@media (max-width: 576px) {
+  .table-sensibles-container {
+    padding: 15px;
+    border-left-width: 8px;
+  }
+}

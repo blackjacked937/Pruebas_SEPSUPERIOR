@@ -7,36 +7,52 @@ export function SelectForm(props) {
         label, labelDirection,
         name, value, onChange,
         options, error, touched,
-        disabled, size, col
+        disabled, size, col,
+        icon,
+        placeholder,
+        ...rest
     } = props;
+
+    const isError = touched && error;
+    const currentBorderColor = isError ? "red" : "#4DB6AC57";
 
     return (
         <Form.Group className={`${col} conteiner-input`}>
             {label && <Form.Label className={labelDirection}>{label}</Form.Label>}
-            <center>
-                <Form.Select
-                    className={`input-control ${labelDirection}`}
-                    name={name}
-                    value={value}
-                    onChange={onChange}
-                    disabled={disabled}
-                    size={size}
-                    style={{
-                        borderColor: touched && error ? "red" : "#4DB6AC57",
-                        width: "100%"
-                    }}
+            <div className="center">
+                <div
+                    className="custom-input-wrapper"
+                    style={{ borderColor: currentBorderColor }}
                 >
-                    <option value="">Seleccione una opción...</option>
-                    {options && options.map((opt, index) => (
-                        <option key={opt.id || opt.value || index} value={opt.id || opt.value}>
-                            {opt.opcion || opt.label}
+                    {icon && (
+                        <div className="custom-icon-block">
+                            {icon}
+                        </div>
+                    )}
+                    <Form.Select
+                        className={`input-control-borderless ${labelDirection}`}
+                        name={name}
+                        value={value}
+                        onChange={onChange}
+                        disabled={disabled}
+                        size={size}
+                        {...rest}
+                    >
+                        <option value="">
+                            {placeholder || "Seleccione una opción..."}
                         </option>
-                    ))}
-                </Form.Select>
-            </center>
+                        {options && options.map((opt, index) => (
+                            <option key={opt.id || opt.value || index} value={opt.id || opt.value}>
+                                {opt.opcion || opt.label}
+                            </option>
+                        ))}
+                    </Form.Select>
+                </div>
+            </div>
+
             <Form.Text className="text-danger">
-                {touched && error ?
-                    <center><b><div className="text-danger">{error}</div></b></center>
+                {isError ?
+                    <div className="text-danger mt-1">{error}</div>
                     : null}
             </Form.Text>
         </Form.Group>

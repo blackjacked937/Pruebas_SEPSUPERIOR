@@ -1,5 +1,5 @@
-import { AdminLayout } from '../layouts';
-import { 
+import { AdminLayout } from '../layouts/adminLayout/AdminLayout';
+import {
     EstadisticaConasama,
     ColumbiaPageCona,
     HomaAdminConasama
@@ -10,29 +10,26 @@ const routesAdminConasama = [
     {
         path: "/admin/gestor/conasama",
         layout: AdminLayout,
-        component: (props) => (
-            <RoleRoute allowStaff>
-                <HomaAdminConasama {...props} />
-            </RoleRoute>
-        ),
+        component: HomaAdminConasama,
+        label: "Inicio",
+        Guard: RoleRoute,
+        access: { allowStaff: true },
     },
     {
         path: "/admin/gestor/conasama/estadisticas",
         layout: AdminLayout,
-        component: (props) => (
-            <RoleRoute allowStaff>
-                <EstadisticaConasama {...props} />
-            </RoleRoute>
-        ),
+        component:EstadisticaConasama,
+        label: "Estadísticas",
+        Guard: RoleRoute,
+        access: { allowStaff: true },
     },
     {
         path: "/admin/gestor/conasama/columbia",
         layout: AdminLayout,
-        component: (props) => (
-            <RoleRoute allowStaff>
-                <ColumbiaPageCona {...props} />
-            </RoleRoute>
-        ),
+        component: ColumbiaPageCona,
+        label: "Grupo de Riesgo",
+        Guard: RoleRoute,
+        access: { allowStaff: true },
     }
 ]
 

@@ -1,7 +1,9 @@
-import { AdminLayout } from '../layouts';
-import { HomeAdminSeP } from '../pages/adminSEP/homeAdminSeP/HomeAdminSeP';
-import { EstadisticasSeP } from '../pages/adminSEP/estadisticasSeP/EstadisticasSeP';
-import { ColumbiaPageSeP } from '../pages/adminSEP/columbiaPageSeP/ColumbiaPageSeP';
+import { SepLayout } from '../layouts/sepLayout/SepLayout';
+import {
+  HomeAdminSeP,
+  EstadisticasSeP,
+  ColumbiaPageSeP
+} from '../pages/adminSEP';
 import { RoleRouteSEP } from '../components/adminsep';
 
 /**
@@ -14,30 +16,27 @@ import { RoleRouteSEP } from '../components/adminsep';
 const routesAdminSeP = [
   {
     path: '/admin/gestor/sep',
-    layout: AdminLayout,
-    component: (props) => (
-      <RoleRouteSEP allowStaff>
-        <HomeAdminSeP {...props} />
-      </RoleRouteSEP>
-    ),
+    layout: SepLayout,
+    component: HomeAdminSeP,
+    label: "Inicio",
+    Guard: RoleRouteSEP,
+    access: { allowStaff: true },
   },
   {
     path: '/admin/gestor/sep/estadisticas',
-    layout: AdminLayout,
-    component: (props) => (
-      <RoleRouteSEP allowStaff>
-        <EstadisticasSeP {...props} />
-      </RoleRouteSEP>
-    ),
+    layout: SepLayout,
+    component: EstadisticasSeP,
+    label: "Estadísticas",
+    Guard: RoleRouteSEP,
+    access: { allowStaff: true },
   },
   {
     path: '/admin/gestor/sep/columbia',
-    layout: AdminLayout,
-    component: (props) => (
-      <RoleRouteSEP allowStaff>
-        <ColumbiaPageSeP {...props} />
-      </RoleRouteSEP>
-    ),
+    layout: SepLayout,
+    component: ColumbiaPageSeP,
+    label: "Grupo de Riesgo",
+    Guard: RoleRouteSEP,
+    access: { allowStaff: true },
   },
 ];
 

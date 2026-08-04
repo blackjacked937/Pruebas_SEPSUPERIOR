@@ -1,167 +1,256 @@
-import { Container } from 'react-bootstrap';
-import { useState, useEffect, useMemo } from 'react';
-import { useAuth } from '../../../hooks';
-import { CardInfoNavigation } from '../../../components/common';
-import { getConteoNivelRiesgoSePBySedeApi } from '../../../api/sep/gestoresSEP';
+import { Container } from "react-bootstrap";
+import { useState, useEffect } from "react";
+import { useAuth } from "../../../hooks";
+import { CardInfoNavigation } from "../../../components/common";
+import { getConteoNivelRiesgoSePBySedeApi } from "../../../api/sep/gestoresSEP";
+import { getPaises, getMunicipio, getEscuela } from "../../../api/sep";
+import "./HomeSuperAdminSeP.css";
+import "./HomeSuperAdminSeP.css";
+import { SepHeader } from "../../../components/sep";
+import { SepFooter } from "../../../components/sep";
+import avatarMujer from "../../../assets/img/avatar-mujer.png";
 
-import './HomeSuperAdminSeP.css';
+import {
+  BsGeoAltFill,
+  BsBuildingsFill,
+  BsMortarboardFill,
+} from "react-icons/bs";
 
-const sedesPorEstadoConstant = {
-  'Estado de México': {
-    29: "Centro de Estudios Tecnológicos Ecatepec",
-    30: "Preparatoria Oficial No. 128",
-    32: "Universidad Tecnológica de Nezahualcóyotl",
-    33: "CBT No. 2 Nezahualcóyotl",
-    34: "UAEM - Unidad Académica Toluca",
-    35: "Instituto Tecnológico de Toluca"
-  },
-  'Ciudad de México': {
-    31: "Secundaria Técnica 55",
-    36: "Escuela Secundaria Oficial No. 1",
-    37: "UAM Iztapalapa - Plantel Central",
-    38: "CETIS No. 53 Iztapalapa",
-    39: "Secundaria Diurna No. 115",
-    40: "IPN - Escuela Superior de Ingeniería (ESIME)",
-    41: "Preparatoria Nacional Plantel 9 UNAM",
-    42: "Facultad de Filosofía y Letras UNAM",
-    43: "CBTIS No. 2 Coyoacán",
-    44: "Secundaria Técnica No. 17"
-  }
+// IMPLEMENTAR
+const getMunicipiosByEstado = async (idEstado) => {
+  return getMunicipio(idEstado);
+};
+
+// IMPLEMENTAR
+const getEscuelasByMunicipio = async (idMunicipio) => {
+  return getEscuela(idMunicipio);
 };
 
 export function HomeSuperAdminSeP() {
-    const { auth } = useAuth();
-    const [estadoSeleccionado, setEstadoSeleccionado] = useState('Estado de México');
-    const [sedeSeleccionada, setSedeSeleccionada] = useState(null);
-    const [sedesData, setSedesData] = useState({});
-    const [loading, setLoading] = useState(false);
+  const { auth } = useAuth();
 
-    // Memoizar para evitar recálculos en cada render
-    const sedesPorEstado = useMemo(() => sedesPorEstadoConstant, []);
-    const sedesDelEstado = useMemo(() => sedesPorEstado[estadoSeleccionado] || {}, [estadoSeleccionado, sedesPorEstado]);
-    const idsSedes = useMemo(() => Object.keys(sedesDelEstado), [sedesDelEstado]);
+  const [estados, setEstados] = useState([]);
+  const [municipios, setMunicipios] = useState([]);
+  const [escuelas, setEscuelas] = useState([]);
 
-    // Inicializar sede cuando cambia el estado
-    useEffect(() => {
-        if (idsSedes.length > 0) {
-            setSedeSeleccionada(idsSedes[0]);
+  const [estadoSeleccionado, setEstadoSeleccionado] = useState("");
+  const [municipioSeleccionado, setMunicipioSeleccionado] = useState("");
+  const [sedeSeleccionada, setSedeSeleccionada] = useState("");
+
+  const [sedesData, setSedesData] = useState({});
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const cargarEstados = async () => {
+      try {
+        const data = await getPaises();
+
+        setEstados(data || []);
+
+        if (data?.length > 0) {
+          setEstadoSeleccionado(data[0].id);
         }
-    }, [estadoSeleccionado]);
+      } catch (error) {
+        console.error("Error cargando estados", error);
+      }
+    };
 
-    // Cargar datos de la sede seleccionada
-    useEffect(() => {
-        const cargarDatos = async () => {
-            if (!auth?.token || !sedeSeleccionada) return;
+    cargarEstados();
+  }, []);
 
-            try {
-                setLoading(true);
-                const data = await getConteoNivelRiesgoSePBySedeApi(Number(sedeSeleccionada), auth.token);
-                setSedesData({
-                    [sedeSeleccionada]: data || []
-                });
-            } catch (error) {
-                console.error("Error cargando datos:", error);
-                setSedesData({ [sedeSeleccionada]: [] });
-            } finally {
-                setLoading(false);
-            }
-        };
+  useEffect(() => {
+    if (!estadoSeleccionado) return;
 
-        cargarDatos();
-    }, [sedeSeleccionada, auth?.token]);
+    const cargarMunicipios = async () => {
+      try {
+        const data = await getMunicipiosByEstado(estadoSeleccionado);
 
-    return (
-        <Container className="container-super-admin-sep">
-            <header className="header-dashboard mb-5">
-                <h1>🏥 Panel de Supervisión - SEP</h1>
-                <p className="lead">Sistema de Evaluación y Prevención de Riesgos</p>
-            </header>
+        setMunicipios(data || []);
 
-            {/* Filtros en cascada - Estado y Sede */}
-            <div className="filtros-container mb-5">
-                <div className="filtro-wrapper">
-                    <label className="filtro-label">📍 Seleccionar Estado:</label>
-                    <select 
-                        className="filtro-select"
-                        value={estadoSeleccionado}
-                        onChange={(e) => setEstadoSeleccionado(e.target.value)}
-                    >
-                        {Object.keys(sedesPorEstado).map((estado) => (
-                            <option key={estado} value={estado}>
-                                {estado} ({Object.keys(sedesPorEstado[estado]).length} sedes)
-                            </option>
-                        ))}
-                    </select>
-                </div>
+        if (data?.length > 0) {
+          setMunicipioSeleccionado(data[0].id);
+        } else {
+          setMunicipioSeleccionado("");
+          setEscuelas([]);
+          setSedeSeleccionada("");
+        }
+      } catch (error) {
+        console.error("Error cargando municipios", error);
+      }
+    };
 
-                {idsSedes.length > 0 && (
-                    <div className="filtro-wrapper">
-                        <label className="filtro-label">🏢 Seleccionar Sede:</label>
-                        <select 
-                            className="filtro-select"
-                            value={sedeSeleccionada || ''}
-                            onChange={(e) => setSedeSeleccionada(e.target.value)}
-                        >
-                            {idsSedes.map((id) => (
-                                <option key={id} value={id}>
-                                    {sedesDelEstado[id]}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                )}
+    cargarMunicipios();
+  }, [estadoSeleccionado]);
+
+  useEffect(() => {
+    if (!municipioSeleccionado) return;
+
+    const cargarEscuelas = async () => {
+      try {
+        const data = await getEscuelasByMunicipio(municipioSeleccionado);
+
+        setEscuelas(data || []);
+
+        if (data?.length > 0) {
+          setSedeSeleccionada(data[0].id);
+        } else {
+          setSedeSeleccionada("");
+        }
+      } catch (error) {
+        console.error("Error cargando escuelas", error);
+      }
+    };
+
+    cargarEscuelas();
+  }, [municipioSeleccionado]);
+
+  useEffect(() => {
+    const cargarDatos = async () => {
+      if (!auth?.token || !sedeSeleccionada) return;
+
+      try {
+        setLoading(true);
+
+        const data = await getConteoNivelRiesgoSePBySedeApi(
+          Number(sedeSeleccionada),
+          auth.token,
+        );
+
+        setSedesData({
+          [sedeSeleccionada]: data || [],
+        });
+      } catch (error) {
+        console.error("Error cargando dashboard", error);
+
+        setSedesData({
+          [sedeSeleccionada]: [],
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    cargarDatos();
+  }, [sedeSeleccionada, auth?.token]);
+
+  const escuelaActual = escuelas.find((x) => x.id === Number(sedeSeleccionada));
+
+  const municipioActual = municipios.find(
+    (x) => x.id === Number(municipioSeleccionado),
+  );
+
+  const estadoActual = estados.find((x) => x.id === Number(estadoSeleccionado));
+
+  return (
+    <div className="d-flex flex-column w-100 min-vh-100" style={{ backgroundColor: "#F4F6F9" }}>
+      <SepHeader
+        title="Panel de Supervisión - SEP"
+        subtitle="Sistema de Evaluación y Prevención de Riesgos"
+      />
+
+      <Container className="container-super-admin-sep flex-grow-1">
+        <div className="mc-filtros-container">
+          {/* ESTADO */}
+          <div className="mc-filtro-card">
+            <label className="mc-filtro-label">
+              🚩 ESTADO
+            </label>
+            <div className="mc-filtro-select-wrapper">
+              <select
+                className="mc-filtro-select"
+                value={estadoSeleccionado}
+                onChange={(e) => setEstadoSeleccionado(Number(e.target.value))}>
+                {estados.map((estado) => (
+                  <option key={estado.id} value={estado.id}>
+                    {estado.descripcion}
+                  </option>
+                ))}
+              </select>
             </div>
+          </div>
 
-            {/* Resumen de la Sede */}
-            {sedeSeleccionada && (
-                <div className="estado-resumen mb-5">
-                    <div className="resumen-contenido">
-                        <h2 className="resumen-titulo">{sedesDelEstado[sedeSeleccionada]}</h2>
-                        <p className="resumen-subtitulo">{estadoSeleccionado}</p>
-                    </div>
-                </div>
-            )}
+          {/* MUNICIPIO */}
+          <div className="mc-filtro-card">
+            <label className="mc-filtro-label">
+              🏢 MUNICIPIO
+            </label>
+            <div className="mc-filtro-select-wrapper">
+              <select
+                className="mc-filtro-select"
+                value={municipioSeleccionado}
+                onChange={(e) =>
+                  setMunicipioSeleccionado(Number(e.target.value))
+                }>
+                {municipios.map((municipio) => (
+                  <option key={municipio.id} value={municipio.id}>
+                    {municipio.descripcion}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
 
-            {loading ? (
-                <div className="loading-container-super">
-                    <div className="loading-spinner-super" role="status"></div>
-                    <p className="loading-text-super">Sincronizando datos...</p>
+          {/* ESCUELA */}
+          <div className="mc-filtro-card">
+            <label className="mc-filtro-label">
+              🏫 ESCUELA
+            </label>
+            <div className="mc-filtro-select-wrapper">
+              <select
+                className="mc-filtro-select"
+                value={sedeSeleccionada}
+                onChange={(e) => setSedeSeleccionada(Number(e.target.value))}>
+                {escuelas.map((escuela) => (
+                  <option key={escuela.id} value={escuela.id}>
+                    {escuela.nombre}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </div>
+        {loading ? (
+          <div className="loading-container-super">
+            <div className="loading-spinner-super" role="status"></div>
+            <p className="loading-text-super">Sincronizando datos...</p>
+          </div>
+        ) : sedeSeleccionada && sedesData[sedeSeleccionada] ? (
+          <div className="sedes-container">
+            <div className="mc-indicadores-grid mb-5">
+              {sedesData[sedeSeleccionada].length > 0 ? (
+                sedesData[sedeSeleccionada].map((item) => (
+                  <CardInfoNavigation
+                    key={item.id_cuestionario}
+                    riskLevel={item.score}
+                    account={item.score}
+                    title={item.Cuestionario}
+                    subTitle={escuelaActual?.nombre}
+                    textLink="Ver Reporte"
+                    link="/admin/super-gestor/sep/pacientes-riesgo"
+                  />
+                ))
+              ) : (
+                <div className="sede-sin-datos">
+                  <p>Sin datos de evaluación</p>
                 </div>
-            ) : sedeSeleccionada && sedesData[sedeSeleccionada] ? (
-                <div className="sedes-container">
-                    <div className="sedes-grid-super">
-                        {sedesData[sedeSeleccionada].length > 0 ? (
-                            sedesData[sedeSeleccionada].map((item) => (
-                                <div key={item.id_cuestionario} className="sede-card-super">
-                                    <div className="sede-card-header">
-                                        <h4 className="sede-nombre">{item.Cuestionario}</h4>
-                                    </div>
-                                    <div className="sede-card-content">
-                                        <CardInfoNavigation
-                                            riskLevel={item.score}
-                                            account={item.score}
-                                            title={item.Cuestionario}
-                                            subTitle={sedesDelEstado[sedeSeleccionada]}
-                                            textLink="Ver Reporte"
-                                            link={`/admin/super-gestor/sep/pacientes-riesgo`}
-                                        />
-                                    </div>
-                                </div>
-                            ))
-                        ) : (
-                            <div className="sede-sin-datos">
-                                <p>Sin datos de evaluación</p>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            ) : (
-                <div className="loading-container-super">
-                    <p className="loading-text-super">Selecciona una sede para ver los datos</p>
-                </div>
-            )}
-        </Container>
-    );
+              )}
+            </div>
+          </div>
+        ) : (
+          <div className="loading-container-super">
+            <p className="loading-text-super">Selecciona una escuela</p>
+          </div>
+        )}
+      </Container>
+      <div className="footer-personajes-wrapper">
+        <img
+          src={avatarMujer}
+          alt="Avatar decorativo"
+          className="personaje-der-home-superadmin"
+        />
+      </div>
+    </div>
+  );
 }
 
 export default HomeSuperAdminSeP;

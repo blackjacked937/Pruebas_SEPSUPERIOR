@@ -124,8 +124,8 @@
 }
 
 .sede-table-container {
-  padding: 20px;
-  background-color: #f8f9fa;
+  padding: 20px 0px;
+  background-color: transparent;
   border-radius: 8px;
 }
 

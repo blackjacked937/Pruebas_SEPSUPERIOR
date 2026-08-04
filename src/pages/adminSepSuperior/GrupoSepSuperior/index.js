@@ -1,0 +1,1 @@
+export { GrupoSepSuperior } from './GrupoSepSuperior';

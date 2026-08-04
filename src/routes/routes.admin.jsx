@@ -1,4 +1,4 @@
-import { AdminLayout } from '../layouts';
+import { AdminLayout } from '../layouts/adminLayout/AdminLayout';
 import {
     Estadisticas,
     HomaAdmin

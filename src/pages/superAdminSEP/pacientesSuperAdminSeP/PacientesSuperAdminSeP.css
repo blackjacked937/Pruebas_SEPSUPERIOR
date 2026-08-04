@@ -1,163 +1,222 @@
-/* ===== COLORES CORPORATIVOS HOSPITAL ===== */
+/* ===== VARIABLES ===== */
 :root {
-  --primary-hospital: #0F4C75;
-  --secondary-hospital: #1B6FA3;
-  --accent-hospital: #2E8BC0;
-  --light-hospital: #E8F1F5;
-  --border-hospital: #D0DFE8;
-  --text-dark: #1A1A1A;
-  --text-muted: #666666;
+  --blue-sep-text: #1a365d;
+  --bg-app: #F4F6F9; /* Fondo de la aplicación. Asegúrate de que el "fill" de tu SepHeader coincida con este color */
+  --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
-/* ===== CONTAINER PRINCIPAL ===== */
-.pacientes-riesgo-container {
-  padding: 24px;
-  background: linear-gradient(135deg, #f8fafb 0%, #eef2f5 100%);
+/* ===== LAYOUT PRINCIPAL ===== */
+.pacientes-sep-layout {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  margin-top: 0;
-}
-
-/* ===== HEADER DASHBOARD ===== */
-.header-dashboard {
-  text-align: center;
-  padding: 50px 40px;
-  background: linear-gradient(135deg, var(--primary-hospital) 0%, var(--secondary-hospital) 100%);
-  color: white;
-  border-radius: 16px;
-  box-shadow: 0 12px 48px rgba(15, 76, 117, 0.25);
-  margin-bottom: 50px;
-  animation: slideDown 0.6s ease-out;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background-color: var(--bg-app);
   position: relative;
   overflow: hidden;
 }
 
-.header-dashboard::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  right: -50%;
-  width: 300px;
-  height: 300px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 50%;
-  pointer-events: none;
+.pacientes-riesgo-content {
+  flex: 1;
+  padding: 0 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
 }
 
-.header-dashboard h1 {
-  font-size: 2.5rem;
+/* ===== FILTROS FLOTANTES ===== */
+.filtros-flotantes-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: -50px; /* Esto hace que las tarjetas "floten" sobre la ola de tu SepHeader */
+  position: relative;
+  z-index: 10;
+  animation: fadeInUp 0.6s ease-out 0.1s backwards;
+}
+
+.filtro-card {
+  background: #FFFFFF;
+  border-radius: 20px;
+  padding: 24px 30px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+  border: 1.5px solid #4EAD43 !important;
+  flex: 1;
+  min-width: 280px;
+  max-width: 350px;
+  text-align: center;
+  transition: none !important;
+}
+
+.filtro-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+  transform: none !important;
+}
+
+.filtro-card-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 1rem;
   font-weight: 800;
-  margin-bottom: 12px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
-  letter-spacing: -1px;
-  line-height: 1.1;
-  position: relative;
-  z-index: 1;
-}
-
-.header-dashboard .lead {
-  font-size: 1.15rem;
-  opacity: 0.95;
-  margin: 0;
-  font-weight: 300;
+  color: #000000 !important;
+  text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2) !important;
+  margin-bottom: 16px;
+  text-transform: uppercase;
   letter-spacing: 0.5px;
-  position: relative;
-  z-index: 1;
 }
 
-@keyframes slideDown {
+.filtro-card-label .icon {
+  font-size: 1.2rem;
+}
+
+.filtro-card-select {
+  width: 100%;
+  padding: 12px 20px;
+  border: 2.5px solid #4EAD43 !important;
+  border-radius: 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  background-color: white;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000000'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e") !important;
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 20px;
+  transition: none !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
+}
+
+.filtro-card-select:hover {
+  border-color: #4EAD43 !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
+}
+
+.filtro-card-select:focus {
+  outline: none;
+  border-color: #4EAD43 !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* ===== TABLA Y CONTENIDO ===== */
+.table-wrapper-sep {
+  margin-top: 30px;
+  margin-bottom: 50px;
+  animation: fadeInUp 0.6s ease-out 0.25s backwards;
+}
+
+.badge-personas {
+  background-color: #F8B400;
+  color: white;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+/* ===== CONTENEDOR DE LA TABLA ===== */
+.tabla-blanca-container {
+  background: white;
+  border-radius: 16px;
+  box-shadow: var(--card-shadow);
+  overflow-x: auto;
+  /* El borde verde grueso del lado izquierdo */
+  border-left: 12px solid #5cb85c; 
+  padding: 10px 20px 20px 20px;
+}
+
+/* Forzar estilos limpios en la tabla interna */
+.tabla-blanca-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Encabezados - dejar que DataTable controle los estilos */
+.tabla-blanca-container thead th {
+  font-weight: 800 !important;
+  color: #1A1A1A !important;
+  padding: 16px 10px !important;
+  text-transform: uppercase;
+  border: none !important;
+}
+
+/* Filas - dejar que DataTable controle los estilos */
+.tabla-blanca-container tbody td {
+  padding: 16px 10px !important;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #333;
+  border: none !important;
+}
+
+/* Si tu componente interno tiene un borde o shadow propio, se lo quitamos */
+.tabla-blanca-container .MuiPaper-root, 
+.tabla-blanca-container .card {
+  box-shadow: none !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+/* Quitar el borde izquierdo interno de react-data-table-component */
+.tabla-blanca-container .rdt_Table {
+  border: none !important;
+}
+
+.tabla-blanca-container .rdt_TableRow {
+  border-left: none !important;
+}
+
+/* ===== FOOTER CON OLA ===== */
+.bottom-wave-footer {
+  width: 100%;
+  height: 120px;
+  margin-top: auto;
+  margin-bottom: -1px;
+}
+
+.bottom-wave-footer svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 991px) {
+  .filtros-flotantes-container {
+    gap: 20px;
+  }
+  .filtro-card {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .pacientes-riesgo-content {
+    padding: 0 15px;
+  }
+  .filtros-flotantes-container {
+    margin-top: -30px;
+  }
+  .tabla-blanca-container {
+    padding: 15px;
+  }
+}
+
+/* 
+   == ANIMACIONES DE ENTRADA (EFECTO CASCADA) == */
+@keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(-30px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-/* ===== FILTROS EN CASCADA ===== */
-.filtros-container {
-  display: flex;
-  justify-content: center;
-  gap: 28px;
-  flex-wrap: wrap;
-  margin-bottom: 40px;
-  animation: fadeIn 0.5s ease-out 0.1s backwards;
-}
-
-.filtro-wrapper {
-  background: white;
-  padding: 28px 32px;
-  border-radius: 14px;
-  box-shadow: 0 6px 24px rgba(15, 76, 117, 0.12);
-  border: 2px solid var(--light-hospital);
-  width: 100%;
-  max-width: 380px;
-  animation: fadeInUp 0.5s ease-out;
-  flex: 1;
-  min-width: 280px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-}
-
-.filtro-wrapper:hover {
-  box-shadow: 0 12px 36px rgba(15, 76, 117, 0.18);
-  border-color: var(--secondary-hospital);
-  transform: translateY(-4px);
-}
-
-.filtro-wrapper::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: linear-gradient(90deg, var(--secondary-hospital), var(--accent-hospital));
-  border-radius: 14px 14px 0 0;
-}
-
-.filtro-label {
-  display: block;
-  margin-bottom: 14px;
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--primary-hospital);
-  letter-spacing: 0.4px;
-  text-transform: uppercase;
-}
-
-.filtro-select {
-  width: 100%;
-  padding: 14px 18px;
-  border: 2px solid var(--border-hospital);
-  border-radius: 10px;
-  font-size: 1rem;
-  font-weight: 500;
-  color: var(--text-dark);
-  background-color: white;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230F4C75' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 22px;
-  padding-right: 45px;
-}
-
-.filtro-select:hover {
-  border-color: var(--secondary-hospital);
-  box-shadow: 0 6px 20px rgba(27, 111, 163, 0.18);
-}
-
-.filtro-select:focus {
-  outline: none;
-  border-color: var(--accent-hospital);
-  box-shadow: 0 0 0 5px rgba(46, 139, 192, 0.12);
-  background-color: rgba(232, 241, 245, 0.5);
 }
 
 @keyframes fadeIn {
@@ -166,126 +225,5 @@
   }
   to {
     opacity: 1;
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ===== ALERTAS ===== */
-.alert-info {
-  background-color: var(--light-hospital);
-  border: 2px solid var(--accent-hospital);
-  color: var(--primary-hospital);
-  border-radius: 12px;
-  padding: 20px;
-  font-weight: 500;
-  margin-top: 40px;
-}
-
-.alert-info h5 {
-  margin: 0;
-  color: var(--primary-hospital);
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 1200px) {
-  .header-dashboard h1 {
-    font-size: 2rem;
-  }
-
-  .header-dashboard .lead {
-    font-size: 1rem;
-  }
-
-  .filtros-container {
-    gap: 20px;
-  }
-
-  .filtro-wrapper {
-    max-width: 100%;
-  }
-}
-
-@media (max-width: 768px) {
-  .pacientes-riesgo-container {
-    padding: 16px;
-  }
-
-  .header-dashboard {
-    padding: 40px 24px;
-    margin-bottom: 30px;
-  }
-
-  .header-dashboard h1 {
-    font-size: 1.5rem;
-    margin-bottom: 8px;
-  }
-
-  .header-dashboard .lead {
-    font-size: 0.95rem;
-  }
-
-  .filtros-container {
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .filtro-wrapper {
-    max-width: 100%;
-    min-width: auto;
-  }
-
-  .filtro-label {
-    font-size: 0.85rem;
-  }
-
-  .filtro-select {
-    font-size: 0.95rem;
-    padding: 12px 16px;
-    padding-right: 40px;
-    background-size: 18px;
-  }
-}
-
-@media (max-width: 576px) {
-  .pacientes-riesgo-container {
-    padding: 12px;
-  }
-
-  .header-dashboard {
-    padding: 30px 16px;
-    margin-bottom: 20px;
-  }
-
-  .header-dashboard h1 {
-    font-size: 1.2rem;
-  }
-
-  .header-dashboard .lead {
-    font-size: 0.85rem;
-  }
-
-  .filtro-label {
-    font-size: 0.8rem;
-  }
-
-  .filtro-select {
-    font-size: 0.9rem;
-    padding: 10px 14px;
-    padding-right: 36px;
-  }
-
-  .alert-info {
-    padding: 16px;
-    font-size: 0.9rem;
   }
 }

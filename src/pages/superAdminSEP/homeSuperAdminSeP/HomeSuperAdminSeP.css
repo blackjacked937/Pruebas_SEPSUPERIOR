@@ -1,617 +1,333 @@
-/* ===== COLORES CORPORATIVOS HOSPITAL ===== */
-:root {
-    --primary-hospital: #0F4C75;
-    --secondary-hospital: #1B6FA3;
-    --accent-hospital: #2E8BC0;
-    --light-hospital: #E8F1F5;
-    --border-hospital: #D0DFE8;
-    --text-dark: #1A1A1A;
-    --text-muted: #666666;
-    --danger-score: #DC3545;
-    --warning-score: #FFC107;
-    --success-score: #28A745;
+/* =========================================================
+   HOME SUPERIOR - ESTILO MONTE CONECTA
+   ========================================================= */
+
+.mc-home-superior {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+  padding: 0 !important;
+  height: 100vh;
+  /* Fuerza a que el layout mida exactamente el alto de pantalla */
+  max-height: 100vh;
+  overflow: hidden !important;
+  /* Cero scrollers globales en la pantalla principal */
+  background-color: #f4f7fc;
+  margin-top: 0 !important;
 }
 
-/* ===== CONTAINER PRINCIPAL ===== */
-.container-super-admin-sep {
-    padding: 24px;
-    background: linear-gradient(135deg, #f8fafb 0%, #eef2f5 100%);
-    min-height: 100vh;
-    margin-top: 0;
+/* ---------------------------------------------------------
+   BANNER (¡SIN TOCAR NADA DE TAMAÑOS!)
+   --------------------------------------------------------- */
+.mc-banner-wave {
+  position: relative;
+  width: 100%;
+  background-color: #6ebeea;
+  padding: 10px clamp(16px, 4vw, 48px) 0px;
+  color: #ffffff;
 }
 
-/* ===== HEADER DASHBOARD ===== */
-.header-dashboard {
-    text-align: center;
-    padding: 50px 40px;
-    background: linear-gradient(135deg, var(--primary-hospital) 0%, var(--secondary-hospital) 100%);
-    color: white;
-    border-radius: 16px;
-    box-shadow: 0 12px 48px rgba(15, 76, 117, 0.25);
-    margin-bottom: 50px;
-    animation: slideDown 0.6s ease-out;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    position: relative;
-    overflow: hidden;
+.mc-banner-wave__content {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.header-dashboard::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -50%;
-    width: 300px;
-    height: 300px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 50%;
-    pointer-events: none;
+.mc-banner-wave__text {
+  flex: 1;
 }
 
-.header-dashboard h1 {
-    font-size: 2.5rem;
-    font-weight: 800;
-    margin-bottom: 12px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
-    letter-spacing: -1px;
-    line-height: 1.1;
-    position: relative;
-    z-index: 1;
+.mc-banner-wave__logo {
+  flex-shrink: 0;
+  margin-left: 24px;
 }
 
-.header-dashboard .lead {
-    font-size: 1.15rem;
-    opacity: 0.95;
-    margin: 0;
-    font-weight: 300;
-    letter-spacing: 0.5px;
-    position: relative;
-    z-index: 1;
+.mc-banner-sep-logo {
+  height: 90px;
+  width: auto;
+  object-fit: contain;
+  mix-blend-mode: multiply;
 }
 
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.mc-banner-wave__content h1 {
+  font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+  font-weight: 800;
+  margin: 0 0 2px 0;
+  text-shadow: 0 1px 3px rgba(30, 50, 100, 0.25);
 }
 
-/* ===== FILTROS EN CASCADA ===== */
-.filtros-container {
-    display: flex;
-    justify-content: center;
-    gap: 28px;
-    flex-wrap: wrap;
-    margin-bottom: 40px;
-    animation: fadeIn 0.5s ease-out 0.1s backwards;
+.mc-banner-wave__content p.lead {
+  font-size: clamp(0.85rem, 1.2vw, 1rem);
+  margin: 0;
+  color: #f4f7fc;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(30, 50, 100, 0.2);
 }
 
-.filtro-wrapper {
-    background: white;
-    padding: 28px 32px;
-    border-radius: 14px;
-    box-shadow: 0 6px 24px rgba(15, 76, 117, 0.12);
-    border: 2px solid var(--light-hospital);
-    width: 100%;
-    max-width: 380px;
-    animation: fadeInUp 0.5s ease-out;
-    flex: 1;
-    min-width: 280px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
+/* ---------------------------------------------------------
+   ONDA DE TRANSICION
+   --------------------------------------------------------- */
+.mc-banner-transition {
+  position: relative;
+  width: 100%;
+  margin-top: -1px;
+  height: 40px;
+  line-height: 0;
+  background-color: #6ebeea;
 }
 
-.filtro-wrapper:hover {
-    box-shadow: 0 12px 36px rgba(15, 76, 117, 0.18);
-    border-color: var(--secondary-hospital);
-    transform: translateY(-4px);
+.mc-banner-transition svg {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
-.filtro-wrapper::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, var(--secondary-hospital), var(--accent-hospital));
-    border-radius: 14px 14px 0 0;
+/* ---------------------------------------------------------
+   WRAPPER DE CONTENIDO (MÁXIMA RESTRICCIÓN DE SCROLL)
+   --------------------------------------------------------- */
+.mc-content-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 10px clamp(16px, 4vw, 48px) 0px;
+  overflow-y: auto;
+  /* Activa el scroll interno SOLO si las tarjetas no caben */
+  max-height: calc(100vh - 180px);
+  /* CAMBIO: Forzamos a que el contenedor no mida más del espacio disponible en pantalla */
+  min-height: 0;
+  position: relative;
+  /* NUEVO: crea contexto de apilamiento propio */
+  z-index: 10;
+  /* NUEVO: todo el contenido por encima del footer */
 }
 
-.filtro-label {
-    display: block;
-    margin-bottom: 14px;
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: var(--primary-hospital);
-    letter-spacing: 0.4px;
-    text-transform: uppercase;
+/* ---------------------------------------------------------
+   TARJETAS DE FILTRO
+   --------------------------------------------------------- */
+.mc-filtros-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 24px;
+  padding: 15px !important;
+  overflow: visible !important;
 }
 
-.filtro-select {
-    width: 100%;
-    padding: 14px 18px;
-    border: 2px solid var(--border-hospital);
-    border-radius: 10px;
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--text-dark);
-    background-color: white;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230F4C75' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-    background-size: 22px;
-    padding-right: 45px;
+.mc-filtro-card {
+  background-color: #ffffff;
+  border-radius: 20px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+  border: 1.5px solid #4EAD43 !important;
+  padding: 24px 20px !important;
+  flex: 1 1 200px;
+  max-width: 350px !important;
+  transition: none !important;
+  overflow: visible !important;
 }
 
-.filtro-select:hover {
-    border-color: var(--secondary-hospital);
-    box-shadow: 0 6px 20px rgba(27, 111, 163, 0.18);
+.mc-filtro-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+  transform: none !important;
 }
 
-.filtro-select:focus {
-    outline: none;
-    border-color: var(--accent-hospital);
-    box-shadow: 0 0 0 5px rgba(46, 139, 192, 0.12);
-    background-color: rgba(232, 241, 245, 0.5);
+.mc-filtro-label {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-bottom: 16px !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  color: #000000 !important;
+  text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2) !important;
+  letter-spacing: 0.4px !important;
+  text-transform: uppercase !important;
 }
 
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.mc-filtro-select-wrapper {
+  border: none !important;
+  padding: 0 !important;
 }
 
-/* ===== RESUMEN DEL ESTADO ===== */
-.estado-resumen {
-    background: white;
-    padding: 36px 40px;
-    border-radius: 14px;
-    box-shadow: 0 6px 24px rgba(15, 76, 117, 0.12);
-    border-left: 6px solid var(--secondary-hospital);
-    animation: fadeInUp 0.5s ease-out 0.15s backwards;
-    margin-bottom: 40px;
-    position: relative;
-    overflow: hidden;
+.mc-filtro-select {
+  width: 100% !important;
+  padding: 10px 16px !important;
+  border: 2.5px solid #4EAD43 !important;
+  border-radius: 20px !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  color: var(--text-dark) !important;
+  background-color: white !important;
+  cursor: pointer !important;
+  transition: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000000'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 16px center !important;
+  background-size: 18px !important;
+  padding-right: 45px !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
 }
 
-.estado-resumen::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -50%;
-    width: 250px;
-    height: 250px;
-    background: linear-gradient(135deg, var(--light-hospital), rgba(232, 241, 245, 0));
-    border-radius: 50%;
-    pointer-events: none;
+.mc-filtro-select:hover {
+  border-color: #4EAD43 !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
 }
 
-.resumen-contenido {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    position: relative;
-    z-index: 1;
+.mc-filtro-select:focus {
+  outline: none !important;
+  border-color: #4EAD43 !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
+  background-color: white !important;
 }
 
-.resumen-titulo {
-    margin: 0;
-    font-size: 1.8rem;
-    font-weight: 800;
-    color: var(--primary-hospital);
-    letter-spacing: -0.5px;
+/* ---------------------------------------------------------
+   GRID DE TARJETAS DE INDICADORES (ESPACIOS REDUCIDOS)
+   --------------------------------------------------------- */
+.mc-indicadores-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  /* Reducimos ligeramente el espacio entre tarjetas */
+  margin-top: 10px;
+  /* Pegamos un poco más hacia arriba */
+  margin-bottom: 0px;
+  /* CAMBIO: Eliminamos el margen inferior para que no empuje el footer */
+  padding-bottom: 20px;
+  /* Espacio interno inferior seguro */
+  justify-content: center;
 }
 
-.resumen-subtitulo {
-    margin: 0;
-    font-size: 0.95rem;
-    color: var(--text-muted);
-    font-weight: 500;
-    letter-spacing: 0.3px;
+.mc-indicadores-grid .container-card-info-1 {
+  width: 100% !important;
+  max-width: 280px !important;
+  min-width: 240px !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  position: relative;
+  z-index: 5;
 }
 
-/* ===== CONTENEDOR SEDES ===== */
-.sedes-container {
-    animation: fadeInUp 0.5s ease-out 0.2s backwards;
+.mc-indicadores-grid .card-header-navigation {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100% !important;
 }
 
-.sedes-grid-super {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
-    gap: 32px;
-    padding: 0;
-    margin: 0;
+.mc-indicadores-grid .card-icon-container-navigation {
+  background-color: transparent !important;
+  padding: 0 10px 0 0 !important;
 }
 
-/* ===== TARJETAS DE CUESTIONARIOS ===== */
-.sede-card-super {
-    background: white;
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 6px 24px rgba(15, 76, 117, 0.1);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    animation: cardEnter 0.5s ease-out;
-    position: relative;
-    border: 2px solid var(--border-hospital);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+.mc-indicadores-grid .card-icon-navigation {
+  font-size: 34px !important;
 }
 
-@keyframes cardEnter {
-    from {
-        opacity: 0;
-        transform: translateY(25px) scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+.mc-indicadores-grid .card-title-navigation {
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  color: #000000 !important;
 }
 
-.sede-card-super::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 6px;
-    background: linear-gradient(90deg, var(--secondary-hospital) 0%, var(--accent-hospital) 100%);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 2;
+.mc-indicadores-grid .footer-link-navigation {
+  font-weight: 700 !important;
 }
 
-.sede-card-super:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 60px rgba(15, 76, 117, 0.25);
-    border-color: var(--secondary-hospital);
+/* ---------------------------------------------------------
+   FOOTER CON PERSONAJES (MÁS GRANDES Y JUNTOS AL CENTRO)
+   ========================================================= */
+.footer-personajes-wrapper {
+  position: relative;
+  width: 100%;
+  height: 0;
+  z-index: 1;
+  /* CAMBIO: antes 9999, ahora bien por debajo del content-wrapper (10) */
 }
 
-.sede-card-super:hover::before {
-    transform: scaleX(1);
+.mc-footer-wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 90px;
+  /* Altura de la onda */
+  line-height: 0;
+  background: #f8bc63;
+  z-index: 1;
+  pointer-events: none;
 }
 
-/* ===== HEADER DE TARJETA ===== */
-.sede-card-header {
-    background: linear-gradient(135deg, rgba(15, 76, 117, 0.04), rgba(46, 139, 192, 0.04));
-    padding: 24px;
-    border-bottom: 2px solid var(--border-hospital);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-    position: relative;
-    z-index: 1;
+/* MASCOTA IZQUIERDA: Ajustada hacia abajo */
+.personaje-izq {
+  position: absolute;
+  bottom: -40px;
+  /* CAMBIO: Valor negativo para hundir la mascota en el footer */
+  left: 50%;
+  margin-left: -600px;
+  height: 230px;
+  z-index: 2;
+  /* CAMBIO: antes 10, ahora por debajo de las cards */
+  pointer-events: none;
+  filter: drop-shadow(0px 6px 10px rgba(0, 0, 0, 0.12));
 }
 
-.sede-nombre {
-    margin: 0;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--primary-hospital);
-    flex: 1;
-    line-height: 1.3;
+/* MASCOTA DERECHA: Ajustada hacia abajo */
+.personaje-der {
+  position: absolute;
+  bottom: -40px;
+  right: 50%;
+  margin-right: -600px;
+  height: 230px;
+  z-index: 2;
+  /* CAMBIO: antes 10, ahora por debajo de las cards */
+  pointer-events: none;
+  filter: drop-shadow(0px 6px 10px rgba(0, 0, 0, 0.12));
 }
 
-/* ===== CONTENIDO DE TARJETA ===== */
-.sede-card-content {
-    flex: 1;
-    padding: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, rgba(232, 241, 245, 0.4), rgba(232, 241, 245, 0));
+.personaje-der-home-superadmin {
+  position: absolute;
+  bottom: -60px;
+  right: -120px;
+  height: clamp(450px, 55vh, 650px);
+  z-index: 2;
+  /* NUEVO: por debajo de las cards */
+  pointer-events: none;
+  filter: drop-shadow(-4px 6px 10px rgba(0, 0, 0, 0.15));
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  transform: translateZ(0);
 }
 
-.sede-sin-datos {
-    text-align: center;
-    padding: 40px 24px;
-    color: var(--text-muted);
-}
-
-.sede-sin-datos p {
-    margin: 0;
-    font-size: 0.95rem;
-    font-weight: 500;
-}
-
-/* ===== LOADING STATE ===== */
-.loading-container-super {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 120px 20px;
-    min-height: 600px;
-}
-
-.loading-spinner-super {
-    width: 70px;
-    height: 70px;
-    border: 5px solid var(--light-hospital);
-    border-top: 5px solid var(--primary-hospital);
-    border-radius: 50%;
-    animation: spin 1.2s linear infinite;
-    box-shadow: 0 0 30px rgba(15, 76, 117, 0.2);
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.loading-text-super {
-    margin-top: 32px;
-    color: var(--primary-hospital);
-    font-weight: 600;
-    font-size: 1.1rem;
-    letter-spacing: 0.3px;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-/* ===== RESPONSIVE DESIGN ===== */
-@media (max-width: 1200px) {
-    .sedes-grid-super {
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 28px;
-    }
-
-    .header-dashboard {
-        padding: 40px 32px;
-        margin-bottom: 40px;
-    }
-
-    .header-dashboard h1 {
-        font-size: 2.1rem;
-    }
-
-    .filtros-container {
-        gap: 20px;
-    }
-}
-
-@media (max-width: 992px) {
-    .header-dashboard {
-        padding: 35px 28px;
-        margin-bottom: 35px;
-    }
-
-    .header-dashboard h1 {
-        font-size: 1.9rem;
-    }
-
-    .header-dashboard .lead {
-        font-size: 1rem;
-    }
-
-    .filtros-container {
-        gap: 18px;
-    }
-
-    .filtro-wrapper {
-        max-width: 100%;
-        flex: 1;
-        min-width: auto;
-    }
-
-    .sedes-grid-super {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 24px;
-    }
-
-    .estado-resumen {
-        padding: 28px 32px;
-    }
-
-    .resumen-titulo {
-        font-size: 1.5rem;
-    }
-}
-
+/* ---------------------------------------------------------
+   RESPONSIVE
+   --------------------------------------------------------- */
 @media (max-width: 768px) {
-    .container-super-admin-sep {
-        padding: 16px;
-    }
+  .mc-banner-wave {
+    padding: 15px 24px 0px;
+  }
 
-    .header-dashboard {
-        padding: 30px 24px;
-        margin-bottom: 30px;
-        border-radius: 12px;
-    }
+  .personaje-der-home-superadmin {
+    display: none;
+  }
 
-    .header-dashboard h1 {
-        font-size: 1.6rem;
-        margin-bottom: 10px;
-    }
+  .mc-banner-wave__logo {
+    display: none;
+  }
 
-    .header-dashboard .lead {
-        font-size: 0.95rem;
-    }
+  .mc-indicadores-grid {
+    gap: 15px;
+  }
 
-    .filtros-container {
-        flex-direction: column;
-        gap: 16px;
-        margin-bottom: 30px;
-    }
-
-    .filtro-wrapper {
-        padding: 20px 24px;
-        max-width: 100%;
-    }
-
-    .filtro-label {
-        font-size: 0.9rem;
-        margin-bottom: 12px;
-    }
-
-    .filtro-select {
-        padding: 12px 14px;
-        font-size: 0.95rem;
-    }
-
-    .sedes-grid-super {
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-        gap: 18px;
-    }
-
-    .estado-resumen {
-        padding: 24px 28px;
-        margin-bottom: 30px;
-    }
-
-    .resumen-titulo {
-        font-size: 1.3rem;
-    }
-
-    .resumen-subtitulo {
-        font-size: 0.9rem;
-    }
-
-    .sede-card-header {
-        padding: 18px;
-    }
-
-    .sede-nombre {
-        font-size: 0.95rem;
-    }
-
-    .sede-card-content {
-        padding: 18px;
-    }
-
-    .loading-container-super {
-        padding: 80px 20px;
-        min-height: 500px;
-    }
-
-    .loading-spinner-super {
-        width: 60px;
-        height: 60px;
-        border-width: 4px;
-    }
-
-    .loading-text-super {
-        font-size: 1rem;
-        margin-top: 28px;
-    }
-}
-
-@media (max-width: 576px) {
-    .container-super-admin-sep {
-        padding: 12px;
-    }
-
-    .header-dashboard {
-        padding: 24px 18px;
-        margin-bottom: 24px;
-        border-radius: 10px;
-    }
-
-    .header-dashboard h1 {
-        font-size: 1.4rem;
-        margin-bottom: 8px;
-    }
-
-    .header-dashboard .lead {
-        font-size: 0.9rem;
-    }
-
-    .filtros-container {
-        flex-direction: column;
-        gap: 12px;
-        margin-bottom: 24px;
-    }
-
-    .filtro-wrapper {
-        padding: 18px 20px;
-        max-width: 100%;
-    }
-
-    .filtro-label {
-        font-size: 0.85rem;
-        margin-bottom: 10px;
-    }
-
-    .filtro-select {
-        padding: 10px 12px;
-        font-size: 0.9rem;
-        background-size: 18px;
-    }
-
-    .sedes-grid-super {
-        grid-template-columns: 1fr;
-        gap: 14px;
-    }
-
-    .estado-resumen {
-        padding: 20px 24px;
-        margin-bottom: 24px;
-    }
-
-    .resumen-titulo {
-        font-size: 1.15rem;
-    }
-
-    .resumen-subtitulo {
-        font-size: 0.85rem;
-    }
-
-    .sede-card-header {
-        padding: 16px;
-    }
-
-    .sede-nombre {
-        font-size: 0.9rem;
-    }
-
-    .sede-card-content {
-        padding: 14px;
-        min-height: 200px;
-    }
-
-    .loading-spinner-super {
-        width: 50px;
-        height: 50px;
-        border-width: 3px;
-    }
-
-    .loading-text-super {
-        font-size: 0.95rem;
-        margin-top: 20px;
-    }
-}
-
-/* ===== OVERRIDES PARA CARDINFO ===== */
-.card-info {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-
-.card-info-wrapper {
-    width: 100%;
+  .personaje-der,
+  .personaje-izq {
+    display: none;
+  }
 }

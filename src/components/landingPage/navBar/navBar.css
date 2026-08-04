@@ -1,0 +1,24 @@
+/* NavBar.css */
+body { padding-top: 80px !important; }
+
+.header-mente-conecta {
+  background-color: #536bb2;
+  height: 80px !important;
+  padding: 0 40px !important;
+}
+
+.logo-figma {
+  height: 160px !important;
+  width: auto !important;
+  transform: scale(1.1);
+}
+
+.nav-link-custom { color: #cbd5e1 !important; text-decoration: none; }
+
+.btn-acceder {
+  background-color: #eef2fa !important;
+  color: #3a53a4 !important;
+  padding: 10px 28px !important;
+  border-radius: 25px !important;
+}
+/* ... (puedes copiar el resto de tus reglas aquí) */

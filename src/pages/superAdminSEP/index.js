@@ -4,3 +4,5 @@ export { PacientesSuperAdminSeP } from './pacientesSuperAdminSeP/PacientesSuperA
 export { GestoresSuperAdminSeP } from './gestoresSuperAdminSeP/GestoresSuperAdminSeP';
 export { NoticiasSuperAdminSeP } from './noticiasSuperAdminSeP/NoticiasSuperAdminSeP';
 export { ReportesSuperAdminSeP } from './reportesSuperAdminSeP/ReportesSuperAdminSeP';
+export { Perfil } from './perfilSuperAdminSep/Perfil';
+export {GestionarAccesosPage} from './gestionarAccesosSeP/GestionarAccesosPage';

@@ -28,55 +28,61 @@
     transition: all 0.4s ease-in-out;
   }
 
-  /* Nivel 1: Riesgo Bajo (Azul - Seguridad) */
-  .risk-card.risk-level-1 {
-    border-left-color: #3182CE;
+  /* Nivel 0: Sin Riesgo (Verde #4EAD43 / Icono Amarillo #FFCD29) */
+  .risk-card.risk-level-0 {
+    border-left-color: #4EAD43;
   }
 
-  .risk-card.risk-level-1 .card-icon-container-navigation {
-    background-color: #BEE3F8;
-  }
-
-  .risk-card.risk-level-1 .card-icon-navigation {
-    color: #2B6CB0;
-  }
-
-  .risk-card.risk-level-1 .patient-count {
-    color: #3182CE;
-  }
-
-  /* Nivel 2: Riesgo Medio (Amarillo - Precaución) */
-  .risk-card.risk-level-2 {
-    border-left-color: #D69E2E;
-  }
-
-  .risk-card.risk-level-2 .card-icon-container-navigation {
+  .risk-card.risk-level-0 .card-icon-container-navigation {
     background-color: #FEFCBF;
   }
 
-  .risk-card.risk-level-2 .card-icon-navigation {
-    color: #B7791F;
+  .risk-card.risk-level-0 .card-icon-navigation {
+    color: #FFCD29;
   }
 
-  .risk-card.risk-level-2 .patient-count {
-    color: #D69E2E;
+  .risk-card.risk-level-0 .patient-count {
+    color: #2D3748;
   }
 
-  /* Nivel 3: Riesgo Alto (Rojo - Alerta) */
+  .risk-card.risk-level-0 .footer-link-navigation {
+    color: #4EAD43;
+  }
+
+  /* Nivel 1 o mayor: Con Riesgo (Rojo #FF0000 / Icono Rojo) */
+  .risk-card.risk-level-danger,
+  .risk-card.risk-level-1,
+  .risk-card.risk-level-2,
   .risk-card.risk-level-3 {
-    border-left-color: #E53E3E;
+    border-left-color: #FF0000;
   }
 
+  .risk-card.risk-level-danger .card-icon-container-navigation,
+  .risk-card.risk-level-1 .card-icon-container-navigation,
+  .risk-card.risk-level-2 .card-icon-container-navigation,
   .risk-card.risk-level-3 .card-icon-container-navigation {
     background-color: #FED7D7;
   }
 
+  .risk-card.risk-level-danger .card-icon-navigation,
+  .risk-card.risk-level-1 .card-icon-navigation,
+  .risk-card.risk-level-2 .card-icon-navigation,
   .risk-card.risk-level-3 .card-icon-navigation {
-    color: #C53030;
+    color: #FF0000;
   }
 
+  .risk-card.risk-level-danger .patient-count,
+  .risk-card.risk-level-1 .patient-count,
+  .risk-card.risk-level-2 .patient-count,
   .risk-card.risk-level-3 .patient-count {
-    color: #E53E3E;
+    color: #FF0000;
+  }
+
+  .risk-card.risk-level-danger .footer-link-navigation,
+  .risk-card.risk-level-1 .footer-link-navigation,
+  .risk-card.risk-level-2 .footer-link-navigation,
+  .risk-card.risk-level-3 .footer-link-navigation {
+    color: #FF0000;
   }
 
 
@@ -145,4 +151,51 @@
     text-decoration: underline;
   }
 
+}
+
+/* =========================================================
+   OVERRIDES ESPECIFICOS - HOME SUPERIOR (estilo Monte Conecta)
+   Solo afectan tarjetas dentro de .mc-indicadores-grid,
+   NO modifican el comportamiento default del componente
+   CardInfoNavigation usado en otras vistas (ej. HomeSepSuperior).
+   ========================================================= */
+
+.mc-indicadores-grid .risk-card {
+  margin: 0;
+  padding: 20px 24px;
+  border-radius: 14px;
+  align-items: stretch;
+}
+
+.mc-indicadores-grid .card-header-navigation {
+  margin-bottom: 12px;
+}
+
+.mc-indicadores-grid .card-icon-container-navigation {
+  padding: 6px;
+}
+
+.mc-indicadores-grid .card-icon-navigation {
+  font-size: 18px;
+}
+
+.mc-indicadores-grid .card-title-navigation {
+  font-size: 1rem;
+}
+
+.mc-indicadores-grid .patient-count {
+  font-size: 3rem;
+}
+
+.mc-indicadores-grid .footer-link-navigation {
+  font-weight: 700;
+}
+
+.mc-indicadores-grid-sesyn .card-icon-container-navigation {
+  background-color: transparent !important;
+  padding: 0 10px 0 0 !important;
+}
+
+.mc-indicadores-grid-sesyn .card-icon-navigation {
+  font-size: 34px !important; 
 }

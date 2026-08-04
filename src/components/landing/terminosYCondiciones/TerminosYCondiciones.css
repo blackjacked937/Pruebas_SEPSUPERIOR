@@ -1,0 +1,133 @@
+.terminos-page {
+    background-color: #f4f7f6;
+    min-height: 100vh;
+    padding-top: 40px;
+    padding-bottom: 60px;
+}
+
+.terminos-container {
+    max-width: 900px;
+    margin: 0 auto;
+    font-family: 'Inter', 'Open Sans', system-ui, -apple-system, sans-serif;
+    color: #333333;
+    line-height: 1.6;
+    padding: 0 20px;
+}
+
+.terminos-title-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 2;
+}
+
+.terminos-title-pill {
+    background-color: #d16b9e; 
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding: 12px 40px;
+    border-radius: 50px; 
+    text-align: center;
+    margin: 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.terminos-content {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.terminos-section {
+    margin-bottom: 25px;
+}
+
+.terminos-subtitle {
+    font-size: 1.3rem;
+    color: #d16b9e; 
+    margin-bottom: 10px;
+    font-weight: 600;
+    display: block;
+}
+
+.terminos-item-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    color: #333333;
+}
+
+.terminos-text {
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    text-align: left;
+    color: #333333;
+}
+
+.terminos-list {
+    margin-bottom: 15px;
+    padding-left: 25px;
+    list-style-type: disc;
+}
+
+.terminos-list li {
+    margin-bottom: 5px;
+    font-size: 0.95rem;
+    color: #333333;
+}
+
+.autorizo-section {
+    background-color: #9eb3d4; 
+    padding: 25px 30px 25px 65px;
+    border-radius: 8px;
+    margin-top: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.autorizo-section::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 10px;
+    background-color: #6b88b5;
+}
+
+.autorizo-title {
+    color: #142e6c !important; 
+    margin-bottom: 10px;
+    font-size: 28px;
+}
+
+.autorizo-text {
+    color: #333333;
+    margin-bottom: 0;
+    font-size: 18px;
+}
+
+@media (max-width: 768px) {
+    .terminos-page {
+        padding-top: 20px;
+        padding-bottom: 30px;
+    }
+
+    .terminos-container {
+        padding: 0 10px;
+    }
+    
+    .terminos-title-pill {
+        font-size: 1.2rem;
+        padding: 10px 25px;
+    }
+
+    .terminos-content-border {
+        padding: 25px 20px;
+        margin-top: -15px;
+    }
+}

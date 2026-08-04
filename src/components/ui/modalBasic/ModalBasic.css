@@ -7,3 +7,30 @@
   font-size: 18px;
   color: #3a77be;
 }
+
+.modal-icon-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  color: #000000; 
+  width: 48px;
+  height: 48px;
+  min-width: 48px; 
+  border-radius: 50%; 
+  border: 2px solid #000000; 
+  font-size: 1.8rem;
+}
+
+.modal-title-left {
+  font-size: 1.25rem !important; 
+  font-weight: 700 !important;
+  color: #000000 !important;
+  line-height: 1.2;
+}
+
+.modal-subtitle-left {
+  font-size: 0.85rem;
+  color: #8c8c8c;
+  font-weight: 400;
+}

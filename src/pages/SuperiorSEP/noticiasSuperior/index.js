@@ -1,0 +1,1 @@
+export { NoticiasSuperior } from './NoticiasSuperior';

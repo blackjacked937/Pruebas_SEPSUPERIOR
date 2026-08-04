@@ -51,7 +51,7 @@ export function HomaAdminFase1() {
                     ? <h1>Cargando</h1>
                     :  
                         <CardInfoNavigation
-                            riskLevel = {alertsColumbia?.pacientes_en_alerta === 0 ? 1: 3}
+                            riskLevel = {alertsColumbia?.pacientes_en_alerta === 0 ? 0 : 1}
                             account = {alertsColumbia?.pacientes_en_alerta}
                             title = "Pacientes en riesgo"
                             subTitle = "Cuestionario de Columbia"

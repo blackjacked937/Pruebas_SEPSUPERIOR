@@ -1,0 +1,309 @@
+.login-layout-container-isem {
+    --white-width: clamp(280px, 24vw, 380px);
+    --curve-width: clamp(200px, 16vw, 280px);
+    display: flex;
+    min-height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+    position: relative;
+    background: url('../../../assets/img/Vector.jpg') no-repeat var(--white-width) center / var(--curve-width) 100%,
+                linear-gradient(90deg, #F2F2F2 0%, #F2F2F2 var(--white-width), #7A99D9 calc(var(--white-width) + var(--curve-width) - 10px), #7A99D9 calc(var(--white-width) + var(--curve-width) + 10px), #4563BF 100%);
+}
+  
+.login-left-panel-isem {
+    width: var(--white-width);
+    position: relative;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    z-index: 2;
+}
+  
+.logo-container-isem {
+    position: relative;
+    z-index: 3;
+    margin-top: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+  
+.login-logo-img-isem {
+    width: 92%;
+    max-width: 350px;
+    height: auto;
+    object-fit: contain;
+}
+  
+.login-right-panel-isem {
+    flex: 1;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    z-index: 2;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.mobile-logo-container-isem {
+    display: none;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.login-form-container-isem {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+  
+/* Card layout settings */
+.login-header-card-isem,
+.login-card-isem,
+.login-footer-card-isem {
+    background: white;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    padding: 24px 32px;
+    width: 100%;
+    box-sizing: border-box;
+}
+  
+/* Header Card Styling */
+.login-header-card-isem {
+    text-align: center;
+}
+  
+.login-header-card-isem h2 {
+    color: #04547B;
+    font-size: 26px;
+    font-weight: 700;
+    margin: 0 0 6px 0;
+}
+  
+.login-header-card-isem p {
+    color: #64748B;
+    font-size: 14px;
+    margin: 0;
+}
+  
+/* Form Card Styling */
+.login-card-isem {
+    display: flex;
+    flex-direction: column;
+}
+  
+/* Input Styles */
+.input-group-container-isem {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+  
+.input-label-isem {
+    color: #04547B;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-align: left;
+}
+  
+.input-field-wrapper-isem {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+  
+.input-icon-isem {
+    position: absolute;
+    left: 16px;
+    color: #94A3B8;
+    font-size: 18px;
+    pointer-events: none;
+}
+  
+.custom-login-input-isem {
+    width: 100%;
+    height: 48px;
+    padding: 10px 16px 10px 46px;
+    font-size: 15px;
+    border-radius: 15px;
+    border: 1px solid #E2E8F0;
+    background-color: #F8FAFC;
+    color: #1E293B;
+    outline: none;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+  
+.custom-login-input-isem::placeholder {
+    color: #94A3B8;
+}
+  
+.custom-login-input-isem:focus {
+    border-color: #7999D9;
+    background-color: white;
+    box-shadow: 0 0 0 4px rgba(121, 153, 217, 0.15);
+}
+  
+.custom-login-input-isem.input-error-isem {
+    border-color: #EF4444;
+    background-color: #FEF2F2;
+}
+  
+.custom-login-input-isem.input-error-isem:focus {
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
+}
+  
+.password-toggle-btn-isem {
+    position: absolute;
+    right: 16px;
+    background: none;
+    border: none;
+    color: #94A3B8;
+    cursor: pointer;
+    padding: 0;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+}
+  
+.password-toggle-btn-isem:hover {
+    color: #64748B;
+}
+  
+.error-text-isem {
+    color: #EF4444;
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 6px;
+    text-align: left;
+    padding-left: 4px;
+}
+  
+/* Forgot Password Link Styling */
+.forgot-password-container-isem {
+    text-align: center;
+    margin-bottom: 20px;
+}
+  
+.forgot-password-link-isem {
+    color: #7999D9;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+  
+.forgot-password-link-isem:hover {
+    color: #4563BF;
+    text-decoration: underline;
+}
+  
+/* Actions and Buttons */
+.login-actions-isem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+  
+.login-btn-gradient-isem {
+    width: 100%;
+    height: 48px;
+    border-radius: 15px;
+    border: none;
+    background: linear-gradient(90deg, #7999D9 0%, #4563BF 100%);
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(73, 115, 223, 0.3);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  
+.login-btn-gradient-isem:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(73, 115, 223, 0.4);
+}
+  
+.login-btn-gradient-isem:active {
+    transform: translateY(1px);
+}
+  
+.login-btn-gradient-isem:disabled {
+    background: #CBD5E1;
+    color: #94A3B8;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+  
+.login-back-link-isem {
+    background: none;
+    border: none;
+    color: #7999D9;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+    transition: color 0.2s ease;
+    margin-top: 4px;
+}
+  
+.login-back-link-isem:hover {
+    color: #4563BF;
+    text-decoration: underline;
+}
+  
+/* Footer Card Styling */
+.login-footer-card-isem {
+    text-align: center;
+    font-size: 13px;
+    color: #64748B;
+    line-height: 1.5;
+    border-radius: 20px;
+    padding: 16px 24px;
+}
+  
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .login-left-panel-isem {
+        display: none;
+    }
+    .mobile-logo-container-isem {
+        display: flex;
+    }
+    .login-right-panel-isem {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .login-header-card-isem,
+    .login-card-isem,
+    .login-footer-card-isem {
+        padding: 20px 24px;
+    }
+    
+    .login-header-card-isem h2 {
+        font-size: 22px;
+    }
+}

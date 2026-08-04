@@ -1,0 +1,1 @@
+export { GraficasSesyn } from "./GraficasSesyn";

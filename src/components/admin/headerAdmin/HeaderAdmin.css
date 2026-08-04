@@ -1,54 +1,158 @@
-.top-menu-admin {
-    font-family: Geomanist, sans-serif !important;
-    font-size: 0.8em !important;
-    box-shadow: 0px 1px rgba(118, 118, 118, 0.429);
-    height: 5vh;
-    background: linear-gradient(to bottom, #4DB6AC, #4DB6AC, #4DB6AC);
+/* =========================================================
+   HEADER ADMIN - VARIANTE MONTE CONECTA (sep-superior)
+   Liso, sin ondas. Logo izq / menu centrado / usuario der.
+   ========================================================= */
 
+.top-menu-admin--mc {
+    width: 100%;
+    padding: 10px 4%;
+    background-color: #00669E !important;
+    border-bottom: none;
+    box-shadow: 0 2px 10px rgba(80, 100, 190, 0.18);
+    font-family: 'Inter', sans-serif;
+}
 
-    .logo {
-        margin-right: 1rem;
-        width: 30px;
-        height: 80px;
-        color: #fff;
+.mc-header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+/* LOGO */
+.mc-logo-wrapper {
+    display: flex;
+    align-items: center;
+   background: transparent !important;
+    border-radius: 12px;
+    padding: 4px 10px;
+}
+
+.mc-logo {
+    height: 3.5rem;
+    width: auto;
+    object-fit: contain;
+}
+
+/* MENU CENTRADO */
+.mc-nav-center {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+}
+
+.mc-nav-link {
+    color: #FFFFFF !important;
+    font-weight: 500;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    text-decoration: none !important;
+    padding: 8px 0;
+    position: relative;
+    white-space: nowrap;
+    transition: opacity 0.3s ease;
+    opacity: 0.85;
+}
+
+.mc-nav-link:hover {
+    opacity: 1;
+}
+
+.mc-nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background-color: #FFFFFF;
+    border-radius: 2px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(-50%);
+}
+
+.mc-nav-link.active {
+    color: #FFFFFF !important;
+    font-weight: 700;
+    opacity: 1;
+}
+
+.mc-nav-link.active::after {
+    width: 100%;
+}
+
+/* USUARIO / CERRAR SESION */
+.mc-nav-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.mc-user-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #FFFFFF;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+}
+
+.mc-user-icon {
+    font-size: 1.6rem;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+}
+
+.mc-logout-btn {
+    background-color: #FFFFFF;
+    color: #5C72C9;
+    border: none;
+    border-radius: 20px;
+    padding: 6px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.3s ease;
+}
+
+.mc-logout-btn:hover {
+    opacity: 0.85;
+}
+
+.mc-profile-link {
+    cursor: pointer;
+    transition: opacity 0.3s ease, transform 0.2s ease;
+    opacity: 0.9;
+}
+
+.mc-profile-link:hover {
+    opacity: 1;
+    transform: translateY(-1px);
+}
+
+.mc-profile-link:active {
+    transform: translateY(0);
+}
+
+/* RESPONSIVE */
+@media (max-width: 991px) {
+    .mc-nav-center {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+        margin: 16px 0;
     }
 
-    .avatar {
-        width: 25px;
-        height: 25px;
-        line-height: 23px;
-        border-radius: 50%;
-        border: solid 1px;
-        border-color: rgb(146, 146, 146);
-        font-size: 10px;
-        color: #fff;
-        text-align: center;
-        background: rgb(191, 191, 191);
-        margin-right: 0.2em;
+    .mc-nav-right {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 12px;
     }
 
-    .name-descrip {
-        margin-right: 2em;
-        font-size: 0.9em;
-    }
-
-    .cerrar-sesion {
-        color: #fff;
-        margin-left: 0.5rem;
-        margin-right: 1rem;
-        font-size: 0.85rem;
-        font-weight: 600;
-    }
-
-    .text-white .nav-link {
-        color: lightgray;
-        font-size: 1.2em;
-        font-weight: 600;
-    }
-
-    .font-media {
-        font-size: 0.9em;
-        font-weight: 500;
-        color: #383838;
+    .mc-nav-link::after {
+        display: none;
     }
 }

@@ -1,76 +1,237 @@
-import React, { useEffect, useState, useMemo } from 'react'
-import { Container, Row, Col, Spinner, Button } from 'react-bootstrap'
-import { ModalBasic } from '../../../components/ui/modalBasic'
-import { RegisterGestorForm } from '../../../components/adminsep/gestores/RegisterGestorForm'
-import { TableGestores } from '../../../components/adminsep/gestores/TableGestores';
+import React, { useEffect, useState } from "react";
+import { Container, Button, Modal } from "react-bootstrap";
+import { ModalBasic } from "../../../components/ui/modalBasic";
+import { RegisterGestorForm } from "../../../components/adminsep/gestores/RegisterGestorForm";
+import { TableGestores } from "../../../components/adminsep/gestores/TableGestores";
 import { useGestoresSEP } from "../../../hooks/sep/useGestoresSEP";
-import './GestoresSuperAdminSeP.css';
+import { SepHeader } from "../../../components/sep/sepHeader";
+import { SepFooter } from "../../../components/sep/sepFooter";
+import avatarGestores from "../../../assets/img/AvatarGestores.png";
 
-const sedesPorEstadoConstant = {
-  'Estado de México': {
-    29: "Centro de Estudios Tecnológicos Ecatepec",
-    30: "Preparatoria Oficial No. 128",
-    32: "Universidad Tecnológica de Nezahualcóyotl",
-    33: "CBT No. 2 Nezahualcóyotl",
-    34: "UAEM - Unidad Académica Toluca",
-    35: "Instituto Tecnológico de Toluca"
-  },
-  'Ciudad de México': {
-    31: "Secundaria Técnica 55",
-    36: "Escuela Secundaria Oficial No. 1",
-    37: "UAM Iztapalapa - Plantel Central",
-    38: "CETIS No. 53 Iztapalapa",
-    39: "Secundaria Diurna No. 115",
-    40: "IPN - Escuela Superior de Ingeniería (ESIME)",
-    41: "Preparatoria Nacional Plantel 9 UNAM",
-    42: "Facultad de Filosofía y Letras UNAM",
-    43: "CBTIS No. 2 Coyoacán",
-    44: "Secundaria Técnica No. 17"
-  }
-};
+import {
+    getPaises,
+    getMunicipio,
+    getEscuela,
+} from "../../../api/sep";
+
+import "./GestoresSuperAdminSeP.css";
 
 export function GestoresSuperAdminSeP() {
+
     const [showModal, setShowModal] = useState(false);
     const [titleModal, setTitleModal] = useState("");
+    const [subtitleModal, setSubtitleModal] = useState("");
     const [contentModal, setContentModal] = useState(null);
-    const { loading, getGestores, gestores, getHospitales, hospitales } = useGestoresSEP();
+
+    const {
+        loading,
+        getGestores,
+        gestores,
+        getHospitales,
+        hospitales,
+    } = useGestoresSEP();
+
     const [reload, setReload] = useState(false);
-    const [estadoSeleccionado, setEstadoSeleccionado] = useState('Estado de México');
-    const [sedeSeleccionada, setSedeSeleccionada] = useState(null);
-    const [gestoresFiltrados, setGestoresFiltrados] = useState([]);
 
-    // Memoizar para evitar recálculos en cada render
-    const sedesPorEstado = useMemo(() => sedesPorEstadoConstant, []);
-    const sedesDelEstado = useMemo(() => sedesPorEstado[estadoSeleccionado] || {}, [estadoSeleccionado, sedesPorEstado]);
+    const [estados, setEstados] = useState([]);
+    const [municipios, setMunicipios] = useState([]);
+    const [escuelas, setEscuelas] = useState([]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const [estadoSeleccionado, setEstadoSeleccionado] =
+        useState("");
+
+    const [
+        municipioSeleccionado,
+        setMunicipioSeleccionado,
+    ] = useState("");
+
+    const [sedeSeleccionada, setSedeSeleccionada] =
+        useState("");
+
+    const [
+        gestoresFiltrados,
+        setGestoresFiltrados,
+    ] = useState([]);
+
+    // =====================================
+    // HELPERS
+    // =====================================
+
+    const getMunicipiosByEstado = async (
+        idEstado
+    ) => {
+        return await getMunicipio(idEstado);
+    };
+
+    const getEscuelasByMunicipio = async (
+        idMunicipio
+    ) => {
+        return await getEscuela(idMunicipio);
+    };
+
+    // =====================================
+    // CARGAR GESTORES
+    // =====================================
+
     useEffect(() => {
         const cargarDatos = async () => {
-            await getGestores();
-            await getHospitales();
+            try {
+                await getGestores();
+                await getHospitales();
+            } catch (error) {
+                console.error("Error de conexión al cargar los gestores:", error);
+            }
         };
-        cargarDatos();
-    }, [reload]);
 
-    // Establecer la primera sede cuando cambia el estado
+        cargarDatos();
+    }, [
+        reload,
+        getGestores,
+        getHospitales,
+    ]);
+
+    // =====================================
+    // CARGAR ESTADOS
+    // =====================================
+
     useEffect(() => {
-        const primeraSede = Object.keys(sedesDelEstado)[0];
-        setSedeSeleccionada(primeraSede ? Number(primeraSede) : null);
+        const cargarEstados = async () => {
+            try {
+                const data = await getPaises();
+
+                const estadosPermitidos = (data || []).filter((estado) => {
+                    const nombre = estado.descripcion
+                        ?.trim()
+                        .toLowerCase();
+
+                    return (
+                        nombre === "estado de méxico" ||
+                        nombre === "ciudad de méxico"
+                    );
+                });
+
+                setEstados(estadosPermitidos);
+
+                if (estadosPermitidos.length > 0) {
+                    setEstadoSeleccionado(
+                        estadosPermitidos[0].id
+                    );
+                }
+            } catch (error) {
+                console.error(
+                    "Error cargando estados",
+                    error
+                );
+            }
+        };
+
+        cargarEstados();
+    }, []);
+
+    // =====================================
+    // CARGAR MUNICIPIOS
+    // =====================================
+
+    useEffect(() => {
+        if (!estadoSeleccionado) return;
+
+        const cargarMunicipios = async () => {
+            try {
+                const data =
+                    await getMunicipiosByEstado(
+                        estadoSeleccionado
+                    );
+
+                setMunicipios(data || []);
+
+                if (data?.length > 0) {
+                    setMunicipioSeleccionado(
+                        data[0].id
+                    );
+                } else {
+                    setMunicipioSeleccionado("");
+                    setEscuelas([]);
+                    setSedeSeleccionada("");
+                }
+            } catch (error) {
+                console.error(
+                    "Error cargando municipios",
+                    error
+                );
+            }
+        };
+
+        cargarMunicipios();
     }, [estadoSeleccionado]);
 
-    // Filtrar gestores por sede seleccionada
+    // =====================================
+    // CARGAR ESCUELAS
+    // =====================================
+
     useEffect(() => {
-        if (sedeSeleccionada && gestores.length > 0) {
-            const filtered = gestores.filter(g => g.sede_id === sedeSeleccionada);
-            setGestoresFiltrados(filtered);
-        } else {
+        if (!municipioSeleccionado) return;
+
+        const cargarEscuelas = async () => {
+            try {
+                const data =
+                    await getEscuelasByMunicipio(
+                        municipioSeleccionado
+                    );
+
+                setEscuelas(data || []);
+
+                if (data?.length > 0) {
+                    setSedeSeleccionada(
+                        data[0].id
+                    );
+                } else {
+                    setSedeSeleccionada("");
+                }
+            } catch (error) {
+                console.error(
+                    "Error cargando escuelas",
+                    error
+                );
+            }
+        };
+
+        cargarEscuelas();
+    }, [municipioSeleccionado]);
+
+    // =====================================
+    // FILTRAR GESTORES
+    // =====================================
+
+    useEffect(() => {
+        if (
+            !sedeSeleccionada ||
+            !gestores?.length
+        ) {
             setGestoresFiltrados([]);
+            return;
         }
+
+        const filtered = gestores.filter(
+            (g) =>
+                Number(g.sede_id) ===
+                Number(sedeSeleccionada)
+        );
+
+        setGestoresFiltrados(filtered);
+
     }, [sedeSeleccionada, gestores]);
 
-    const onReload = () => setReload((prev) => !prev);
+    // =====================================
+    // MODAL
+    // =====================================
 
-    const openModal = (title, content) => {
+    const onReload = () =>
+        setReload((prev) => !prev);
+
+    const openModal = (
+        title,
+        content
+    ) => {
         setTitleModal(title);
         setContentModal(content);
         setShowModal(true);
@@ -83,86 +244,250 @@ export function GestoresSuperAdminSeP() {
     };
 
     const addGestor = () => {
-        openModal("Registrar Director, Profesor u Orientador", <RegisterGestorForm onClose={closeModal} onReload={onReload} />);
+        setTitleModal("Registrar Director, Profesor u Orientador");
+        setSubtitleModal("Completa la información para registrar un nuevo gestor");
+        setContentModal(
+            <RegisterGestorForm
+                onClose={closeModal}
+                onReload={() => setReload(!reload)}
+                viewMode={false}
+            />
+        );
+        setShowModal(true);
     };
 
     const viewGestor = (gestor) => {
-        openModal("Información del Director, Profesor u Orientador", <RegisterGestorForm gestor={gestor} viewMode={true} onClose={closeModal} />);
+        openModal(
+            "Información del Director, Profesor u Orientador",
+            <RegisterGestorForm
+                gestor={gestor}
+                viewMode={true}
+                onClose={closeModal}
+            />
+        );
     };
 
+    const estadoActual = estados.find(
+        (e) =>
+            e.id === Number(estadoSeleccionado)
+    );
+
+    const municipioActual =
+        municipios.find(
+            (m) =>
+                m.id ===
+                Number(municipioSeleccionado)
+        );
+
+    const escuelaActual = escuelas.find(
+        (e) =>
+            e.id === Number(sedeSeleccionada)
+    );
+
     return (
-        <Container fluid className="gestores-container">
-            <header className="header-dashboard mb-5">
-                <h1>👨‍🏫 Gestión de Gestores SuperAdmin</h1>
-                <p className="lead">Administración de directores, profesores y orientadores</p>
-            </header>
-
-            {/* Filtros en cascada */}
-            <div className="filtros-container mb-5">
-                <div className="filtro-wrapper">
-                    <label className="filtro-label">📍 Seleccionar Estado:</label>
-                    <select 
-                        value={estadoSeleccionado}
-                        onChange={(e) => setEstadoSeleccionado(e.target.value)}
-                        className="filtro-select"
-                    >
-                        {Object.keys(sedesPorEstado).map((estado) => (
-                            <option key={estado} value={estado}>
-                                {estado} ({Object.keys(sedesPorEstado[estado]).length} sedes)
-                            </option>
-                        ))}
-                    </select>
-                </div>
-
-                <div className="filtro-wrapper">
-                    <label className="filtro-label">🏢 Seleccionar Sede:</label>
-                    <select 
-                        value={sedeSeleccionada || ''}
-                        onChange={(e) => setSedeSeleccionada(Number(e.target.value))}
-                        className="filtro-select"
-                    >
-                        {Object.entries(sedesDelEstado).map(([sedeId, sedeName]) => (
-                            <option key={sedeId} value={sedeId}>
-                                {sedeName}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-            </div>
-
-            {/* Botón para agregar gestor */}
-            <div className="btn-container mb-4">
-                <Button className="btn-agregar" onClick={addGestor}>
-                    <span className="btn-icon">➕</span>
-                    Registrar Director, Profesor u Orientador
-                </Button>
-            </div>
-
-            {loading && !gestores ? (
-                <div className="alert alert-info mt-4">
-                    <h5>Cargando gestores...</h5>
-                </div>
-            ) : (
-                <>
-                    {gestoresFiltrados.length === 0 ? (
-                        <div className="alert alert-info mt-4">
-                            No hay gestores registrados para la sede seleccionada.
-                        </div>
-                    ) : (
-                        <TableGestores gestores={gestoresFiltrados} hospitales={hospitales} onViewGestor={viewGestor} />
-                    )}
-                </>
-            )}
-
-            <ModalBasic
-                show={showModal}
-                onClose={closeModal}
-                title={titleModal}
-                children={contentModal}
-                size="lg"
+        <div
+            className="d-flex flex-column w-100 min-vh-100"
+            style={{ background: "linear-gradient(135deg, #f8fafb 0%, #eef2f5 100%)" }}
+        >
+            <SepHeader
+                title="Gestión de Gestores"
+                subtitle="Administración de directores, profesores y orientadores"
             />
-        </Container>
-    )
+            <Container
+                className="gestores-container flex-grow-1"
+            >
+                {/* FILTROS */}
+
+                <div className="filtros-container mb-5">
+
+                    <div className="filtro-wrapper">
+                        <label className="filtro-label">
+                            🚩 ESTADO
+                        </label>
+
+                        <select
+                            className="filtro-select"
+                            value={
+                                estadoSeleccionado
+                            }
+                            onChange={(e) =>
+                                setEstadoSeleccionado(
+                                    Number(
+                                        e.target.value
+                                    )
+                                )
+                            }
+                        >
+                            {estados.map(
+                                (estado) => (
+                                    <option
+                                        key={
+                                            estado.id
+                                        }
+                                        value={
+                                            estado.id
+                                        }
+                                    >
+                                        {
+                                            estado.descripcion
+                                        }
+                                    </option>
+                                )
+                            )}
+                        </select>
+                    </div>
+
+                    <div className="filtro-wrapper">
+                        <label className="filtro-label">
+                            🏢 MUNICIPIO
+                        </label>
+
+                        <select
+                            className="filtro-select"
+                            value={
+                                municipioSeleccionado
+                            }
+                            onChange={(e) =>
+                                setMunicipioSeleccionado(
+                                    Number(
+                                        e.target.value
+                                    )
+                                )
+                            }
+                        >
+                            {municipios.map(
+                                (municipio) => (
+                                    <option
+                                        key={
+                                            municipio.id
+                                        }
+                                        value={
+                                            municipio.id
+                                        }
+                                    >
+                                        {
+                                            municipio.descripcion
+                                        }
+                                    </option>
+                                )
+                            )}
+                        </select>
+                    </div>
+
+                    <div className="filtro-wrapper">
+                        <label className="filtro-label">
+                            🏫 ESCUELA
+                        </label>
+
+                        <select
+                            className="filtro-select"
+                            value={
+                                sedeSeleccionada
+                            }
+                            onChange={(e) =>
+                                setSedeSeleccionada(
+                                    Number(
+                                        e.target.value
+                                    )
+                                )
+                            }
+                        >
+                            {escuelas.map(
+                                (escuela) => (
+                                    <option
+                                        key={
+                                            escuela.id
+                                        }
+                                        value={
+                                            escuela.id
+                                        }
+                                    >
+                                        {
+                                            escuela.nombre
+                                        }
+                                    </option>
+                                )
+                            )}
+                        </select>
+                    </div>
+                </div>
+                <div className="btn-container mb-4">
+                    <Button
+                        variant="success"
+                        className="btn-agregar"
+                        onClick={addGestor}
+                    >
+                        <i className="bi bi-plus-circle me-2"></i>
+                        Registrar Director, Profesor u Orientador
+                    </Button>
+                </div>
+
+                {loading ? (
+                    <div className="alert alert-info mt-4">
+                        Cargando gestores...
+                    </div>
+                ) : gestoresFiltrados.length ===
+                    0 ? (
+                    <div className="alert alert-info mt-4">
+                        No hay gestores registrados
+                        para la escuela seleccionada.
+                    </div>
+                ) : (
+                    <TableGestores
+                        gestores={
+                            gestoresFiltrados
+                        }
+                        hospitales={hospitales}
+                        onViewGestor={
+                            viewGestor
+                        }
+                        onDeleteGestor={(gestor) => {
+                            import('sweetalert2').then((Swal) => {
+                                Swal.default.fire({
+                                    title: '¿Estás seguro?',
+                                    text: `¿Deseas eliminar al gestor ${gestor.nombre} ${gestor.apellido_paterno}?`,
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#dc3545',
+                                    cancelButtonColor: '#6c757d',
+                                    confirmButtonText: 'Sí, eliminar',
+                                    cancelButtonText: 'Cancelar'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        Swal.default.fire(
+                                            '¡Eliminado!',
+                                            'El gestor ha sido eliminado.',
+                                            'success'
+                                        );
+                                    }
+                                });
+                            });
+                        }}
+                    />
+                )}
+
+                <ModalBasic
+                    show={showModal}
+                    onClose={closeModal}
+                    title={titleModal}
+                    subtitle={subtitleModal}
+                    align="left"
+                    icon={<i className="bi bi-person"></i>}
+                    children={contentModal}
+                    size="lg"
+                />
+            </Container>
+            <div className="footer-personajes-wrapper">
+                {!showModal && !loading && gestoresFiltrados.length === 0 && (
+                    <div
+                        className="personaje-sin-datos"
+                        style={{ backgroundImage: `url(${avatarGestores})` }}
+                    ></div>
+                )}
+
+            </div>
+        </div>
+    );
 }
 
 export default GestoresSuperAdminSeP;

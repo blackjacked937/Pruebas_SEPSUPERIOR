@@ -1,13 +1,126 @@
-.card-select-login {
-  display: flex; 
+.select-login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  justify-content: center;  
-  align-items: center;       
-  gap: 2rem;                 
-  flex-wrap: wrap;          
-  padding: 2rem 0; 
-  a {
-        all: unset;
-        text-decoration: none;
-    }         
+  max-width: 900px;
+  margin: 0 auto;
 }
+
+.select-login-header {
+  text-align: center;
+  margin-top: 0.3rem;
+  margin-bottom: 0.8rem;
+}
+
+.select-login-title {
+  background-color: #be759a;
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding: 0.5rem 2.5rem;
+  border-radius: 12px;
+  display: inline-block;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  margin: 0;
+  text-align: center;
+}
+
+.card-select-login {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: center;
+  align-items: center;
+  gap: 1.4rem;
+  padding: 0.5rem 0;
+  width: 100%;
+}
+
+
+.card-select-login a {
+  all: unset;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* SCOPED overrides for IconButton to prevent affecting other screens */
+.select-login-container .container-icon-button {
+  width: 205px;
+  height: 155px;
+  padding: 0.6rem 0.8rem;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  color: #3c3c3c;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.88rem;
+  line-height: 1.2;
+}
+
+.select-login-container .container-icon-button:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+  background-color: #ffffff;
+  color: #be759a; /* Highlight color on hover for premium look */
+}
+
+.select-login-container .container-image-icon-button {
+  width: 160px;
+  height: 65px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.15rem;
+}
+
+.select-login-container .container-icon-button img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.select-login-footer {
+  margin-top: 1.4rem;
+  margin-bottom: 0.8rem;
+  text-align: center;
+}
+
+.select-login-back-link {
+  color: #be759a;
+  font-size: 1.15rem; /* Reduced from 1.25rem */
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+  display: inline-block;
+}
+
+.select-login-back-link:hover {
+  color: #a35a81;
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .select-login-title {
+    font-size: 1.4rem;
+    padding: 0.6rem 1.8rem;
+    border-radius: 12px;
+  }
+  .card-select-login {
+    gap: 1rem;
+  }
+  .select-login-container .container-icon-button {
+    width: 195px;
+    height: 180px;
+  }
+}
+
+

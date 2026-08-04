@@ -1,6 +1,6 @@
-import React from 'react';
+import { useEffect, useRef } from 'react';
 import { useAuth } from '../../../hooks';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, Navigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 /**
@@ -27,50 +27,64 @@ export function RoleRouteSEP({
   allowOrganizaciones = null,
   children,
 }) {
-  const auth = useAuth();
-  const navigate = useNavigate();
+  const context = useAuth();
+  const location = useLocation();
+  const toastFired = useRef(false);
+
+  if (!context || context.auth === undefined) return null;
+
+  const auth = context.auth;
+
+  if (!auth) {
+    return <Navigate to="/admin" replace />;
+  }
+
+  const isSuper = Boolean(auth?.is_superuser);
+  const requiereCambio = localStorage.getItem('requiere_cambio_password') === 'true';
+  if (requiereCambio && isSuper && !location.pathname.includes('/perfil')) {
+    return <Navigate to="/admin/super-gestor/sep/perfil" replace />;
+  }
+
+  const rawTypeLogin = auth?.typeLogin || context?.typeLogin || sessionStorage.getItem('typeLogin');
+  const isSePSystem = Number(rawTypeLogin) === 4;
+
+  if (!isSePSystem) {
+    if (!toastFired.current) {
+      toast.dismiss();
+      toast.error('Acceso denegado: No perteneces al sistema SEP.');
+      toastFired.current = true;
+    }
+    return <Navigate to="/admin" replace />;
+  }
 
   // Validaciones
-  const isSeP = Number(auth?.typeLogin) === 4;
-  const isSuper = Boolean(auth?.is_superuser);
   const isStaff = Boolean(auth?.is_staff);
   const organizacion = auth?.me?.organizacion;
 
   // ================== LÓGICA DE PERMISOS ==================
-
-  // Validar que sea de SEP primero, luego validar el rol
-  const rolPermitido = isSeP && ((allowSuper && isSuper) || (allowStaff && isStaff && !isSuper));
-
-  // Validar si la organización está permitida
+  const rolPermitido = (allowSuper && isSuper) || (allowStaff && isStaff && !isSuper);
   const organizacionPermitida =
     !allowOrganizaciones || allowOrganizaciones.includes(organizacion);
 
-  const tienePermiso = rolPermitido && organizacionPermitida;
-
   // ================== REDIRECCIÓN ==================
 
-  if (!tienePermiso && isSeP) {
-    toast.error(
-      `${
-        !rolPermitido
-          ? 'No tienes rol suficiente para acceder a esta sección'
-          : 'Tu organización no tiene acceso a esta sección'
-      }`
-    );
+  if (!rolPermitido || !organizacionPermitida) {
+    if (!toastFired.current) {
+      toast.dismiss();
+      if (!rolPermitido) {
+        toast.error('Acceso denegado: No tienes el rol necesario para ver esta pantalla.');
+      } else if (!organizacionPermitida) {
+        toast.error('Acceso restringido: Tu organización actual no tiene permisos aquí.');
+      }
 
-    // Redirigir según el rol
-    if (isSuper) {
-      navigate('/admin/super-gestor/sep');
-    } else if (isStaff) {
-      navigate('/admin/gestor/sep');
-    } else {
-      navigate('/login');
+      toastFired.current = true;
     }
 
-    return null;
-  }
+    if (isSuper) return <Navigate to="/admin/super-gestor/sep" replace />;
+    if (isStaff) return <Navigate to="/admin/gestor/sep" replace />;
 
-  // ================== RENDERIZAR ==================
+    return <Navigate to="/admin" replace />;
+  }
 
   return children;
 }

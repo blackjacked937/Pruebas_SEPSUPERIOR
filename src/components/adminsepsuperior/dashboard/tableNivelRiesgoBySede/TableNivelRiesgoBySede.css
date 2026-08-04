@@ -1,0 +1,171 @@
+/* ===== CONTENEDOR GENERAL ===== */
+.nivel-riesgo-tabs-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ===== TABS DE SEDES ===== */
+.tabs-sedes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tab-sede-btn {
+  padding: 8px 20px;
+  border-radius: 20px;
+  border: 2px solid #d5e0f5;
+  background: white;
+  color: #4f70bd;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab-sede-btn:hover {
+  background: #f0f4ff;
+  border-color: #4f70bd;
+}
+
+.tab-sede-btn.active {
+  background: #4f70bd;
+  border-color: #4f70bd;
+  color: white;
+  box-shadow: 0 4px 12px rgba(79, 112, 189, 0.3);
+}
+
+/* ===== HEADER EXTERNO (fuera del card) ===== */
+.sede-header-externo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 14px;
+}
+
+.sede-title-externo {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1;
+}
+
+.badge-sede {
+  background: #f8b400;
+  color: white;
+  padding: 0 18px;
+  height: 32px;
+  border-radius: 16px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(248, 180, 0, 0.35);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== CARD DE LA TABLA ===== */
+.sede-table-container {
+  background: white;
+  border-radius: 16px;
+  border-left: 6px solid #6384cf;
+  box-shadow: 0 4px 20px rgba(79, 112, 189, 0.1);
+  overflow: auto;
+  overflow-y: visible;
+}
+
+
+
+
+
+
+
+/* ===== CELDAS ===== */
+.cell-id {
+  font-weight: 700;
+  color: #4f70bd;
+  font-size: 0.85rem;
+}
+
+.cell-nombre {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.cell-correo {
+  color: #555;
+  font-size: 0.85rem;
+}
+
+.cell-celular {
+  font-weight: 600;
+  color: #333;
+}
+
+.cell-parentesco {
+  background: #f0f4ff;
+  color: #4f70bd;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+.cell-fecha {
+  color: #555;
+  font-size: 0.85rem;
+}
+
+.cell-vacio {
+  color: #bbb;
+}
+
+/* ===== CLASIFICACIÓN MÉDICA ===== */
+.clasificacion-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.clasificacion-vacia {
+  color: #bbb;
+}
+
+/* ===== ESTADO VACÍO ===== */
+.tabla-vacia {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: #999;
+}
+
+.tabla-vacia-icon {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+.tabla-vacia p {
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .sede-title-externo {
+    font-size: 1.2rem;
+  }
+}

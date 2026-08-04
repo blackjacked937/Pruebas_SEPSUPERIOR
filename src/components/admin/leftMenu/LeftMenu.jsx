@@ -2,7 +2,7 @@ import React from "react";
 import { Nav } from "react-bootstrap";
 import { FaHome } from "react-icons/fa";
 import { FcStatistics } from "react-icons/fc";
-import { GiBrain, GiBrainStem } from "react-icons/gi";
+import { GiBrain } from "react-icons/gi";
 import { FaUserDoctor } from "react-icons/fa6";
 import { VscGraph } from "react-icons/vsc";
 import { IoNewspaperOutline } from "react-icons/io5";
@@ -12,6 +12,7 @@ import { HiUserGroup, HiDocumentReport } from "react-icons/hi";
 import logoMCA from '../../../assets/img/logoMCA.png'
 import logoSep from '../../../assets/img/logoSep.png'
 import image from '../../../assets/img/logoColor.png'
+import logoSesyn from '../../../assets/img/logoSesyn.png'
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../../hooks";
 
@@ -21,580 +22,419 @@ export function LeftMenu(props) {
     const { children } = props;
     const { pathname } = useLocation();
     const { auth } = useAuth();
-    const typeLogin = auth?.typeLogin;
     const organizacion = auth?.me?.organizacion;
     const puedeGestionarUsuarios = organizacion === 1;
     const puedeGenerarReportes = organizacion === 0;
 
-    
-
     return (
         <div className="side-menu-admin">
-        <MenuLeft
-            pathname={pathname}
-            typeLogin={auth?.typeLogin}
-            isSuperUser={auth?.is_superuser}
-            isStaff={auth?.is_staff}
-            puedeGestionarUsuarios={puedeGestionarUsuarios}
-            puedeGenerarReportes={puedeGenerarReportes}
-        />
-        <div className="content">{children}</div>
+            <MenuLeft
+                pathname={pathname}
+                typeLogin={auth?.typeLogin}
+                isSuperUser={auth?.is_superuser}
+                isStaff={auth?.is_staff}
+                puedeGestionarUsuarios={puedeGestionarUsuarios}
+                puedeGenerarReportes={puedeGenerarReportes}
+            />
+            <div className="content">{children}</div>
         </div>
     );
 }
 
 function MenuLeft({ pathname, typeLogin, isSuperUser, isStaff, puedeGestionarUsuarios, puedeGenerarReportes }) {
-  const menusByTypeLogin = {
-    1: <MenuAdmin pathname={pathname} />,
-    2: <MenuAdminFase1 pathname={pathname} />,
-    3: (
-      <MenuAdminConasama
-        pathname={pathname}
-        isSuperUser={isSuperUser}
-        isStaff={isStaff}
-        puedeGestionarUsuarios={puedeGestionarUsuarios}
-        puedeGenerarReportes={puedeGenerarReportes}
-      />
-    ),
-    4: (
-      <MenuAdminSEP
-        pathname={pathname}
-        isSuperUser={isSuperUser}
-        isStaff={isStaff}
-        puedeGestionarUsuarios={puedeGestionarUsuarios}
-        puedeGenerarReportes={puedeGenerarReportes}
-      />
-    ),
-    5: (
-        <MenuSuperiorSEP
-          pathname={pathname}
-          isSuperUser={isSuperUser}
-          isStaff={isStaff}
-        />
-      ),
-  };
+    const menusByTypeLogin = {
+        1: <MenuAdmin pathname={pathname} />,
+        2: <MenuAdminFase1 pathname={pathname} />,
+        3: (
+            <MenuAdminConasama
+                pathname={pathname}
+                isSuperUser={isSuperUser}
+                isStaff={isStaff}
+                puedeGestionarUsuarios={puedeGestionarUsuarios}
+                puedeGenerarReportes={puedeGenerarReportes}
+            />
+        ),
+        4: (
+            <MenuAdminSEP
+                pathname={pathname}
+                isSuperUser={isSuperUser}
+                isStaff={isStaff}
+                puedeGestionarUsuarios={puedeGestionarUsuarios}
+                puedeGenerarReportes={puedeGenerarReportes}
+            />
+        ),
+        5: (
+            <MenuSuperiorSEP
+                pathname={pathname}
+                isSuperUser={isSuperUser}
+                isStaff={isStaff}
+                puedeGestionarUsuarios={puedeGestionarUsuarios}
+                puedeGenerarReportes={puedeGenerarReportes}
+            />
+        ),
+    };
 
-  return menusByTypeLogin[Number(typeLogin)] ?? null;
+    return menusByTypeLogin[Number(typeLogin)] ?? null;
 }
 
-function MenuSuperiorSEP({ pathname, isSuperUser, isStaff }) {
+function MenuSuperiorSEP({ pathname, isSuperUser, isStaff, puedeGestionarUsuarios, puedeGenerarReportes }) {
     return (
-      <Nav activeKey="/admin" className="nav-conteiner">
-        <Nav.Item className="menu-sub">
-          <Nav.Link as={Link} to="/admin/superior-gestor/sep" className="text-nav">
-            <div>
-              <img
-                src={logoSep}
-                alt="LogoSEP"
-                style={{
-                  width: "100%",
-                  marginBottom: "1rem",
-                  marginTop: "2rem",
-                }}
-              />
-            </div>
-          </Nav.Link>
-        </Nav.Item>
-  
-        <Nav.Item className="menu-sub">
-          <Nav.Link
-            className="text-nav"
-            as={Link}
-            to="/admin/superior-gestor/sep"
-            active={pathname === "/admin/superior-gestor/sep"}
-          >
-            <FaHome className="icon" /> Inicio
-          </Nav.Link>
-        </Nav.Item>
-  
-        <Nav.Item className="menu-sub">
-          <Nav.Link
-            className="text-nav"
-            as={Link}
-            to="/admin/superior-gestor/sep/graficas"
-            active={pathname === "/admin/superior-gestor/sep/graficas"}
-          >
-            <VscGraph className="icon" /> Graficas
-          </Nav.Link>
-        </Nav.Item>
-  
-        <Nav.Item className="menu-sub">
-          <Nav.Link
-            className="text-nav"
-            as={Link}
-            to="/admin/superior-gestor/sep/grupo"
-            active={pathname === "/admin/superior-gestor/sep/grupo"}
-          >
-            <HiUserGroup className="icon" /> Grupo de Riesgos
-          </Nav.Link>
-        </Nav.Item>
-  
-        <Nav.Item className="menu-sub">
-          <Nav.Link
-            className="text-nav"
-            as={Link}
-            to="/admin/superior-gestor/sep/gestores"
-            active={pathname === "/admin/superior-gestor/sep/gestores"}
-          >
-            <FaUserDoctor className="icon" /> Gestores
-          </Nav.Link>
-        </Nav.Item>
-  
-        <Nav.Item className="menu-sub">
-          <Nav.Link
-            className="text-nav"
-            as={Link}
-            to="/admin/superior-gestor/sep/noticias"
-            active={pathname === "/admin/superior-gestor/sep/noticias"}
-          >
-            <IoNewspaperOutline className="icon" /> Noticias
-          </Nav.Link>
-        </Nav.Item>
-      </Nav>
-    );
-  }
+        <Nav activeKey="/admin" className="nav-conteiner">
 
-function MenuAdmin(props) {
+            {/* ======== MENU GESTOR ======== */}
+            {isStaff && !isSuperUser && (
+                <>
+                    <div>
+                                <img src={logoSesyn} alt="LogoSEP" style={{ width: "80%", height: "200px", display: "block", margin: "0.5rem auto" }} />
+                    </div>
+                    <Nav.Item className="menu-sub">
+                        <Nav.Link className="text-nav" as={Link} to="/admin/gestor/sep-superior"
+                            active={pathname === "/admin/gestor/sep-superior"}>
+                            <FaHome className="icon" /> Inicio
+                        </Nav.Link>
+                    </Nav.Item>
 
-    const { pathname } = props;
-    return (
-        <Nav
-            activeKey="/admin"
-            className="nav-conteiner"
-        >
-            <Nav.Item className="menu-sub" >
+                    <Nav.Item className="menu-sub">
+                        <Nav.Link className="text-nav" as={Link} to="/admin/gestor/sep-superior/estadisticas"
+                            active={pathname === "/admin/gestor/sep-superior/estadisticas"}>
+                            <VscGraph className="icon" /> Graficas
+                        </Nav.Link>
+                    </Nav.Item>
+
+                    <Nav.Item className="menu-sub">
+                        <Nav.Link className="text-nav" as={Link} to="/admin/gestor/sep-superior/grupo"
+                            active={pathname === "/admin/gestor/sep-superior/grupo"}>
+                            <HiUserGroup className="icon" /> Grupo de Riesgos
+                        </Nav.Link>
+                    </Nav.Item>
+                </>
+            )}
+
+            {/* ======== MENU SUPERIOR GESTOR ======== */}
+            {isSuperUser && (
+                <>
                 <div>
-                    <center>
-                        <GiBrain className="logo" />
-                    </center>
+                                <img src={logoSesyn} alt="LogoSEP" style={{ width: "80%", height: "200px", display: "block", margin: "0.5rem auto" }} />
+                            </div>
+                    <Nav.Item className="menu-sub">
+                        <Nav.Link className="text-nav" as={Link} to="/admin/superior-gestor/sep-superior"
+                            active={pathname === "/admin/superior-gestor/sep-superior"}>
+                            <FaHome className="icon" /> Inicio
+                        </Nav.Link>
+                    </Nav.Item>
+
+                    <Nav.Item className="menu-sub">
+                        <Nav.Link className="text-nav" as={Link} to="/admin/superior-gestor/sep-superior/graficas"
+                            active={pathname === "/admin/superior-gestor/sep-superior/graficas"}>
+                            <VscGraph className="icon" /> Graficas
+                        </Nav.Link>
+                    </Nav.Item>
+
+                    <Nav.Item className="menu-sub">
+                        <Nav.Link className="text-nav" as={Link} to="/admin/superior-gestor/sep-superior/grupo"
+                            active={pathname === "/admin/superior-gestor/sep-superior/grupo"}>
+                            <HiUserGroup className="icon" /> Grupo de Riesgos
+                        </Nav.Link>
+                    </Nav.Item>
+
+                    {puedeGestionarUsuarios && (
+                        <Nav.Item className="menu-sub">
+                            <Nav.Link className="text-nav" as={Link} to="/admin/superior-gestor/sep-superior/gestores"
+                                active={pathname === "/admin/superior-gestor/sep-superior/gestores"}>
+                                <FaUserDoctor className="icon" /> Gestores
+                            </Nav.Link>
+                        </Nav.Item>
+                    )}
+
+                    {puedeGenerarReportes && (
+                        <Nav.Item className="menu-sub">
+                            <Nav.Link className="text-nav" as={Link} to="/admin/superior-gestor/sep-superior/reportes"
+                                active={pathname === "/admin/superior-gestor/sep-superior/reportes"}>
+                                <HiDocumentReport className="icon" /> Reportes
+                            </Nav.Link>
+                        </Nav.Item>
+                    )}
+
+                    <Nav.Item className="menu-sub">
+                        <Nav.Link className="text-nav" as={Link} to="/admin/superior-gestor/sep-superior/noticias"
+                            active={pathname === "/admin/superior-gestor/sep-superior/noticias"}>
+                            <IoNewspaperOutline className="icon" /> Noticias
+                        </Nav.Link>
+                    </Nav.Item>
+                </>
+            )}
+        </Nav>
+    );
+}
+
+function MenuAdmin({ pathname }) {
+    return (
+        <Nav activeKey="/admin" className="nav-conteiner">
+            <Nav.Item className="menu-sub">
+                <div>
+                    <center><GiBrain className="logo" /></center>
                 </div>
             </Nav.Item>
 
             <Nav.Item className="menu-sub">
-                <Nav.Link
-                    className="text-nav"
-                    as={Link}
-                    to={"/admin"}
-                    active={pathname === "/admin"}
-                >
+                <Nav.Link className="text-nav" as={Link} to="/admin" active={pathname === "/admin"}>
                     <FaHome className="icon" /> Inicio
                 </Nav.Link>
             </Nav.Item>
 
             <Nav.Item className="menu-sub">
-                <Nav.Link
-                    className="text-nav"
-                    as={Link}
-                    to={"/admin/estadisticas"}
-                    active={pathname === "/admin/estadisticas"}
-                >
+                <Nav.Link className="text-nav" as={Link} to="/admin/estadisticas" active={pathname === "/admin/estadisticas"}>
                     <FcStatistics className="icon" /> Estadisticas
                 </Nav.Link>
             </Nav.Item>
 
             <Nav.Item className="menu-sub">
-                <Nav.Link
-                    className="text-nav"
-                    href="https://menteconecta.net/jupyterhub"
-                >
+                <Nav.Link className="text-nav" href="https://menteconecta.net/jupyterhub">
                     <SiJupyter className="icon" /> Jupyter Notebook
                 </Nav.Link>
             </Nav.Item>
-
         </Nav>
     );
 }
 
-function MenuAdminFase1(props) {
-
-    const { pathname } = props;
+function MenuAdminFase1({ pathname }) {
     return (
-        <Nav
-            activeKey="/admin"
-            className="nav-conteiner"
-        >
+        <Nav activeKey="/admin" className="nav-conteiner">
             <Nav.Item className="menu-sub">
-
-                <Nav.Link
-                    className="text-nav"
-                    as={Link}
-                    to={"/admin/f1"}
-                    active={pathname === "/admin"}
-                >
+                <Nav.Link className="text-nav" as={Link} to="/admin/f1" active={pathname === "/admin"}>
                     <div>
-                        <img src={image} alt="Logo" style={{
-                            width: "100%",
-                            marginBottom: "1rem",
-                            marginTop: "2rem",
-                            }}
-                        />
+                        <img src={image} alt="Logo" style={{ width: "100%", marginBottom: "1rem", marginTop: "2rem" }} />
                     </div>
                 </Nav.Link>
             </Nav.Item>
 
             <Nav.Item className="menu-sub">
-                <Nav.Link
-                    className="text-nav"
-                    as={Link}
-                    to={"/admin/f1"}
-                    active={pathname === "/admin"}
-                >
+                <Nav.Link className="text-nav" as={Link} to="/admin/f1" active={pathname === "/admin"}>
                     <FaHome className="icon" /> Inicio
                 </Nav.Link>
             </Nav.Item>
 
             <Nav.Item className="menu-sub">
-                <Nav.Link
-                    className="text-nav"
-                    as={Link}
-                    to={"/admin/f1/estadisticas"}
-                    active={pathname === "/admin/f1/estadisticas"}
-                >
+                <Nav.Link className="text-nav" as={Link} to="/admin/f1/estadisticas" active={pathname === "/admin/f1/estadisticas"}>
                     <FcStatistics className="icon" /> Dashboard
                 </Nav.Link>
             </Nav.Item>
 
             <Nav.Item className="menu-sub">
-                <Nav.Link
-                    className="text-nav"
-                    as={Link}
-                    to={"/admin/f1/columbia"}
-                    active={pathname === "/admin/f1/columbia"}
-                >
+                <Nav.Link className="text-nav" as={Link} to="/admin/f1/columbia" active={pathname === "/admin/f1/columbia"}>
                     <FcStatistics className="icon" /> Columbia
                 </Nav.Link>
             </Nav.Item>
-
         </Nav>
     );
 }
 
-function MenuAdminConasama({ pathname, isSuperUser, isStaff, puedeGestionarUsuarios, puedeGenerarReportes  }) {
-  const { auth } = useAuth();
-  const organizacion = auth?.me?.organizacion;
+function MenuAdminConasama({ pathname, isSuperUser, isStaff, puedeGestionarUsuarios, puedeGenerarReportes }) {
+    const { auth } = useAuth();
+    const organizacion = auth?.me?.organizacion;
+    const logos = { 1: logoMCA, 2: image };
+    const logoOrganizacion = logos[organizacion] || logoMCA;
 
-  const logos = {
-    1: logoMCA,
-    2: image
-  };
+    return (
+        <Nav activeKey="/admin" className="nav-conteiner">
 
-  const logoOrganizacion = logos[organizacion] || logoMCA;
+            {/* ======== MENU GESTOR ======== */}
+            {isStaff && !isSuperUser && (
+                <>
+                    <Nav.Item className="menu-sub">
+                        <Nav.Link as={Link} to="/admin/gestor/conasama" className="text-nav">
+                            <div>
+                                <img src={logoMCA} alt="LogoMCA" style={{ width: "100%", marginBottom: "1rem", marginTop: "2rem" }} />
+                            </div>
+                        </Nav.Link>
+                    </Nav.Item>
 
-  return (
-    <Nav activeKey="/admin" className="nav-conteiner">
+                    <Nav.Item className="menu-sub">
+                        <Nav.Link className="text-nav" as={Link} to="/admin/gestor/conasama"
+                            active={pathname === "/admin/gestor/conasama"}>
+                            <FaHome className="icon" /> Inicio
+                        </Nav.Link>
+                    </Nav.Item>
 
-      {/* ============================= */}
-      {/* ======== MENU GESTOR ======== */}
-      {/* ============================= */}
-      {isStaff && !isSuperUser && (
-        <>
-          <Nav.Item className="menu-sub">
-            <Nav.Link as={Link} to="/admin/gestor/conasama" className="text-nav">
-              <div>
-                <img
-                  src={logoMCA}
-                  alt="LogoMCA"
-                  style={{
-                    width: "100%",
-                    marginBottom: "1rem",
-                    marginTop: "2rem",
-                  }}
-                />
-              </div>
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item className="menu-sub">
-            <Nav.Link
-              className="text-nav"
-              as={Link}
-              to="/admin/gestor/conasama"
-              active={pathname === "/admin/gestor/conasama"}
-            >
-              <FaHome className="icon" /> Inicio
-            </Nav.Link>
-          </Nav.Item>
+                    <Nav.Item className="menu-sub">
+                        <Nav.Link className="text-nav" as={Link} to="/admin/gestor/conasama/estadisticas"
+                            active={pathname === "/admin/gestor/conasama/estadisticas"}>
+                            <VscGraph className="icon" /> Graficas
+                        </Nav.Link>
+                    </Nav.Item>
 
-          <Nav.Item className="menu-sub">
-            <Nav.Link
-              className="text-nav"
-              as={Link}
-              to="/admin/gestor/conasama/estadisticas"
-              active={pathname === "/admin/gestor/conasama/estadisticas"}
-            >
-              <VscGraph className="icon" /> Graficas
-            </Nav.Link>
-          </Nav.Item>
+                    <Nav.Item className="menu-sub">
+                        <Nav.Link className="text-nav" as={Link} to="/admin/gestor/conasama/columbia"
+                            active={pathname === "/admin/gestor/conasama/columbia"}>
+                            <HiUserGroup className="icon" /> Grupo de Riesgos
+                        </Nav.Link>
+                    </Nav.Item>
+                </>
+            )}
 
-          <Nav.Item className="menu-sub">
-            <Nav.Link
-              className="text-nav"
-              as={Link}
-              to="/admin/gestor/conasama/columbia"
-              active={pathname === "/admin/gestor/conasama/columbia"}
-            >
-              <HiUserGroup className="icon" /> Grupo de Riesgos
-            </Nav.Link>
-          </Nav.Item>
-        </>
-      )}
+            {/* ======== MENU SUPER GESTOR ======== */}
+            {isSuperUser && (
+                <>
+                    <Nav.Item className="menu-sub">
+                        <Nav.Link as={Link} to="/admin/super-gestor/conasama" className="text-nav">
+                            <div>
+                                <img src={logoOrganizacion} alt="Logo" style={{ width: "100%", marginBottom: "1rem", marginTop: "2rem" }} />
+                            </div>
+                        </Nav.Link>
+                    </Nav.Item>
 
-      {/* ============================= */}
-      {/* ===== MENU SUPER GESTOR ===== */}
-      {/* ============================= */}
-      {isSuperUser && (
-        <>
-          <Nav.Item className="menu-sub">
-            <Nav.Link as={Link} to="/admin/super-gestor/conasama" className="text-nav">
-              <div>
-                <img
-                  src={logoOrganizacion}
-                  alt="Logo"
-                  style={{
-                    width: "100%",
-                    marginBottom: "1rem",
-                    marginTop: "2rem",
-                  }}
-                />
-              </div>
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item className="menu-sub">
-            <Nav.Link
-              className="text-nav"
-              as={Link}
-              to="/admin/super-gestor/conasama"
-              active={pathname === "/admin/super-gestor/conasama"}
-            >
-              <FaHome className="icon" /> Inicio
-            </Nav.Link>
-          </Nav.Item>
+                    <Nav.Item className="menu-sub">
+                        <Nav.Link className="text-nav" as={Link} to="/admin/super-gestor/conasama"
+                            active={pathname === "/admin/super-gestor/conasama"}>
+                            <FaHome className="icon" /> Inicio
+                        </Nav.Link>
+                    </Nav.Item>
 
-          <Nav.Item className="menu-sub">
-            <Nav.Link
-              className="text-nav"
-              as={Link}
-              to="/admin/super-gestor/conasama/graficas"
-              active={pathname === "/admin/super-gestor/conasama/graficas"}
-            >
-              <VscGraph className="icon" /> Graficas
-            </Nav.Link>
-          </Nav.Item>
+                    <Nav.Item className="menu-sub">
+                        <Nav.Link className="text-nav" as={Link} to="/admin/super-gestor/conasama/graficas"
+                            active={pathname === "/admin/super-gestor/conasama/graficas"}>
+                            <VscGraph className="icon" /> Graficas
+                        </Nav.Link>
+                    </Nav.Item>
 
-          <Nav.Item className="menu-sub">
-            <Nav.Link
-              className="text-nav"
-              as={Link}
-              to="/admin/super-gestor/conasama/pacientes-riesgo"
-              active={pathname === "/admin/super-gestor/conasama/pacientes-riesgo"}
-            >
-              <HiUserGroup className="icon" /> Grupo de Riesgos
-            </Nav.Link>
-          </Nav.Item>
+                    <Nav.Item className="menu-sub">
+                        <Nav.Link className="text-nav" as={Link} to="/admin/super-gestor/conasama/pacientes-riesgo"
+                            active={pathname === "/admin/super-gestor/conasama/pacientes-riesgo"}>
+                            <HiUserGroup className="icon" /> Grupo de Riesgos
+                        </Nav.Link>
+                    </Nav.Item>
 
-          {puedeGestionarUsuarios && (
-            <Nav.Item className="menu-sub">
-              <Nav.Link
-                className="text-nav"
-                as={Link}
-                to="/admin/super-gestor/conasama/gestores"
-                active={pathname === "/admin/super-gestor/conasama/gestores"}
-              >
-                <FaUserDoctor className="icon" /> Gestores
-              </Nav.Link>
-            </Nav.Item>
-          )}
+                    {puedeGestionarUsuarios && (
+                        <Nav.Item className="menu-sub">
+                            <Nav.Link className="text-nav" as={Link} to="/admin/super-gestor/conasama/gestores"
+                                active={pathname === "/admin/super-gestor/conasama/gestores"}>
+                                <FaUserDoctor className="icon" /> Gestores
+                            </Nav.Link>
+                        </Nav.Item>
+                    )}
 
-          {puedeGenerarReportes && (
-            <Nav.Item className="menu-sub">
-              <Nav.Link
-                className="text-nav"
-                as={Link}
-                to="/admin/super-gestor/conasama/reportes"
-                active={pathname === "/admin/super-gestor/conasama/reportes"}
-              >
-                <HiDocumentReport className="icon" /> Reportes
-              </Nav.Link>
-            </Nav.Item>
-          )}
+                    {puedeGenerarReportes && (
+                        <Nav.Item className="menu-sub">
+                            <Nav.Link className="text-nav" as={Link} to="/admin/super-gestor/conasama/reportes"
+                                active={pathname === "/admin/super-gestor/conasama/reportes"}>
+                                <HiDocumentReport className="icon" /> Reportes
+                            </Nav.Link>
+                        </Nav.Item>
+                    )}
 
-          <Nav.Item className="menu-sub">
-            <Nav.Link
-              className="text-nav"
-              as={Link}
-              to="/admin/super-gestor/conasama/noticias"
-              active={pathname === "/admin/super-gestor/conasama/noticias"}
-            >
-              <IoNewspaperOutline className="icon" /> Noticias
-            </Nav.Link>
-          </Nav.Item>
-        </>
-      )}
-
-    </Nav>
-  );
+                    <Nav.Item className="menu-sub">
+                        <Nav.Link className="text-nav" as={Link} to="/admin/super-gestor/conasama/noticias"
+                            active={pathname === "/admin/super-gestor/conasama/noticias"}>
+                            <IoNewspaperOutline className="icon" /> Noticias
+                        </Nav.Link>
+                    </Nav.Item>
+                </>
+            )}
+        </Nav>
+    );
 }
 
-function MenuAdminSEP({ pathname, isSuperUser, isStaff, puedeGestionarUsuarios, puedeGenerarReportes  }) {
-  const { auth } = useAuth();
-  const organizacion = auth?.me?.organizacion;
+function MenuAdminSEP({ pathname, isSuperUser, isStaff, puedeGestionarUsuarios, puedeGenerarReportes }) {
+    // const { auth } = useAuth();
+    // const organizacion = auth?.me?.organizacion;
+    // const logos = { 1: logoMCA, 2: image };
+    // const logoOrganizacion = logos[organizacion] || logoMCA;
 
-  const logos = {
-    1: logoMCA,
-    2: image
-  };
+    return (
+        <Nav activeKey="/admin" className="nav-conteiner">
 
-  const logoOrganizacion = logos[organizacion] || logoMCA;
+            {/* ======== MENU GESTOR ======== */}
+            {isStaff && !isSuperUser && (
+                <>
+                    <Nav.Item className="menu-sub">
+                       
+                            <div>
+                                <img src={logoSep} alt="LogoSEP" style={{ width: "100%", marginBottom: "1rem", marginTop: "2rem" }} />
+                            </div>
+                       
+                    </Nav.Item>
 
-  return (
-    <Nav activeKey="/admin" className="nav-conteiner">
+                    <Nav.Item className="menu-sub">
+                        <Nav.Link className="text-nav" as={Link} to="/admin/gestor/sep"
+                            active={pathname === "/admin/gestor/sep"}>
+                            <FaHome className="icon" /> Inicio
+                        </Nav.Link>
+                    </Nav.Item>
 
-      {/* ============================= */}
-      {/* ======== MENU GESTOR ======== */}
-      {/* ============================= */}
-      {isStaff && !isSuperUser && (
-        <>
-          <Nav.Item className="menu-sub">
-            <Nav.Link as={Link} to="/admin/gestor/sep" className="text-nav">
-              <div>
-                <img
-                  src={logoSep}
-                  alt="LogoMCA"
-                  style={{
-                    width: "100%",
-                    marginBottom: "1rem",
-                    marginTop: "2rem",
-                  }}
-                />
-              </div>
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item className="menu-sub">
-            <Nav.Link
-              className="text-nav"
-              as={Link}
-              to="/admin/gestor/sep"
-              active={pathname === "/admin/gestor/sep"}
-            >
-              <FaHome className="icon" /> Inicio
-            </Nav.Link>
-          </Nav.Item>
+                    <Nav.Item className="menu-sub">
+                        <Nav.Link className="text-nav" as={Link} to="/admin/gestor/sep/estadisticas"
+                            active={pathname === "/admin/gestor/sep/estadisticas"}>
+                            <VscGraph className="icon" /> Graficas
+                        </Nav.Link>
+                    </Nav.Item>
 
-          <Nav.Item className="menu-sub">
-            <Nav.Link
-              className="text-nav"
-              as={Link}
-              to="/admin/gestor/sep/estadisticas"
-              active={pathname === "/admin/gestor/sep/estadisticas"}
-            >
-              <VscGraph className="icon" /> Graficas
-            </Nav.Link>
-          </Nav.Item>
+                    <Nav.Item className="menu-sub">
+                        <Nav.Link className="text-nav" as={Link} to="/admin/gestor/sep/columbia"
+                            active={pathname === "/admin/gestor/sep/columbia"}>
+                            <HiUserGroup className="icon" /> Grupo de Riesgos
+                        </Nav.Link>
+                    </Nav.Item>
+                </>
+            )}
 
-          <Nav.Item className="menu-sub">
-            <Nav.Link
-              className="text-nav"
-              as={Link}
-              to="/admin/gestor/sep/columbia"
-              active={pathname === "/admin/gestor/sep/columbia"}
-            >
-              <HiUserGroup className="icon" /> Grupo de Riesgos
-            </Nav.Link>
-          </Nav.Item>
-        </>
-      )}
+            {/* ======== MENU SUPER GESTOR ======== */}
+            {isSuperUser && (
+                <>
+                    <Nav.Item className="menu-sub">
+                     
+                            <div>
+                                <img src={logoSep} alt="LogoSEP" style={{ width: "100%", marginBottom: "1rem", marginTop: "2rem" }} />
+                            </div>
+                        
+                    </Nav.Item>
 
-      {/* ============================= */}
-      {/* ===== MENU SUPER GESTOR ===== */}
-      {/* ============================= */}
-      {isSuperUser && (
-        <>
-          <Nav.Item className="menu-sub">
-            <Nav.Link as={Link} to="/admin/super-gestor/sep" className="text-nav">
-              <div>
-                <img
-                  src={logoSep}
-                  alt="Logo"
-                  style={{
-                    width: "100%",
-                    marginBottom: "1rem",
-                    marginTop: "2rem",
-                  }}
-                />
-              </div>
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item className="menu-sub">
-            <Nav.Link
-              className="text-nav"
-              as={Link}
-              to="/admin/super-gestor/sep"
-              active={pathname === "/admin/super-gestor/sep"}
-            >
-              <FaHome className="icon" /> Inicio
-            </Nav.Link>
-          </Nav.Item>
+                    <Nav.Item className="menu-sub">
+                        <Nav.Link className="text-nav" as={Link} to="/admin/super-gestor/sep"
+                            active={pathname === "/admin/super-gestor/sep"}>
+                            <FaHome className="icon" /> Inicio
+                        </Nav.Link>
+                    </Nav.Item>
 
-          <Nav.Item className="menu-sub">
-            <Nav.Link
-              className="text-nav"
-              as={Link}
-              to="/admin/super-gestor/sep/graficas"
-              active={pathname === "/admin/super-gestor/sep/graficas"}
-            >
-              <VscGraph className="icon" /> Graficas
-            </Nav.Link>
-          </Nav.Item>
+                    <Nav.Item className="menu-sub">
+                        <Nav.Link className="text-nav" as={Link} to="/admin/super-gestor/sep/graficas"
+                            active={pathname === "/admin/super-gestor/sep/graficas"}>
+                            <VscGraph className="icon" /> Graficas
+                        </Nav.Link>
+                    </Nav.Item>
 
-          <Nav.Item className="menu-sub">
-            <Nav.Link
-              className="text-nav"
-              as={Link}
-              to="/admin/super-gestor/sep/pacientes-riesgo"
-              active={pathname === "/admin/super-gestor/sep/pacientes-riesgo"}
-            >
-              <HiUserGroup className="icon" /> Grupo de Riesgos
-            </Nav.Link>
-          </Nav.Item>
+                    <Nav.Item className="menu-sub">
+                        <Nav.Link className="text-nav" as={Link} to="/admin/super-gestor/sep/pacientes-riesgo"
+                            active={pathname === "/admin/super-gestor/sep/pacientes-riesgo"}>
+                            <HiUserGroup className="icon" /> Grupo de Riesgos
+                        </Nav.Link>
+                    </Nav.Item>
 
-          {puedeGestionarUsuarios && (
-            <Nav.Item className="menu-sub">
-              <Nav.Link
-                className="text-nav"
-                as={Link}
-                to="/admin/super-gestor/sep/gestores"
-                active={pathname === "/admin/super-gestor/sep/gestores"}
-              >
-                <FaUserDoctor className="icon" /> Gestores
-              </Nav.Link>
-            </Nav.Item>
-          )}
+                    {puedeGestionarUsuarios && (
+                        <Nav.Item className="menu-sub">
+                            <Nav.Link className="text-nav" as={Link} to="/admin/super-gestor/sep/gestores"
+                                active={pathname === "/admin/super-gestor/sep/gestores"}>
+                                <FaUserDoctor className="icon" /> Gestores
+                            </Nav.Link>
+                        </Nav.Item>
+                    )}
 
-          {puedeGenerarReportes && (
-            <Nav.Item className="menu-sub">
-              <Nav.Link
-                className="text-nav"
-                as={Link}
-                to="/admin/super-gestor/sep/reportes"
-                active={pathname === "/admin/super-gestor/sep/reportes"}
-              >
-                <HiDocumentReport className="icon" /> Reportes
-              </Nav.Link>
-            </Nav.Item>
-          )}
+                    {puedeGenerarReportes && (
+                        <Nav.Item className="menu-sub">
+                            <Nav.Link className="text-nav" as={Link} to="/admin/super-gestor/sep/reportes"
+                                active={pathname === "/admin/super-gestor/sep/reportes"}>
+                                <HiDocumentReport className="icon" /> Reportes
+                            </Nav.Link>
+                        </Nav.Item>
+                    )}
 
-          <Nav.Item className="menu-sub">
-            <Nav.Link
-              className="text-nav"
-              as={Link}
-              to="/admin/super-gestor/sep/noticias"
-              active={pathname === "/admin/super-gestor/sep/noticias"}
-            >
-              <IoNewspaperOutline className="icon" /> Noticias
-            </Nav.Link>
-          </Nav.Item>
-        </>
-      )}
-
-    </Nav>
-  );
+                    <Nav.Item className="menu-sub">
+                        <Nav.Link className="text-nav" as={Link} to="/admin/super-gestor/sep/noticias"
+                            active={pathname === "/admin/super-gestor/sep/noticias"}>
+                            <IoNewspaperOutline className="icon" /> Noticias
+                        </Nav.Link>
+                    </Nav.Item>
+                </>
+            )}
+        </Nav>
+    );
 }

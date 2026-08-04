@@ -1,0 +1,183 @@
+/* ===== CONTAINER PRINCIPAL HOME ===== */
+.home-superior-container {
+    padding: 0;
+    background-color: #F4F6F9;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 76px) !important;
+    /* Viewport exact height minus header */
+    max-height: calc(100vh - 76px) !important;
+    min-height: calc(100vh - 76px) !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+/* TITULO DENTRO DE LA ONDA */
+.home-superior-container .mc-banner-wave__text h1,
+.mc-banner-wave__text h1 {
+    font-size: 32px !important;
+    font-weight: 800 !important;
+    margin-bottom: 6px !important;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.12) !important;
+    letter-spacing: -0.5px !important;
+    line-height: 1.2 !important;
+    color: #ffffff !important;
+    font-family: 'Montserrat', 'Nunito', 'Inter', -apple-system, sans-serif !important;
+}
+
+/* SUBTITULO DENTRO DE LA ONDA */
+.home-superior-container .mc-banner-wave__text .lead,
+.mc-banner-wave__text .lead {
+    font-size: 16px !important;
+    opacity: 0.92 !important;
+    margin: 0 !important;
+    font-weight: 300 !important;
+    letter-spacing: 0.3px !important;
+    color: #ffffff !important;
+    font-family: 'Montserrat', 'Nunito', 'Inter', -apple-system, sans-serif !important;
+}
+
+/* TARJETAS */
+.home-sep-superior-body {
+    padding: 60px 24px 140px 24px;
+    position: relative;
+    z-index: 5;
+    flex-grow: 1;
+}
+
+.home-sep-superior-body .row {
+    row-gap: 2rem;
+}
+
+.home-superior-body .card-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.status-footer-info {
+    max-width: 500px;
+    margin: 40px auto 0 auto;
+}
+
+/*ONDA DEL FOOTER INFERIOR*/
+.mc-footer-wave-home {
+  position: relative;
+  width: 100%;
+  height: 130px;
+  line-height: 0;
+  background: #f8bc63;
+}
+
+.mc-footer-wave-home__svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transform: scaleY(-1);
+}
+
+.mc-footer-wave-home__base {
+  fill: #f8bc63;
+}
+
+.mc-footer-wave-home__path {
+  fill: #f4f6f9;
+}
+
+.footer-personajes-wrapper-home {
+  position: relative;
+  width: 100%;
+  height: 0;              
+  margin-top: 0; 
+  z-index: 6;            
+  background: transparent;
+}
+
+/* POSICIONAMIENTO DEL CASTOR */
+.personaje-izq-home {
+    position: absolute;
+    bottom: 0;
+    left: 8vw;
+    max-height: 240px;
+    width: auto;
+    z-index: 10;
+    pointer-events: none;
+    filter: drop-shadow(0px 6px 10px rgba(0, 0, 0, 0.12));
+}
+
+/* POSICIONAMIENTO DEL CONEJO */
+.personaje-der-home {
+    position: absolute;
+    bottom: 0;
+    right: 8vw;
+    max-height: 240px;
+    width: auto;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* MASCOTAS */
+@media (max-width: 1200px) {
+    .personaje-izq-home {
+        left: 2vw;
+        max-height: 200px;
+    }
+
+    .personaje-der-home {
+        right: 2vw;
+        max-height: 200px;
+    }
+}
+
+@media (max-width: 992px) {
+    .home-superior-container .mc-banner-wave__text h1 {
+        font-size: 28px !important;
+    }
+
+    .personaje-izq-home,
+    .personaje-der-home {
+        max-height: 160px;
+    }
+}
+
+@media (max-width: 768px) {
+    .home-superior-container .mc-banner-wave__text h1 {
+        font-size: 24px !important;
+    }
+
+    .home-sep-superior-body {
+        padding: 30px 16px 60px 16px;
+    }
+
+    .personaje-izq-home,
+    .personaje-der-home {
+        display: none !important;
+    }
+}
+
+
+.home-superior-container .mc-filtro-card,
+.home-superior-container .mc-filtro-select-wrapper {
+    box-shadow: none !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+.home-superior-container .mc-indicadores-grid,
+.home-superior-container .mc-indicadores-grid > div,
+.home-superior-container .sedes-container,
+.home-superior-container .home-superior-body .card-info {
+    box-shadow: none !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+
+.home-superior-container .mc-indicadores-grid .card,
+.home-superior-container .mc-indicadores-grid [class*="card"] {
+    box-shadow: none !important;
+    border-top: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
+}

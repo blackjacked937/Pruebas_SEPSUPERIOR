@@ -32,6 +32,17 @@ export function TableColumbiaRisk(props) {
       name: "fecha de evaluación",
       selector: (row) => row.fecha_evaluacion,
       sortable: true,
+      format: (row) => {
+        if (!row.fecha_evaluacion) return "";
+        const fecha = new Date(row.fecha_evaluacion);
+        return fecha.toLocaleString("es-MX", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+      }
     },
     {
       name: "Asignar paciente",
@@ -42,9 +53,9 @@ export function TableColumbiaRisk(props) {
             size="sm"
             variant="success"
             className="table-webinar-admin__boton btn-boton"
-            onClick={ async () => {
-                await setMarkPatientSeen(row.id_registro)
-                await onRefetch()
+            onClick={async () => {
+              await setMarkPatientSeen(row.id_registro)
+              await onRefetch()
             }}
           >
             <FontAwesomeIcon icon={faPencil} />

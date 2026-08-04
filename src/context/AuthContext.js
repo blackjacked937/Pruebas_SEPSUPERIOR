@@ -1,5 +1,7 @@
 import { jwtDecode } from "jwt-decode";
 import React, { createContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 import { getToken, removeToken, setToken } from "../api/token";
 import { useUser } from "../hooks";
 
@@ -97,6 +99,63 @@ export function AuthProvider(props) {
     sessionStorage.removeItem("typeLogin");
     setAuth(null);
   };
+
+  useEffect(() => {
+    if (!auth && sessionStorage.getItem("inactivityTimeout") === "true") {
+      Swal.fire({
+        title: "Sesión cerrada",
+        text: "Tu sesión ha sido cerrada por inactividad.",
+        icon: "warning",
+        confirmButtonColor: "#4f70bd",
+        confirmButtonText: "Entendido",
+        customClass: {
+          popup: "rounded-4"
+        }
+      });
+      sessionStorage.removeItem("inactivityTimeout");
+    }
+  }, [auth]);
+
+  useEffect(() => {
+    if (!auth) return;
+
+    const INACTIVITY_LIMIT = 15 * 60 * 1000; // 15 minutes
+    let timeoutId;
+
+    const resetTimer = () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        sessionStorage.setItem("inactivityTimeout", "true");
+        logout();
+      }, INACTIVITY_LIMIT);
+    };
+
+    // Events that indicate user activity
+    const events = [
+      "mousemove",
+      "mousedown",
+      "keypress",
+      "scroll",
+      "touchstart",
+      "click"
+    ];
+
+    // Initialize timer
+    resetTimer();
+
+    // Bind event listeners
+    events.forEach((event) => {
+      window.addEventListener(event, resetTimer);
+    });
+
+    // Cleanup
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      events.forEach((event) => {
+        window.removeEventListener(event, resetTimer);
+      });
+    };
+  }, [auth]);
 
   if (auth === undefined) return null;
 

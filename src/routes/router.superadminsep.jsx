@@ -1,10 +1,14 @@
-import { AdminLayout } from '../layouts';
-import { HomeSuperAdminSeP } from '../pages/superAdminSEP/homeSuperAdminSeP/HomeSuperAdminSeP';
-import { GraficasSuperAdminSeP } from '../pages/superAdminSEP/graficasSuperAdminSeP/GraficasSuperAdminSeP';
-import { PacientesSuperAdminSeP } from '../pages/superAdminSEP/pacientesSuperAdminSeP/PacientesSuperAdminSeP';
-import { GestoresSuperAdminSeP } from '../pages/superAdminSEP/gestoresSuperAdminSeP/GestoresSuperAdminSeP';
-import { NoticiasSuperAdminSeP } from '../pages/superAdminSEP/noticiasSuperAdminSeP/NoticiasSuperAdminSeP';
-import { ReportesSuperAdminSeP } from '../pages/superAdminSEP/reportesSuperAdminSeP/ReportesSuperAdminSeP';
+import { SepLayout } from '../layouts/sepLayout/SepLayout';
+import {
+  HomeSuperAdminSeP,
+  GraficasSuperAdminSeP,
+  PacientesSuperAdminSeP,
+  GestoresSuperAdminSeP,
+  NoticiasSuperAdminSeP,
+  ReportesSuperAdminSeP,
+  Perfil,
+  GestionarAccesosPage
+} from '../pages/superAdminSEP';
 import { RoleRouteSEP } from '../components/adminsep';
 
 /**
@@ -18,57 +22,66 @@ import { RoleRouteSEP } from '../components/adminsep';
 const routesSuperAdminSeP = [
   {
     path: '/admin/super-gestor/sep',
-    layout: AdminLayout,
-    component: (props) => (
-      <RoleRouteSEP allowSuper>
-        <HomeSuperAdminSeP {...props} />
-      </RoleRouteSEP>
-    ),
+    layout: SepLayout,
+    component: HomeSuperAdminSeP,
+    label: "Inicio",
+    Guard: RoleRouteSEP,
+    access: { allowSuper: true },
   },
   {
     path: '/admin/super-gestor/sep/graficas',
-    layout: AdminLayout,
-    component: (props) => (
-      <RoleRouteSEP allowSuper>
-        <GraficasSuperAdminSeP {...props} />
-      </RoleRouteSEP>
-    ),
+    layout: SepLayout,
+    component: GraficasSuperAdminSeP,
+    label: "Gráficas",
+    Guard: RoleRouteSEP,
+    access: { allowSuper: true },
   },
   {
     path: '/admin/super-gestor/sep/pacientes-riesgo',
-    layout: AdminLayout,
-    component: (props) => (
-      <RoleRouteSEP allowSuper>
-        <PacientesSuperAdminSeP {...props} />
-      </RoleRouteSEP>
-    ),
+    layout: SepLayout,
+    component: PacientesSuperAdminSeP,
+    label: "Pacientes en Riesgo",
+    Guard: RoleRouteSEP,
+    access: { allowSuper: true },
   },
   {
     path: '/admin/super-gestor/sep/gestores',
-    layout: AdminLayout,
-    component: (props) => (
-      <RoleRouteSEP allowSuper allowOrganizaciones={[2]}>
-        <GestoresSuperAdminSeP {...props} />
-      </RoleRouteSEP>
-    ),
+    layout: SepLayout,
+    component: GestoresSuperAdminSeP,
+    label: "Gestores",
+    Guard: RoleRouteSEP,
+    access: { allowSuper: true },
   },
   {
     path: '/admin/super-gestor/sep/noticias',
-    layout: AdminLayout,
-    component: (props) => (
-      <RoleRouteSEP allowSuper>
-        <NoticiasSuperAdminSeP {...props} />
-      </RoleRouteSEP>
-    ),
+    layout: SepLayout,
+    component: NoticiasSuperAdminSeP,
+    label: "Noticias",
+    Guard: RoleRouteSEP,
+    access: { allowSuper: true },
   },
   {
     path: '/admin/super-gestor/sep/reportes',
-    layout: AdminLayout,
-    component: (props) => (
-      <RoleRouteSEP allowSuper allowOrganizaciones={[0]}>
-        <ReportesSuperAdminSeP {...props} />
-      </RoleRouteSEP>
-    ),
+    layout: SepLayout,
+    component: ReportesSuperAdminSeP,
+    label: "Reportes",
+    Guard: RoleRouteSEP,
+    access: { allowSuper: true, allowOrganizaciones: [0] },
+  },
+  {
+    path: '/admin/super-gestor/sep/gestionar-accesos',
+    layout: SepLayout,
+    component: GestionarAccesosPage,
+    label: "Gestionar Accesos",
+    Guard: RoleRouteSEP,
+    access: { allowSuper: true,  allowOrganizaciones: [0] },
+  },
+  {
+    path: '/admin/super-gestor/sep/perfil',
+    layout: SepLayout,
+    component: Perfil,
+    Guard: RoleRouteSEP,
+    access: { allowSuper: true },
   },
 ];
 

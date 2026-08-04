@@ -14,6 +14,7 @@ export function useUser() {
         try {
             setLoadingUser(true)
             const response = await getMeApi(token, typeLogin);
+            console.log(response);
             setLoadingUser(false)
             return response;
         } catch (error) {

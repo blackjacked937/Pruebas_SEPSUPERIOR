@@ -1,17 +1,30 @@
-import { Tabs, Tab } from "react-bootstrap";
-import styles from "./Tabs.module.css";
+import React from 'react';
+import styles from './Tabs.module.css';
 
 export default function TipoGraficasTabs({ value, onChange }) {
+  const tabs = [
+    { id: 'cuestionarios', label: 'Cuestionarios' },
+    { id: 'preguntas', label: 'Sociodemográficos' },
+    { id: 'rangos', label: 'Rangos' }
+  ];
+
   return (
-    <Tabs
-      activeKey={value}
-      onSelect={(k) => onChange(k)}
-      className={`mb-4 ${styles.customTabs}`}
-      justify
-    >
-      <Tab eventKey="cuestionarios" title="Cuestionarios" />
-      <Tab eventKey="preguntas" title="Sociodemograficos" />
-      <Tab eventKey="rangos" title="Rangos" />
-    </Tabs>
+    <div className="d-flex justify-content-center w-100 mt-2 mb-4">
+      <div className={styles.tabsContainer}>
+        {tabs.map((tab) => {
+          const isActive = value === tab.id;
+          
+          return (
+            <button
+              key={tab.id}
+              onClick={() => onChange(tab.id)}
+              className={`${styles.tabButton} ${isActive ? styles.activeTab : ''}`}
+            >
+              {tab.label}
+            </button>
+          );
+        })}
+      </div>
+    </div>
   );
 }

@@ -5,6 +5,7 @@ import DataTable from "react-data-table-component";
 import Modal from "react-bootstrap/Modal";
 import { marcarAtencionPacienteSensibleApi } from "../../../../api/conasama/pacientesSensibles";
 import { useAuth } from "../../../../hooks/useAuth";
+import { formatPhoneLada } from "../../../../utils/phone";
 import "./TablePacientesSensibles.css";
 import React, { useState } from "react";
 
@@ -74,12 +75,12 @@ function TablePacientesSensibles(props) {
           row.usuario?.celular ||
           row.celular_paciente ||
           row.celular;
-        if (celularUsuario) return celularUsuario;
+        if (celularUsuario) return formatPhoneLada(celularUsuario);
         if (
           Array.isArray(row.usuario?.contactos_emergencia) &&
           row.usuario.contactos_emergencia.length > 0
         ) {
-          return row.usuario.contactos_emergencia[0].celular || "";
+          return formatPhoneLada(row.usuario.contactos_emergencia[0].celular || "");
         }
         return "";
       },

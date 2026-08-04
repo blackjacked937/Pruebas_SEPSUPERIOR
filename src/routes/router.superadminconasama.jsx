@@ -1,4 +1,4 @@
-import { AdminLayout } from '../layouts';
+import { AdminLayout } from '../layouts/adminLayout/AdminLayout';
 import { 
     HomeSuperAdminConasama,
     GestoresSuperAdminConasama,
@@ -13,58 +13,52 @@ const routesAdminConasama = [
     {
         path: "/admin/super-gestor/conasama",
         layout: AdminLayout,
-        component: (props) => (
-            <RoleRoute allowSuper>
-                <HomeSuperAdminConasama {...props} />
-            </RoleRoute>
-        ),
+        component: HomeSuperAdminConasama,
+        label: "Inicio",
+        Guard: RoleRoute,
+        access: { allowSuper: true },
     },
     {
         path: "/admin/super-gestor/conasama/graficas",
         layout: AdminLayout,
-        component: (props) => (
-            <RoleRoute allowSuper>
-                <GraficasSuperAdminConasama {...props} />
-            </RoleRoute>
-        ),
+        component: GraficasSuperAdminConasama,
+        label: "Graficas",
+        Guard: RoleRoute,
+        access: { allowSuper: true },
     },
     {
         path: "/admin/super-gestor/conasama/pacientes-riesgo",
         layout: AdminLayout,
-        component: (props) => (
-            <RoleRoute allowSuper>
-                <PacientesSuperAdminConasama {...props} />
-            </RoleRoute>
-        ),
+        component: PacientesSuperAdminConasama,
+        label: "Pacientes en Riesgo",
+        Guard: RoleRoute,
+        access: { allowSuper: true },
     },
     {
         path: "/admin/super-gestor/conasama/gestores",
         layout: AdminLayout,
-        component: (props) => (
-            <RoleRoute allowSuper allowOrganizaciones={[1]}>
-                <GestoresSuperAdminConasama {...props} />
-            </RoleRoute>
-        ),
+        component: GestoresSuperAdminConasama,
+        label: "Gestores",
+        Guard: RoleRoute,
+        access: { allowSuper: true, allowOrganizaciones: [1] },
     },
     // En sep no habra apartado de noticias
     {
         path: "/admin/super-gestor/conasama/noticias",
         layout: AdminLayout,
-        component: (props) => (
-            <RoleRoute allowSuper>
-                <NoticiasSuperAdminConasama {...props} />
-            </RoleRoute>
-        ),
+        component: NoticiasSuperAdminConasama,
+        label: "Noticias",
+        Guard: RoleRoute,
+        access: { allowSuper: true },
     },
     // No habra apartado de reportes para SEP
     {
         path: "/admin/super-gestor/conasama/reportes",
         layout: AdminLayout,
-        component: (props) => (
-            <RoleRoute allowSuper allowOrganizaciones={[0]}>
-                <ReportesSuperAdminConasama {...props} />
-            </RoleRoute>
-        ),
+        component: ReportesSuperAdminConasama,
+        label: "Reportes",
+        Guard: RoleRoute,
+        access: { allowSuper: true, allowOrganizaciones: [0] },
     },
 ]
 

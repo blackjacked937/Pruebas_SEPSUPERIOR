@@ -1,4 +1,4 @@
-import { BASE_API_SEP_V1 } from '../../utils/constants';
+import { BASE_API_SEP_V1 } from "../../utils/constants";
 
 // ==================== PACIENTES SENSIBLES SEP ====================
 
@@ -7,7 +7,7 @@ import { BASE_API_SEP_V1 } from '../../utils/constants';
  */
 export async function getPacientesSensiblesSeP(token) {
   try {
-    const url = `${BASE_API_SEP_V1}/paciente2/pacientes/`;
+    const url = `${BASE_API_SEP_V1}/paciente2/pacientes/sencible/`;
     const params = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -30,10 +30,10 @@ export async function marcarAtencionEspecialSeP(idPaciente, data, token) {
   try {
     const url = `${BASE_API_SEP_V1}/paciente2/pacientes/${idPaciente}/`;
     const params = {
-      method: 'PATCH',
+      method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     };

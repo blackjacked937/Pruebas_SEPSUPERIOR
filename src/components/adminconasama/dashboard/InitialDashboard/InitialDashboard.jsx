@@ -51,15 +51,15 @@ export function InitialDashboard({ data, title }) {
         }));
     }
     const axisCount = normalizedData.length;
-    const radius = axisCount >= 5 ? "60%" : "65%";
+    const radius = axisCount >= 5 ? "45%" : "48%";
 
     return (
-        <div style={{ width: '100%', height: 400, marginBottom: "2rem"}}>
+        <div className="radar-chart-box">
             <h4 style={{ textAlign: "center", marginBottom: 10 }}>{title}</h4>
             <ResponsiveContainer>
                 <RadarChart
                     cx="50%"
-                    cy="58%"
+                    cy="57%"
                     outerRadius={radius}
                     data={normalizedData}
                 >
@@ -78,7 +78,7 @@ export function InitialDashboard({ data, title }) {
                             lines.push(words.slice(i, i + 2).join(" "));
                             }
 
-                            const lineHeight = 14;
+                            const lineHeight = 10;
                             const offsetY = -(lines.length - 1) * (lineHeight / 2);
 
                             return (
@@ -86,7 +86,7 @@ export function InitialDashboard({ data, title }) {
                                 x={x}
                                 y={y + offsetY}
                                 textAnchor={textAnchor}
-                                fontSize={12}
+                                fontSize={9}
                                 fontWeight={500}
                             >
                                 {lines.map((line, index) => (

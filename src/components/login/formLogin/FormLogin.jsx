@@ -10,11 +10,15 @@ import { useAuth } from '../../../hooks';
 import { InputForm } from '../../ui';
 import './FormLogin.css';
 
+import { FiMail, FiUser, FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
+import logoColor from '../../../assets/img/logoColor.png';
+
 export function FormLogin(props) {
-    const { typeLogin, onBack } = props;
+    const { typeLogin, onBack, onForgotPassword } = props;
     const { login } = useAuth();
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [showPassword, setShowPassword] = useState(false);
 
     const loginMap = {
         1: loginApiISEM,
@@ -70,22 +74,18 @@ export function FormLogin(props) {
     });
 
     return (
-        <div className="login-bg">
-            <div className="login-wrapper">
-
-            {/* HEADER */}
-            <div className="login-header">
+        <div className="login-form-container">
+            {/* CARD 1: HEADER */}
+            <div className="login-header-card">
+                <div className="mobile-logo-container">
+                    <img src={logoColor} alt="Mente Conecta Logo" className="login-logo-img" />
+                </div>
                 <h2>Bienvenido de Nuevo</h2>
                 <p>Accede a tu espacio</p>
-
-                <div className="logo-circle">
-                <img src={Icono_home} alt="logo" />
-                </div>
             </div>
 
-            {/* FORM CARD */}
+            {/* CARD 2: FORM CARD */}
             <div className="login-card">
-                
                 {/* Mostrar error persistente si existe */}
                 {error && (
                     <div className="alert alert-danger alert-dismissible fade show" role="alert">
@@ -99,78 +99,114 @@ export function FormLogin(props) {
                 )}
 
                 <Form onSubmit={formik.handleSubmit}>
-
-                <InputForm
-                    label={typeLogin === 2 ? "Correo Electrónico" : "Usuario"}
-                    labelDirection="left"
-                    nameInput={typeLogin === 2 ? "email" : "username"}
-                    placeHolderInput={typeLogin === 2 ? "correo@example.com" : "usuario"}
-                    valueInput={typeLogin === 2 ? formik.values.email : formik.values.username}
-                    onChangeInput={formik.handleChange}
-                    type="text"
-                    error={typeLogin === 2 ? formik.errors.email : formik.errors.username}
-                    touched={typeLogin === 2 ? formik.touched.email : formik.touched.username}
-                    disabled={isLoading}
-                />
-
-                <InputForm
-                    label="Contraseña"
-                    labelDirection="left"
-                    nameInput="password"
-                    placeHolderInput="••••••••"
-                    valueInput={formik.values.password}
-                    onChangeInput={formik.handleChange}
-                    type="password"
-                    error={formik.errors.password}
-                    touched={formik.touched.password}
-                    disabled={isLoading}
-                />
-
-                {/* Botón Iniciar Sesión con Spinner */}
-                <Button 
-                    type="submit" 
-                    className="login-btn"
-                    disabled={isLoading}
-                    style={{ opacity: isLoading ? 0.7 : 1 }}
-                >
-                    {isLoading ? (
-                        <>
-                            <Spinner
-                                as="span"
-                                animation="border"
-                                size="sm"
-                                role="status"
-                                aria-hidden="true"
-                                className="me-2"
+                    {/* Correo Electrónico */}
+                    <div className="input-group-container">
+                        <label className="input-label">Correo Electrónico</label>
+                        <div className="input-field-wrapper">
+                            <FiMail className="input-icon" />
+                            <input
+                                name={typeLogin === 2 ? "email" : "username"}
+                                type="text"
+                                placeholder="tu@email.com"
+                                value={typeLogin === 2 ? formik.values.email : formik.values.username}
+                                onChange={formik.handleChange}
+                                disabled={isLoading}
+                                className={`custom-login-input ${formik.touched[typeLogin === 2 ? "email" : "username"] && formik.errors[typeLogin === 2 ? "email" : "username"] ? "input-error" : ""}`}
                             />
-                            Iniciando sesión...
-                        </>
-                    ) : (
-                        "Iniciar Sesión"
-                    )}
-                </Button>
+                        </div>
+                        {formik.touched[typeLogin === 2 ? "email" : "username"] && formik.errors[typeLogin === 2 ? "email" : "username"] && (
+                            <div className="error-text">{formik.errors[typeLogin === 2 ? "email" : "username"]}</div>
+                        )}
+                    </div>
 
-                {/* Botón Regresar */}
-                <Button
-                    type="button"
-                    className="login-btn login-btn-secondary"
-                    onClick={onBack}
-                    disabled={isLoading}
-                >
-                    Regresar
-                </Button>
+                    {/* Contraseña */}
+                    <div className="input-group-container">
+                        <label className="input-label">Contraseña</label>
+                        <div className="input-field-wrapper">
+                            <FiLock className="input-icon" />
+                            <input
+                                name="password"
+                                type={showPassword ? "text" : "password"}
+                                placeholder="•••••••"
+                                value={formik.values.password}
+                                onChange={formik.handleChange}
+                                disabled={isLoading}
+                                className={`custom-login-input ${formik.touched.password && formik.errors.password ? "input-error" : ""}`}
+                            />
+                            <button
+                                type="button"
+                                className="password-toggle-btn"
+                                onClick={() => setShowPassword(!showPassword)}
+                                tabIndex="-1"
+                            >
+                                {showPassword ? <FiEyeOff /> : <FiEye />}
+                            </button>
+                        </div>
+                        {formik.touched.password && formik.errors.password && (
+                            <div className="error-text">{formik.errors.password}</div>
+                        )}
+                    </div>
 
+                    {/* Enlace recuperar contraseña */}
+                    <div className="forgot-password-container">
+                        <a 
+                            href="#" 
+                            onClick={(e) => {
+                                e.preventDefault();
+                                if (onForgotPassword) {
+                                    onForgotPassword();
+                                }
+                            }} 
+                            className="forgot-password-link"
+                        >
+                            ¿Olvidaste tu contraseña?
+                        </a>
+                    </div>
+
+                    {/* Acciones */}
+                    <div className="login-actions">
+                        <Button 
+                            type="submit" 
+                            className="login-btn-gradient"
+                            disabled={isLoading}
+                            style={{ opacity: isLoading ? 0.7 : 1 }}
+                        >
+                            {isLoading ? (
+                                <>
+                                    <Spinner
+                                        as="span"
+                                        animation="border"
+                                        size="sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                        className="me-2"
+                                    />
+                                    Iniciando sesión...
+                                </>
+                            ) : (
+                                "Iniciar Sesión"
+                            )}
+                        </Button>
+
+                        <button
+                            type="button"
+                            className="login-back-link"
+                            onClick={onBack}
+                            disabled={isLoading}
+                        >
+                            Regresar
+                        </button>
+                    </div>
                 </Form>
             </div>
 
-            {/* FOOTER */}
-            <div className="login-footer">
+            {/* CARD 3: FOOTER */}
+            <div className="login-footer-card">
                 🔒 Tu privacidad es nuestra prioridad. Todos tus datos están cifrados y protegidos.
-            </div>
-
             </div>
         </div>
     )
+
 }
 
 function initialValues(typeLogin) {

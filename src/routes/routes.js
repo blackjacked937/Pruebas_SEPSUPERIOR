@@ -5,6 +5,7 @@ import routesAdminConasama from './router.adminconasama';
 import routesSuperAdminConasama from './router.superadminconasama';
 import routesAdminSeP from './router.adminsep';
 import routesSuperAdminSeP from './router.superadminsep';
+import routesAdminSepSuperior from './router.adminsepsuperior';
 import routerSuperior from './router.superior';
 
 const routes = [
@@ -15,7 +16,8 @@ const routes = [
     ...routesSuperAdminConasama,
     ...routesAdminSeP,
     ...routesSuperAdminSeP,
-    ...routerSuperior
+    ...routerSuperior,
+    ...routesAdminSepSuperior,
 ]
 
 export default routes;

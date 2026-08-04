@@ -1,5 +1,7 @@
-export { HomeSuperior } from './homeSuperior/HomeSuperior';
-export  { GestoresSuperior }  from './gestoresSuperior/GestoresSuperior';
-export  { GraficacionSuperior }  from './graficacionSuperior/GraficacionSuperior';
-export  { GrupoSuperior }  from './grupoSuperior/GrupoSuperior';
-export  { NoticiasSuperior }  from './noticiasSuperior/NoticiasSuperior';
+export { default as HomeSuperior } from "./homeSuperior/HomeSuperior";
+export * from "./gestoresSuperior/GestoresSuperior";
+export { default as GraficasSesyn } from "./GraficasSesyn/GraficasSesyn";
+export * from "./grupoSuperior/GrupoSuperior";
+export * from "./noticiasSuperior/NoticiasSuperior";
+export * from "./pacienteSuperior/PacientesRiesgoSuperior";
+export * from "./perfilSuperior";

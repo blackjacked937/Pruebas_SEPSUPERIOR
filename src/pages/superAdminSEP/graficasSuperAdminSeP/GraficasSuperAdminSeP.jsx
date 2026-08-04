@@ -1,79 +1,156 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { Container, Spinner } from "react-bootstrap";
-import { useAuth } from "../../../hooks";
 import { useGraficasSeP } from "../../../hooks/sep";
+import {
+  getPaises,
+  getMunicipio,
+  getEscuela,
+} from "../../../api/sep";
 import GraficasGrid from "../../../components/adminsep/dashboard/GraficasGrid";
 import "./GraficasSuperAdminSeP.css";
-
-const sedesPorEstadoConstant = {
-  'Estado de México': {
-    29: "Centro de Estudios Tecnológicos Ecatepec",
-    30: "Preparatoria Oficial No. 128",
-    32: "Universidad Tecnológica de Nezahualcóyotl",
-    33: "CBT No. 2 Nezahualcóyotl",
-    34: "UAEM - Unidad Académica Toluca",
-    35: "Instituto Tecnológico de Toluca"
-  },
-  'Ciudad de México': {
-    31: "Secundaria Técnica 55",
-    36: "Escuela Secundaria Oficial No. 1",
-    37: "UAM Iztapalapa - Plantel Central",
-    38: "CETIS No. 53 Iztapalapa",
-    39: "Secundaria Diurna No. 115",
-    40: "IPN - Escuela Superior de Ingeniería (ESIME)",
-    41: "Preparatoria Nacional Plantel 9 UNAM",
-    42: "Facultad de Filosofía y Letras UNAM",
-    43: "CBTIS No. 2 Coyoacán",
-    44: "Secundaria Técnica No. 17"
-  }
-};
+import { SepHeader } from "../../../components/sep/sepHeader";
+import { SepFooter } from "../../../components/sep/sepFooter";
+import avatarHombre from "../../../assets/img/avatar-hombre.png";
 
 export function GraficasSuperAdminSeP() {
-  const { auth } = useAuth();
-  const [estadoSeleccionado, setEstadoSeleccionado] = useState('Estado de México');
-  const [sedeSeleccionada, setSedeSeleccionada] = useState(null);
-  const [tipoGrafica, setTipoGrafica] = useState('cuestionarios');
+  const [estados, setEstados] = useState([]);
+  const [municipios, setMunicipios] = useState([]);
+  const [escuelas, setEscuelas] = useState([]);
+
+  const [estadoSeleccionado, setEstadoSeleccionado] = useState("");
+  const [municipioSeleccionado, setMunicipioSeleccionado] = useState("");
+  const [sedeSeleccionada, setSedeSeleccionada] = useState("");
+
+  const [tipoGrafica, setTipoGrafica] = useState("cuestionarios");
   const [graficas, setGraficas] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  // Memoizar para evitar recálculos en cada render
-  const sedesPorEstado = useMemo(() => sedesPorEstadoConstant, []);
-  const sedesDelEstado = useMemo(() => sedesPorEstado[estadoSeleccionado] || {}, [estadoSeleccionado, sedesPorEstado]);
-  const idsSedes = useMemo(() => Object.keys(sedesDelEstado), [sedesDelEstado]);
 
   const {
     getConteoPorNivelRiesgoCategoriaBySedeSeP,
     getGraficasPreguntasBySedeSeP,
-    getRangoDePreguntasBySedeSeP
+    getRangoDePreguntasBySedeSeP,
   } = useGraficasSeP();
 
-  // Inicializar sede cuando cambia el estado
-  useEffect(() => {
-    if (idsSedes.length > 0) {
-      setSedeSeleccionada(Number(idsSedes[0]));
-    }
-  }, [estadoSeleccionado, idsSedes]);
+  const getMunicipiosByEstado = async (idEstado) => {
+    return await getMunicipio(idEstado);
+  };
 
-  // Cargar gráficas cuando cambia sede o tipo
+  const getEscuelasByMunicipio = async (idMunicipio) => {
+    return await getEscuela(idMunicipio);
+  };
+
+  // ===============================
+  // CARGAR ESTADOS
+  // ===============================
+  useEffect(() => {
+    const cargarEstados = async () => {
+      try {
+        const data = await getPaises();
+
+        setEstados(data || []);
+
+        if (data?.length > 0) {
+          setEstadoSeleccionado(data[0].id);
+        }
+      } catch (error) {
+        console.error("Error cargando estados", error);
+      }
+    };
+
+    cargarEstados();
+  }, []);
+
+  // ===============================
+  // CARGAR MUNICIPIOS
+  // ===============================
+  useEffect(() => {
+    if (!estadoSeleccionado) return;
+
+    const cargarMunicipios = async () => {
+      try {
+        const data = await getMunicipiosByEstado(
+          estadoSeleccionado
+        );
+
+        setMunicipios(data || []);
+
+        if (data?.length > 0) {
+          setMunicipioSeleccionado(data[0].id);
+        } else {
+          setMunicipioSeleccionado("");
+          setEscuelas([]);
+          setSedeSeleccionada("");
+        }
+      } catch (error) {
+        console.error("Error cargando municipios", error);
+      }
+    };
+
+    cargarMunicipios();
+  }, [estadoSeleccionado]);
+
+  // ===============================
+  // CARGAR ESCUELAS
+  // ===============================
+  useEffect(() => {
+    if (!municipioSeleccionado) return;
+
+    const cargarEscuelas = async () => {
+      try {
+        const data = await getEscuelasByMunicipio(
+          municipioSeleccionado
+        );
+
+        setEscuelas(data || []);
+
+        if (data?.length > 0) {
+          setSedeSeleccionada(data[0].id);
+        } else {
+          setSedeSeleccionada("");
+        }
+      } catch (error) {
+        console.error("Error cargando escuelas", error);
+      }
+    };
+
+    cargarEscuelas();
+  }, [municipioSeleccionado]);
+
+  // ===============================
+  // CARGAR GRAFICAS
+  // ===============================
   useEffect(() => {
     const cargarGraficas = async () => {
-      if (sedeSeleccionada === null) return;
+      if (!sedeSeleccionada) return;
 
       try {
         setLoading(true);
+
         let data = [];
 
-        if (tipoGrafica === 'cuestionarios') {
-          data = await getConteoPorNivelRiesgoCategoriaBySedeSeP(sedeSeleccionada);
-        } else if (tipoGrafica === 'preguntas') {
-          data = await getGraficasPreguntasBySedeSeP(sedeSeleccionada);
-        } else if (tipoGrafica === 'rangos') {
-          data = await getRangoDePreguntasBySedeSeP(sedeSeleccionada);
+        if (tipoGrafica === "cuestionarios") {
+          data =
+            await getConteoPorNivelRiesgoCategoriaBySedeSeP(
+              sedeSeleccionada
+            );
+        } else if (tipoGrafica === "preguntas") {
+          data =
+            await getGraficasPreguntasBySedeSeP(
+              sedeSeleccionada
+            );
+        } else if (tipoGrafica === "rangos") {
+          data =
+            await getRangoDePreguntasBySedeSeP(
+              sedeSeleccionada
+            );
         }
 
         setGraficas(data || []);
       } catch (error) {
-        console.error('Error al cargar gráficas:', error);
+        console.error(
+          "Error al cargar gráficas:",
+          error
+        );
         setGraficas([]);
       } finally {
         setLoading(false);
@@ -81,86 +158,101 @@ export function GraficasSuperAdminSeP() {
     };
 
     cargarGraficas();
-  }, [sedeSeleccionada, tipoGrafica]);
+  }, [
+    sedeSeleccionada,
+    tipoGrafica,
+    getConteoPorNivelRiesgoCategoriaBySedeSeP,
+    getGraficasPreguntasBySedeSeP,
+    getRangoDePreguntasBySedeSeP,
+  ]);
+
   return (
-    <Container className="container-graficas-sep">
-      <header className="header-graficas">
-        <h1>📊 Gráficas Estadísticas - SEP</h1>
-        <p className="lead">Análisis visual de cuestionarios y evaluaciones</p>
-      </header>
+    <div
+      className="d-flex flex-column w-100 min-vh-100"
+      style={{ backgroundColor: "#F4F6F9" }}
+    >
+      <SepHeader
+        title="Gráficas Estadísticas - SEP"
+        subtitle="Análisis visual de cuestionarios y evaluaciones"
+      />
+      <Container fluid className="container-graficas-sep flex-grow-1">
+        {/* FILTROS */}
+        <div className="filtros-container-graficas mb-5">
 
-      {/* Filtros en cascada - Estado, Sede y Tipo */}
-      <div className="filtros-container-graficas mb-5">
-        <div className="filtro-wrapper">
-          <label className="filtro-label">📍 Seleccionar Estado:</label>
-          <select 
-            className="filtro-select"
-            value={estadoSeleccionado}
-            onChange={(e) => setEstadoSeleccionado(e.target.value)}
-          >
-            {Object.keys(sedesPorEstado).map((estado) => (
-              <option key={estado} value={estado}>
-                {estado} ({Object.keys(sedesPorEstado[estado]).length} sedes)
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {idsSedes.length > 0 && (
+          {/* ESTADO */}
           <div className="filtro-wrapper">
-            <label className="filtro-label">🏢 Seleccionar Sede:</label>
-            <select 
-              className="filtro-select"
-              value={sedeSeleccionada || ''}
-              onChange={(e) => setSedeSeleccionada(Number(e.target.value))}
-            >
-              {idsSedes.map((id) => (
-                <option key={id} value={id}>
-                  {sedesDelEstado[id]}
-                </option>
+            <label className="filtro-label">🚩 ESTADO</label>
+            <select className="filtro-select" value={estadoSeleccionado} onChange={(e) => setEstadoSeleccionado(Number(e.target.value))}>
+              {estados.map((estado) => (
+                <option key={estado.id} value={estado.id}>{estado.descripcion}</option>
               ))}
             </select>
           </div>
-        )}
 
-        <div className="filtro-wrapper">
-          <label className="filtro-label">📈 Tipo de Gráfica:</label>
-          <select 
-            className="filtro-select"
-            value={tipoGrafica}
-            onChange={(e) => setTipoGrafica(e.target.value)}
-          >
-            <option value="cuestionarios">Cuestionarios</option>
-            <option value="preguntas">Preguntas</option>
-            <option value="rangos">Rangos</option>
-          </select>
+          {/* MUNICIPIO */}
+          <div className="filtro-wrapper">
+            <label className="filtro-label">🏢 MUNICIPIO</label>
+            <select className="filtro-select" value={municipioSeleccionado} onChange={(e) => setMunicipioSeleccionado(Number(e.target.value))}>
+              {municipios.map((municipio) => (
+                <option key={municipio.id} value={municipio.id}>{municipio.descripcion}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* ESCUELA */}
+          <div className="filtro-wrapper">
+            <label className="filtro-label">🏫 ESCUELA</label>
+            <select className="filtro-select" value={sedeSeleccionada} onChange={(e) => setSedeSeleccionada(Number(e.target.value))}>
+              {escuelas.map((escuela) => (
+                <option key={escuela.id} value={escuela.id}>{escuela.nombre}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* TIPO GRAFICA */}
+          <div className="filtro-wrapper">
+            <label className="filtro-label">📈 TIPO DE GRÁFICA</label>
+            <select className="filtro-select" value={tipoGrafica} onChange={(e) => setTipoGrafica(e.target.value)}>
+              <option value="cuestionarios">Cuestionarios</option>
+              <option value="preguntas">Preguntas</option>
+              <option value="rangos">Rangos</option>
+            </select>
+          </div>
+
         </div>
-      </div>
 
-      {/* Resumen de la Sede */}
-      {sedeSeleccionada && (
-        <div className="estado-resumen mb-5">
-          <div className="resumen-contenido">
-            <h2 className="resumen-titulo">{sedesDelEstado[sedeSeleccionada]}</h2>
-            <p className="resumen-subtitulo">
-              {estadoSeleccionado} • {tipoGrafica === 'cuestionarios' ? 'Cuestionarios' : tipoGrafica === 'preguntas' ? 'Preguntas' : 'Rangos'}
+
+        {/* GRAFICAS */}
+
+        {loading ? (
+          <div className="loading-container-graficas">
+            <Spinner
+              animation="border"
+              role="status"
+              className="loading-spinner-graficas"
+            />
+
+            <p className="loading-text-graficas">
+              Cargando gráficas...
             </p>
           </div>
-        </div>
-      )}
-
-      {/* Contenido de Gráficas */}
-      {loading ? (
-        <div className="loading-container-graficas">
-          <Spinner animation="border" role="status" className="loading-spinner-graficas" />
-          <p className="loading-text-graficas">Cargando gráficas...</p>
-        </div>
-      ) : (
-        <div className="graficas-container">
-          <GraficasGrid graficas={graficas} loading={loading} />
-        </div>
-      )}
-    </Container>
+        ) : (
+          <div className="graficas-container">
+            <GraficasGrid
+              graficas={graficas}
+              loading={loading}
+            />
+          </div>
+        )}
+      </Container>
+      <div className="footer-personajes-wrapper">
+        <img
+          src={avatarHombre}
+          alt="Avatar decorativo"
+          className="personaje-der-graficas"
+        />
+      </div>
+    </div>
   );
 }
 

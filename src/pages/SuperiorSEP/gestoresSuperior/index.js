@@ -1,0 +1,1 @@
+export { GestoresSuperior } from './GestoresSuperior';

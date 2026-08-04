@@ -1,0 +1,52 @@
+.custom-top-navbar {
+  background-color: #d0e4be;
+  padding: 1rem 0;
+}
+
+/* Links del centro */
+.custom-nav-links .nav-link,
+.profile-link {
+  color: rgba(0, 0, 0, 0.8) !important;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: color 0.3s ease-in-out;
+}
+
+.custom-nav-links .nav-link {
+  margin: 0 15px;
+}
+
+.custom-nav-links .nav-link:not(.active-nav-link):hover,
+.profile-link:not(.active-nav-link):hover {
+  color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.custom-nav-links .active-nav-link,
+.profile-link.active-nav-link {
+  color: #000000 !important;
+  border-bottom: 3px solid #000000;
+  padding-bottom: 2px;
+}
+
+.btn-acceder-panel {
+  background-color: #e5ebf5 !important;
+  color: #6384cf !important;
+  border-radius: 50px !important;
+  padding: 8px 24px !important;
+  font-weight: 600 !important;
+  border: none !important;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.btn-acceder-panel:hover {
+  background-color: #ffffff !important;
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.logo-static {
+  cursor: default !important;
+  pointer-events: none;
+}

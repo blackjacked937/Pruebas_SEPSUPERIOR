@@ -1,57 +1,140 @@
-.conteiner {
-    background: linear-gradient(#04547B, #71BEE9);
-    height: 100vh;
-    align-content: center;
+/* ============================================================ */
+/* Estilos del Upstream: Layout de selección original y formularios */
+/* ============================================================ */
 
-    .sub-conteiner {
-        max-width: 30%;
-        background-color: aliceblue;
-        margin: 10px auto;
-        border: 0.80px solid #F3F4F6;
-        border-radius: 25px;
-        padding: 15px;
-        box-shadow: 0 20px 12px 2px #0000001A;
+/* Pantalla de selección de plataforma (vista 0) con bordes curvos */
+.select-layout-container {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    background-color: #f2f4f7;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    padding: 0.5rem 2rem;
+    box-sizing: border-box;
+}
 
-        h1 {
-            font-size: 32px;
-            font-weight: 700;
-            color: #04547B;
-        }
+.costado-left, .costado-right {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 107px;
+    background-image: url('../../assets/img/costadoAcceder.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    z-index: 1;
+    pointer-events: none;
+}
 
-        p {
-            font-size: 16px;
-            font-weight: 400;
-            color: #7A7A7A;
-        }
+.costado-left {
+    left: 0;
+}
 
-        img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50px;
-        }
+.costado-right {
+    right: 0;
+    transform: scaleX(-1);
+}
 
-        span {
-            font-size: 15px;
-            font-weight: 400;
-            color: #7A7A7A;
-        }
+.login-content-wrapper {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 960px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ============================================================ */
+/* Estilos del Upstream: Layout split-screen para formularios   */
+/* ============================================================ */
+
+.login-layout-container {
+  --white-width: clamp(280px, 24vw, 380px);
+  --curve-width: clamp(200px, 16vw, 280px);
+  display: flex;
+  min-height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+  position: relative;
+  background: url('../../assets/img/Vector.jpg') no-repeat var(--white-width) center / var(--curve-width) 100%,
+              linear-gradient(90deg, #F2F2F2 0%, #F2F2F2 var(--white-width), #7A99D9 calc(var(--white-width) + var(--curve-width) - 10px), #7A99D9 calc(var(--white-width) + var(--curve-width) + 10px), #4563BF 100%);
+}
+
+.login-left-panel {
+  width: var(--white-width);
+  position: relative;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  z-index: 2;
+}
+
+.logo-container {
+  position: relative;
+  z-index: 3;
+  margin-top: 40px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.login-logo-img {
+  width: 92%;
+  max-width: 350px;
+  height: auto;
+  object-fit: contain;
+}
+
+.login-right-panel {
+  flex: 1;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  z-index: 2;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.mobile-logo-container {
+  display: none;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* ============================================================ */
+/* Responsive                                                   */
+/* ============================================================ */
+
+@media (max-width: 992px) {
+  .login-left-panel {
+    display: none;
+  }
+
+  .mobile-logo-container {
+    display: flex;
+  }
+
+  .login-right-panel {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+    .costado-left, .costado-right {
+        display: none;
     }
-
-    .footer-text {
-        text-align: center;
-        color: #04547B;
-        font-size: 18px;
-        padding-bottom: 20px;
-
-        a {
-            outline: none;
-            text-decoration: none;
-            color: #04547B;
-        }
-
-        a:hover {
-            font-size: larger;
-            color: #04547B;
-        }
+    .select-layout-container {
+        padding: 1rem;
     }
 }
